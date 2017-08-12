@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[CocktailIngredient]
 (
-	[Id] BIGINT NOT NULL PRIMARY KEY, 
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
     [Cocktail] BIGINT NOT NULL, 
     [Ingredient] BIGINT NOT NULL, 
     [IsOptional] BIT NOT NULL DEFAULT 0, 
