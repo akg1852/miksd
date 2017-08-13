@@ -31,6 +31,12 @@ namespace Mix.Models
             new Ingredient(Ingredients.RedVermouth, "Sweet Red Vermouth"),
             new Ingredient(Ingredients.WhiteVermouth, "Dry White Vermouth"),
 
+            new Ingredient(Ingredients.OrangeLiqueur, "Orange Liqueur",
+                Ingredients.TripleSec),
+            new Ingredient(Ingredients.TripleSec, "Triple Sec",
+                Ingredients.Cointreau),
+            new Ingredient(Ingredients.Cointreau, "Cointreau"),
+
             new Ingredient(Ingredients.Citrus, "Citrus Juice",
                 Ingredients.LemonJuice, Ingredients.LimeJuice),
             new Ingredient(Ingredients.LemonJuice, "Lemon Juice"),

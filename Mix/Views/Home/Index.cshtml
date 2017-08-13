@@ -19,20 +19,36 @@
 </form>
 
 <ul>
-@foreach (var cocktail in @ViewBag.Cocktails)
+@foreach (var cocktail in ViewBag.Cocktails)
 {
-    <li>@cocktail.Name</li>
-    <ul>
-        @foreach (var ingredient in @cocktail.Recipe)
-        {
+    <li>@cocktail.Name
+        <ul>
             <li>
-                @ingredient.Name: @ingredient.Quantity ml
-                @if (ingredient.IsOptional)
-                {
-                    <span>(optional)</span>
-                }
+                <span>Recipe:</span>
+                <ul>
+                    @foreach (var ingredient in cocktail.Recipe)
+                    {
+                        <li>
+                            @ingredient.Name: @ingredient.Quantity ml
+                            @if (ingredient.IsOptional)
+                            {
+                                <span>(optional)</span>
+                            }
+                        </li>
+                    }
+                </ul>
             </li>
-        }
-    </ul>
+            <li>
+                <span>Similar Cocktails: </span>
+                <ul>
+                    @foreach (var similarCocktail in cocktail.Similar) {
+                        <li>
+                            <span class="similar">@similarCocktail.Name</span>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </li>
 }
 </ul>

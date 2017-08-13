@@ -10,3 +10,7 @@
 input[type="submit"] {
     margin: 20px;
 }
+
+.similar:not(:last-child):after {
+    content: ", "
+}

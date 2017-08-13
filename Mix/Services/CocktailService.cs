@@ -31,7 +31,7 @@ namespace Mix.Services
             }
         }
 
-        public IEnumerable<Cocktail> Cocktails(IEnumerable<Ingredients> ingredients = null)
+        public IEnumerable<Cocktail> Cocktails(IEnumerable<Ingredients> ingredients = null, bool getSimilar = false)
         {
             using (var db = new SqlConnection(connectionString))
             {
@@ -41,16 +41,26 @@ namespace Mix.Services
                     cocktailSql = "SELECT * FROM Cocktail ORDER BY Name ASC";
                 }
                 else
-                { // todo: deal with the ingredient heirarchy
+                {
                     cocktailSql =
-                        "SELECT C.*, COUNT(C.Id) AS Count FROM Cocktail C " +
+                        "WITH cte AS ( " +
+                            "SELECT* " +
+                            "FROM Ingredient WHERE Id in @ingredients " +
+                            "UNION ALL " +
+                            "SELECT I.* " +
+                            "FROM cte C " +
+                            "JOIN IngredientRelationship IR ON IR.Parent = C.Id " +
+                            "JOIN Ingredient I ON I.Id = IR.Child " +
+                        ") " +
+                        "SELECT C.*, COUNT(C.Id) AS Count " +
+                        "FROM Cocktail C " +
                         "RIGHT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id " +
-                        "WHERE CI.Ingredient IN @ingredients " +
+                        "WHERE CI.Ingredient IN (SELECT Id FROM cte) " +
                         "GROUP by C.Id, C.Name " +
                         "ORDER BY Count DESC, Name ASC ";
                 }
 
-                var cocktails = db.Query<Cocktail>(cocktailSql, new { @ingredients });
+                var cocktails = db.Query<Cocktail>(cocktailSql, new { ingredients });
                 foreach (var cocktail in cocktails)
                 {
                     var ingredientSql =
@@ -59,9 +69,24 @@ namespace Mix.Services
                         "LEFT JOIN Ingredient I ON CI.Ingredient = I.Id " +
                         "WHERE CI.Cocktail = @Cocktail";
                     cocktail.Recipe = db.Query<CocktailIngredient>(ingredientSql, new { Cocktail = cocktail.Id });
+
+                    if (getSimilar)
+                    {
+                        cocktail.Similar = SimilarCocktails(db, cocktail);
+                    }
                 }
                 return cocktails;
             }
+        }
+
+        private IEnumerable<Cocktail> SimilarCocktails(SqlConnection db, Cocktail cocktail)
+        {
+            var ingredients = cocktail.Recipe.Select(i => i.Ingredient);
+            var similarIngredients = db.Query<Ingredients>(
+                "SELECT Parent FROM IngredientRelationship " +
+                "WHERE Child IN @ingredients",
+                new { ingredients });
+            return Cocktails(similarIngredients).Where(c => c.Id != cocktail.Id);
         }
 
         private void InsertIngredients(SqlConnection db)

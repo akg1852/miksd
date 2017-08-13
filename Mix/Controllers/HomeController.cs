@@ -21,7 +21,7 @@ namespace Mix.Controllers
             var ingredientsFiler = IngredientsFilter();
 
             ViewBag.IngredientsFilter = ingredientsFiler;
-            ViewBag.Cocktails = cocktailService.Cocktails(ingredientsFiler);
+            ViewBag.Cocktails = cocktailService.Cocktails(ingredientsFiler, true);
             ViewBag.Ingredients = cocktailService.Ingredients();
 
             return View();

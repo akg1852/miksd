@@ -7,6 +7,7 @@ namespace Mix.Models
         public Cocktails Id;
         public string Name;
         public IEnumerable<CocktailIngredient> Recipe;
+        public IEnumerable<Cocktail> Similar;
 
         public Cocktail() { }
         public Cocktail(Cocktails id, string name, params CocktailIngredient[] recipe)
