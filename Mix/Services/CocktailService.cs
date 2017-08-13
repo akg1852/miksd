@@ -23,18 +23,42 @@ namespace Mix.Services
             }
         }
 
-        public IEnumerable<Cocktail> Cocktails()
+        public IEnumerable<Ingredient> Ingredients()
         {
             using (var db = new SqlConnection(connectionString))
             {
-                var cocktails = db.Query<Cocktail>("SELECT * FROM Cocktail");
+                return db.Query<Ingredient>("SELECT * FROM Ingredient");
+            }
+        }
+
+        public IEnumerable<Cocktail> Cocktails(IEnumerable<Ingredients> ingredients = null)
+        {
+            using (var db = new SqlConnection(connectionString))
+            {
+                string cocktailSql;
+                if (ingredients == null)
+                {
+                    cocktailSql = "SELECT * FROM Cocktail ORDER BY Name ASC";
+                }
+                else
+                { // todo: deal with the ingredient heirarchy
+                    cocktailSql =
+                        "SELECT C.*, COUNT(C.Id) AS Count FROM Cocktail C " +
+                        "RIGHT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id " +
+                        "WHERE CI.Ingredient IN @ingredients " +
+                        "GROUP by C.Id, C.Name " +
+                        "ORDER BY Count DESC, Name ASC ";
+                }
+
+                var cocktails = db.Query<Cocktail>(cocktailSql, new { @ingredients });
                 foreach (var cocktail in cocktails)
                 {
-                    var sql = "SELECT I.Id as Ingredient, I.Name, CI.IsOptional, CI.Quantity " +
+                    var ingredientSql =
+                        "SELECT I.Id as Ingredient, I.Name, CI.IsOptional, CI.Quantity " +
                         "FROM CocktailIngredient CI " +
                         "LEFT JOIN Ingredient I ON CI.Ingredient = I.Id " +
                         "WHERE CI.Cocktail = @Cocktail";
-                    cocktail.Recipe = db.Query<CocktailIngredient>(sql, new { Cocktail = cocktail.Id });
+                    cocktail.Recipe = db.Query<CocktailIngredient>(ingredientSql, new { Cocktail = cocktail.Id });
                 }
                 return cocktails;
             }

@@ -1,22 +1,38 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Cocktails";
 }
 
 <h2>Cocktails</h2>
 
+<form>
+    <div class="filters">
+    @foreach (var ingredient in ViewBag.Ingredients)
+    {
+        <span class="filter-select">
+            <input type="checkbox" name="i" value="@((long)ingredient.Id)" @(ViewBag.IngredientsFilter != null &&
+                ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
+            @ingredient.Name
+        </span>
+    }
+    </div>
+    <input type="submit" value="Search" />
+</form>
+
+<ul>
 @foreach (var cocktail in @ViewBag.Cocktails)
 {
+    <li>@cocktail.Name</li>
     <ul>
-        <li>@cocktail.Name</li>
-        <ul>
-            @foreach (var ingredient in @cocktail.Recipe)
-            {
-                <li>@ingredient.Name: @ingredient.Quantity ml
-                @if(@ingredient.IsOptional) {
+        @foreach (var ingredient in @cocktail.Recipe)
+        {
+            <li>
+                @ingredient.Name: @ingredient.Quantity ml
+                @if (ingredient.IsOptional)
+                {
                     <span>(optional)</span>
-                }</li>
-            }
-        </ul>
+                }
+            </li>
+        }
     </ul>
 }
+</ul>

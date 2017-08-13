@@ -17,7 +17,7 @@ namespace Mix.Models
         }
     }
 
-    public enum Ingredients : long
+    public enum Ingredients : long // todo: explicitly number the ingredients
     {
         None,
         Whisky,

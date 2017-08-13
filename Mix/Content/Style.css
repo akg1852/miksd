@@ -1,0 +1,12 @@
+﻿body {
+}
+
+.filter-select {
+    display: inline-block;
+    white-space: nowrap;
+    width: 20%;
+}
+
+input[type="submit"] {
+    margin: 20px;
+}
