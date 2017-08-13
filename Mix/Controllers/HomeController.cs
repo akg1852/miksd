@@ -1,5 +1,4 @@
 ﻿using Mix.Services;
-using Newtonsoft.Json;
 using System.Web.Mvc;
 
 namespace Mix.Controllers
@@ -16,8 +15,7 @@ namespace Mix.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var cocktails = cocktailService.Cocktails();
-            ViewBag.Cocktails = JsonConvert.SerializeObject(cocktails);
+            ViewBag.Cocktails = cocktailService.Cocktails();
             return View();
         }
     }

@@ -67,4 +67,7 @@
   <ItemGroup>
     <None Include="MixDB.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeploy.sql" />
+  </ItemGroup>
 </Project>

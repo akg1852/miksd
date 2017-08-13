@@ -5,6 +5,18 @@
 
 <h2>Cocktails</h2>
 
-<pre>
-@ViewBag.Cocktails
-</pre>
+@foreach (var cocktail in @ViewBag.Cocktails)
+{
+    <ul>
+        <li>@cocktail.Name</li>
+        <ul>
+            @foreach (var ingredient in @cocktail.Recipe)
+            {
+                <li>@ingredient.Name: @ingredient.Quantity ml
+                @if(@ingredient.IsOptional) {
+                    <span>(optional)</span>
+                }</li>
+            }
+        </ul>
+    </ul>
+}
