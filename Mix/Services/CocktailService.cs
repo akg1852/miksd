@@ -27,7 +27,7 @@ namespace Mix.Services
         {
             using (var db = new SqlConnection(connectionString))
             {
-                return db.Query<Ingredient>("SELECT * FROM Ingredient");
+                return db.Query<Ingredient>("SELECT * FROM Ingredient ORDER BY Name");
             }
         }
 
@@ -86,7 +86,9 @@ namespace Mix.Services
                 "SELECT Parent FROM IngredientRelationship " +
                 "WHERE Child IN @ingredients",
                 new { ingredients });
-            return Cocktails(similarIngredients).Where(c => c.Id != cocktail.Id);
+            return Cocktails(ingredients.Concat(similarIngredients).Distinct())
+                .Where(c => c.Id != cocktail.Id)
+                .Take(3);
         }
 
         private void InsertIngredients(SqlConnection db)
