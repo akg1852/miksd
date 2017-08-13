@@ -16,25 +16,13 @@ namespace Mix.Controllers
         }
 
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Index(List<Ingredients> i)
         {
-            var ingredientsFiler = IngredientsFilter();
-
-            ViewBag.IngredientsFilter = ingredientsFiler;
-            ViewBag.Cocktails = cocktailService.Cocktails(ingredientsFiler, true);
+            ViewBag.IngredientsFilter = i;
+            ViewBag.Cocktails = cocktailService.Cocktails(i, true);
             ViewBag.Ingredients = cocktailService.Ingredients();
 
             return View();
-        }
-
-        private IEnumerable<Ingredients> IngredientsFilter()
-        {
-            var ii = Request.QueryString["i"];
-            if (ii != null)
-            {
-                return ii.Split(',').Select(i => (Ingredients)long.Parse(i)).ToList();
-            }
-            else return null;
         }
     }
 }
