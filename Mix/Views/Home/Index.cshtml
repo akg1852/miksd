@@ -18,14 +18,22 @@
     <input type="submit" value="Search" />
 </form>
 
-<ul>
-@foreach (var cocktail in ViewBag.Cocktails)
+<dl>
+<dt class="result-header">Cocktails</dt>
+@for (var i = 0; i < ViewBag.Cocktails.Count; i++)
 {
-    <li>@cocktail.Name
-        <ul>
-            <li>
-                <span>Recipe:</span>
-                <ul>
+    var cocktail = ViewBag.Cocktails[i];
+
+    if (i == ViewBag.MatchCount && ViewBag.MatchCount > 0)
+    {
+        <dt class="result-header">Partial matches</dt>
+    }
+
+    <dd><dl>
+        <dt class="cocktail-name">@cocktail.Name</dt>
+        <dd><dl class="cocktail">
+                <dt>Recipe</dt>
+                <dd><ul>
                     @foreach (var ingredient in cocktail.Recipe)
                     {
                         <li>
@@ -36,19 +44,16 @@
                             }
                         </li>
                     }
-                </ul>
-            </li>
-            <li>
-                <span>Similar Cocktails: </span>
-                <ul>
+                </ul></dd>
+                <dt>Similar Cocktails</dt>
+                <dd><ul>
                     @foreach (var similarCocktail in cocktail.Similar) {
                         <li>
                             <span class="similar">@similarCocktail.Name</span>
                         </li>
                     }
-                </ul>
-            </li>
-        </ul>
-    </li>
+                </ul></dd>
+        </dl></dd>
+    </dl></dd>
 }
-</ul>
+</dl>

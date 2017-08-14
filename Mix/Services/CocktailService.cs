@@ -31,7 +31,7 @@ namespace Mix.Services
             }
         }
 
-        public IEnumerable<Cocktail> Cocktails(IEnumerable<Ingredients> ingredients = null, bool getSimilar = false)
+        public IEnumerable<CocktailMatch> Cocktails(IEnumerable<Ingredients> ingredients = null, bool getSimilar = false)
         {
             using (var db = new SqlConnection(connectionString))
             {
@@ -60,7 +60,7 @@ namespace Mix.Services
                         "ORDER BY Count DESC, Name ASC ";
                 }
 
-                var cocktails = db.Query<Cocktail>(cocktailSql, new { ingredients });
+                var cocktails = db.Query<CocktailMatch>(cocktailSql, new { ingredients });
                 foreach (var cocktail in cocktails)
                 {
                     var ingredientSql =
@@ -128,5 +128,10 @@ namespace Mix.Services
                 }
             }
         }
+    }
+
+    public class CocktailMatch : Cocktail
+    {
+        public int Count;
     }
 }
