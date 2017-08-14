@@ -7,13 +7,19 @@ namespace Mix.Models
         public Ingredients Id;
         public string Name;
         public IEnumerable<Ingredients> Children;
+        public bool Equivalence;
 
         public Ingredient() { }
+
         public Ingredient(Ingredients id, string name, params Ingredients[] children)
+            : this(id, name, false, children) { }
+
+        public Ingredient(Ingredients id, string name, bool equivalence, params Ingredients[] children)
         {
             Id = id;
             Name = name;
             Children = children;
+            Equivalence = equivalence;
         }
     }
 
@@ -22,6 +28,7 @@ namespace Mix.Models
         None,
         Whisky,
         Scotch,
+        AmericanWhiskey,
         Bourbon,
         Rye,
         Rum,

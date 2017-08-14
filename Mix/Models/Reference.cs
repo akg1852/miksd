@@ -10,7 +10,7 @@ namespace Mix.Models
 
         public static List<Ingredient> AllIngredients = new List<Ingredient>
         {
-            new Ingredient(Ingredients.Rum, "Rum",
+            new Ingredient(Ingredients.Rum, "Rum", true,
                 Ingredients.WhiteRum, Ingredients.DarkRum),
             new Ingredient(Ingredients.WhiteRum, "White Rum"),
             new Ingredient(Ingredients.DarkRum, "Dark Rum"),
@@ -18,17 +18,19 @@ namespace Mix.Models
             new Ingredient(Ingredients.Whisky, "Whisk(e)y",
                 Ingredients.Scotch, Ingredients.Bourbon, Ingredients.Rye),
             new Ingredient(Ingredients.Scotch, "Scotch"),
+            new Ingredient(Ingredients.AmericanWhiskey, "American Whisky", true,
+                Ingredients.Bourbon, Ingredients.Rye),
             new Ingredient(Ingredients.Bourbon, "Bourbon"),
             new Ingredient(Ingredients.Rye, "Rye Whiskey"),
 
             new Ingredient(Ingredients.Vodka, "Vodka"),
 
-            new Ingredient(Ingredients.Gin, "Gin",
+            new Ingredient(Ingredients.Gin, "Gin", true,
                 Ingredients.OldTom, Ingredients.LondonDry),
             new Ingredient(Ingredients.OldTom, "Old Tom Gin"),
             new Ingredient(Ingredients.LondonDry, "London Dry Gin"),
 
-            new Ingredient(Ingredients.Brandy, "Brandy",
+            new Ingredient(Ingredients.Brandy, "Brandy", true,
                 Ingredients.Cognac, Ingredients.Pisco),
             new Ingredient(Ingredients.Cognac, "Cognac"),
             new Ingredient(Ingredients.Pisco, "Pisco"),
@@ -37,7 +39,7 @@ namespace Mix.Models
 
             new Ingredient(Ingredients.Absinthe, "Absinthe"),
 
-            new Ingredient(Ingredients.Bitters, "Bitters",
+            new Ingredient(Ingredients.Bitters, "Bitters", true,
                 Ingredients.Angostura, Ingredients.OrangeBitters, Ingredients.Peychauds),
             new Ingredient(Ingredients.Angostura, "Angostura Bitters"),
             new Ingredient(Ingredients.OrangeBitters, "Orange Bitters"),
@@ -45,25 +47,25 @@ namespace Mix.Models
 
             new Ingredient(Ingredients.Campari, "Campari"),
 
-            new Ingredient(Ingredients.Vermouth, "Vermouth",
+            new Ingredient(Ingredients.Vermouth, "Vermouth", true,
                 Ingredients.SweetVermouth, Ingredients.DryVermouth),
             new Ingredient(Ingredients.SweetVermouth, "Sweet Red Vermouth"),
             new Ingredient(Ingredients.DryVermouth, "Dry White Vermouth"),
 
             new Ingredient(Ingredients.OrangeLiqueur, "Orange Liqueur",
                 Ingredients.TripleSec),
-            new Ingredient(Ingredients.TripleSec, "Triple Sec",
+            new Ingredient(Ingredients.TripleSec, "Triple Sec", true,
                 Ingredients.Cointreau),
             new Ingredient(Ingredients.Cointreau, "Cointreau"),
             new Ingredient(Ingredients.Maraschino, "Maraschino Liqueur"),
             new Ingredient(Ingredients.Drambuie, "Drambuie"),
 
             new Ingredient(Ingredients.Grenadine, "Grenadine"),
-            new Ingredient(Ingredients.Sugar, "Sugar",
+            new Ingredient(Ingredients.Sugar, "Sugar", true,
                 Ingredients.SimpleSyrup),
             new Ingredient(Ingredients.SimpleSyrup, "Simple Syrup"),
 
-            new Ingredient(Ingredients.Citrus, "Citrus Juice",
+            new Ingredient(Ingredients.Citrus, "Citrus Juice", true,
                 Ingredients.LemonJuice, Ingredients.LimeJuice),
             new Ingredient(Ingredients.LemonJuice, "Lemon Juice"),
             new Ingredient(Ingredients.LimeJuice, "Lime Juice"),

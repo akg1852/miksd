@@ -83,8 +83,11 @@ namespace Mix.Services
         {
             var ingredients = cocktail.Recipe.Select(i => i.Ingredient);
             var similarIngredients = db.Query<Ingredients>(
-                "SELECT Parent FROM IngredientRelationship " +
-                "WHERE Child IN @ingredients",
+                "SELECT Parent " +
+                "FROM IngredientRelationship IR " +
+                "LEFT JOIN Ingredient I ON I.Id = IR.Parent " +
+                "WHERE Child IN @ingredients " +
+                "AND I.Equivalence = 1",
                 new { ingredients });
             return Cocktails(ingredients.Concat(similarIngredients).Distinct())
                 .Where(c => c.Id != cocktail.Id)
@@ -95,8 +98,8 @@ namespace Mix.Services
         {
             foreach (var ingredient in Reference.AllIngredients)
             {
-                db.Execute("INSERT INTO Ingredient (Id, Name) VALUES (@Id, @Name)",
-                    new { ingredient.Id, ingredient.Name });
+                db.Execute("INSERT INTO Ingredient (Id, Name, Equivalence) VALUES (@Id, @Name, @Equivalence)",
+                    new { ingredient.Id, ingredient.Name, ingredient.Equivalence });
             }
             foreach (var parent in Reference.AllIngredients)
             {
