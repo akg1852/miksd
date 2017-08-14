@@ -19,7 +19,7 @@ namespace Mix.Controllers
         public ActionResult Index(List<Ingredients> i)
         {
             var cocktails = cocktailService.Cocktails(i, true).ToList();
-            var matchCount = i == null ? -1 : cocktails.TakeWhile(c => c.Count >= i.Count).Count();
+            var matchCount = i == null ? -1 : cocktails.TakeWhile(c => c.MatchCount >= i.Count).Count();
 
             ViewBag.IngredientsFilter = i;
             ViewBag.Cocktails = cocktails;

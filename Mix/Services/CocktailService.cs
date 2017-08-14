@@ -42,22 +42,27 @@ namespace Mix.Services
                 }
                 else
                 {
-                    cocktailSql =
-                        "WITH cte AS ( " +
-                            "SELECT* " +
-                            "FROM Ingredient WHERE Id in @ingredients " +
-                            "UNION ALL " +
-                            "SELECT I.* " +
-                            "FROM cte C " +
-                            "JOIN IngredientRelationship IR ON IR.Parent = C.Id " +
-                            "JOIN Ingredient I ON I.Id = IR.Child " +
-                        ") " +
-                        "SELECT C.*, COUNT(C.Id) AS Count " +
-                        "FROM Cocktail C " +
-                        "RIGHT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id " +
-                        "WHERE CI.Ingredient IN (SELECT Id FROM cte) " +
-                        "GROUP by C.Id, C.Name " +
-                        "ORDER BY Count DESC, Name ASC ";
+                    cocktailSql = @"
+                        WITH cte AS(
+                            SELECT * FROM Ingredient WHERE Id IN @ingredients
+                            UNION ALL
+                            SELECT I.* FROM cte C
+                            JOIN IngredientRelationship IR ON IR.Parent = C.Id
+                            JOIN Ingredient I ON I.Id = IR.Child
+                        )
+                        SELECT C.*, COUNT(*) AS IngredientCount,
+                        (CAST(C.MatchCount AS float) / COUNT(*)) AS Fullness
+                        FROM(
+                            SELECT C.*, COUNT(*) AS MatchCount
+                            FROM Cocktail C
+                            LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
+                            WHERE CI.Ingredient IN (SELECT Id FROM cte)
+                            GROUP BY C.Id, C.Name
+                        ) AS C
+                        LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
+                        GROUP BY C.Id, C.Name, C.MatchCount
+                        ORDER BY Fullness DESC, IngredientCount ASC, Name ASC
+                    ";
                 }
 
                 var cocktails = db.Query<CocktailMatch>(cocktailSql, new { ingredients });
@@ -89,7 +94,7 @@ namespace Mix.Services
                 "WHERE Child IN @ingredients " +
                 "AND I.Equivalence = 1",
                 new { ingredients });
-            return Cocktails(ingredients.Concat(similarIngredients).Distinct())
+            return Cocktails(ingredients.Concat(similarIngredients))
                 .Where(c => c.Id != cocktail.Id)
                 .Take(3);
         }
@@ -135,6 +140,6 @@ namespace Mix.Services
 
     public class CocktailMatch : Cocktail
     {
-        public int Count;
+        public int MatchCount;
     }
 }
