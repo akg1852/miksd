@@ -50,17 +50,19 @@ namespace Mix.Services
                             JOIN IngredientRelationship IR ON IR.Parent = C.Id
                             JOIN Ingredient I ON I.Id = IR.Child
                         )
-                        SELECT C.*, COUNT(*) AS IngredientCount,
-                        (CAST(C.MatchCount AS float) / COUNT(*)) AS Fullness
+                        SELECT C.Id, C.Name, C.MatchCount, COUNT(*) AS IngredientCount,
+                        (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness
                         FROM(
-                            SELECT C.*, COUNT(*) AS MatchCount
+                            SELECT C.Id, C.Name, COUNT(*) AS MatchCount,
+                            SUM(CASE WHEN CI.IsOptional = 0 THEN 1 ELSE 0 END) AS FullnessCount
                             FROM Cocktail C
                             LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                             WHERE CI.Ingredient IN (SELECT Id FROM cte)
                             GROUP BY C.Id, C.Name
                         ) AS C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
-                        GROUP BY C.Id, C.Name, C.MatchCount
+                        WHERE CI.IsOptional = 0
+                        GROUP BY C.Id, C.Name, C.FullnessCount, C.MatchCount
                         ORDER BY Fullness DESC, IngredientCount ASC, Name ASC
                     ";
                 }
@@ -141,5 +143,6 @@ namespace Mix.Services
     public class CocktailMatch : Cocktail
     {
         public int MatchCount;
+        public double Fullness;
     }
 }

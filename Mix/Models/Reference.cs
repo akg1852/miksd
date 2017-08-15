@@ -10,6 +10,10 @@ namespace Mix.Models
 
         public static List<Ingredient> AllIngredients = new List<Ingredient>
         {
+            new Ingredient(Ingredients.Spirit, "Spirit",
+                Ingredients.Rum, Ingredients.Whisky, Ingredients.Vodka,
+                Ingredients.Gin, Ingredients.Brandy, Ingredients.Tequila),
+
             new Ingredient(Ingredients.Rum, "Rum", true,
                 Ingredients.WhiteRum, Ingredients.DarkRum),
             new Ingredient(Ingredients.WhiteRum, "White Rum"),

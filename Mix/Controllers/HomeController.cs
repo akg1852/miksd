@@ -1,5 +1,6 @@
 ﻿using Mix.Models;
 using Mix.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -16,17 +17,51 @@ namespace Mix.Controllers
         }
 
         // GET: Home
-        public ActionResult Index(List<Ingredients> i)
+        /*
+         * i: ingredient(s)
+         * m: match (all ingredients in the query must be in the cocktail)
+         * f: full  (all ingredients in the cocktail must be in the query)
+         * n: name of category
+         */
+        public ActionResult Index(List<Ingredients> i, byte m = 0, byte f = 0, string n = "Cocktails")
         {
-            var cocktails = cocktailService.Cocktails(i, true).ToList();
-            var matchCount = i == null ? -1 : cocktails.TakeWhile(c => c.MatchCount >= i.Count).Count();
+            var cocktails = cocktailService.Cocktails(i, true);
+            var matchCount = -1;
+
+            Func<CocktailMatch, bool> IsMatch = c => c.MatchCount >= i.Count;
+            Func<CocktailMatch, bool> IsFull = c => c.Fullness == 1;
+
+            if (i != null)
+            {
+                if (m != 0)
+                {
+                    cocktails = cocktails.Where(IsMatch);
+                }
+                if (f != 0)
+                {
+                    cocktails = cocktails.Where(IsFull);
+                }
+                if (m == 0 && f == 0)
+                {
+                    matchCount = cocktails.TakeWhile(c => IsFull(c) || IsMatch(c)).Count();
+                }
+            }
 
             ViewBag.IngredientsFilter = i;
-            ViewBag.Cocktails = cocktails;
+            ViewBag.Cocktails = cocktails.ToList();
             ViewBag.MatchCount = matchCount;
             ViewBag.Ingredients = cocktailService.Ingredients();
+            ViewBag.Categories = Categories;
+            ViewBag.Category = n;
 
             return View();
         }
+
+        private Dictionary<string, List<Ingredients>> Categories = new Dictionary<string, List<Ingredients>>
+        {
+            { "Sours", new List<Ingredients> { Ingredients.Spirit, Ingredients.Citrus } },
+            { "Ancestrals", new List<Ingredients> { Ingredients.Spirit, Ingredients.Sugar, Ingredients.Bitters } },
+            { "Spirit Forward", new List<Ingredients> { Ingredients.Spirit, Ingredients.Vermouth } },
+        };
     }
 }

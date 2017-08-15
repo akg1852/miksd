@@ -2,6 +2,18 @@
     color: #000000;
 }
 
+dl, dt, dd, ul {
+    padding: 0;
+    margin: 0;
+}
+
+
+/* categories */
+
+ul.categories {
+    margin-bottom: 20px;
+}
+
 
 /* search form */
 
@@ -21,11 +33,6 @@ input[type="submit"] {
 
 
 /* result lists */
-
-dl, dt, dd, ul {
-    padding: 0;
-    margin: 0;
-}
 
 dl.cocktail {
     columns: 2;

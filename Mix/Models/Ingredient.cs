@@ -26,6 +26,7 @@ namespace Mix.Models
     public enum Ingredients : long // todo: explicitly number the ingredients
     {
         None,
+        Spirit,
         Whisky,
         Scotch,
         AmericanWhiskey,
