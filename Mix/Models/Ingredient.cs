@@ -71,4 +71,9 @@ namespace Mix.Models
         Cola,
         EggWhite,
     }
+
+    public static class IngredientHelpers
+    {
+        public static Ingredients Negate(this Ingredients i) => (Ingredients)(-(long)i);
+    }
 }

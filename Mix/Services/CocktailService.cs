@@ -31,43 +31,59 @@ namespace Mix.Services
             }
         }
 
-        public IEnumerable<CocktailMatch> Cocktails(IEnumerable<Ingredients> ingredients = null, bool getSimilar = false)
+        public IEnumerable<CocktailMatch> FeaturedCocktails()
+        {
+            return Cocktails(null, null, true);
+        }
+
+        public IEnumerable<CocktailMatch> Cocktails(IEnumerable<Ingredients> ingredients = null,
+                                                    IEnumerable<Ingredients> exgredients = null,
+                                                    bool getSimilar = false)
         {
             using (var db = new SqlConnection(connectionString))
             {
-                string cocktailSql;
-                if (ingredients == null)
-                {
-                    cocktailSql = "SELECT * FROM Cocktail ORDER BY Name ASC";
-                }
-                else
-                {
-                    cocktailSql = @"
-                        WITH cte AS(
-                            SELECT * FROM Ingredient WHERE Id IN @ingredients
-                            UNION ALL
-                            SELECT I.* FROM cte C
-                            JOIN IngredientRelationship IR ON IR.Parent = C.Id
-                            JOIN Ingredient I ON I.Id = IR.Child
-                        )
-                        SELECT C.Id, C.Name, C.MatchCount, COUNT(*) AS IngredientCount,
-                        (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness
-                        FROM(
-                            SELECT C.Id, C.Name, COUNT(*) AS MatchCount,
-                            SUM(CASE WHEN CI.IsOptional = 0 THEN 1 ELSE 0 END) AS FullnessCount
-                            FROM Cocktail C
-                            LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
-                            WHERE CI.Ingredient IN (SELECT Id FROM cte)
-                            GROUP BY C.Id, C.Name
-                        ) AS C
+                var cocktailSql = @"
+                    WITH
+                    IncludedIngredient AS (
+                        SELECT * FROM Ingredient WHERE Id IN @ingredients
+                        UNION ALL
+                        SELECT I.* FROM IncludedIngredient C
+                        JOIN IngredientRelationship IR ON IR.Parent = C.Id
+                        JOIN Ingredient I ON I.Id = IR.Child
+                    ),
+                    ExcludedIngredient AS (
+                        SELECT * FROM Ingredient WHERE Id IN @exgredients
+                        UNION ALL
+                        SELECT I.* FROM ExcludedIngredient C
+                        JOIN IngredientRelationship IR ON IR.Parent = C.Id
+                        JOIN Ingredient I ON I.Id = IR.Child
+                    ),
+                    NonExcludedCocktail AS (
+                        SELECT C.*
+                        FROM Cocktail C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
-                        WHERE CI.IsOptional = 0
-                        GROUP BY C.Id, C.Name, C.FullnessCount, C.MatchCount
-                        ORDER BY Fullness DESC, IngredientCount ASC, Name ASC
-                    ";
-                }
+                        AND CI.Ingredient IN (SELECT Id FROM ExcludedIngredient)
+                        WHERE CI.Id IS NULL
+                    )
+                    SELECT C.Id, C.Name, C.MatchCount, COUNT(*) AS IngredientCount,
+                    (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness
+                    FROM (
+                        SELECT C.Id, C.Name, COUNT(*) AS MatchCount,
+                        SUM(CASE WHEN CI.IsOptional = 0 THEN 1 ELSE 0 END) AS FullnessCount
+                        FROM NonExcludedCocktail C
+                        LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
+                        WHERE NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
+                        OR CI.Ingredient IN (SELECT Id FROM IncludedIngredient)
+                        GROUP BY C.Id, C.Name
+                    ) AS C
+                    LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
+                    WHERE CI.IsOptional = 0
+                    GROUP BY C.Id, C.Name, C.FullnessCount, C.MatchCount
+                    ORDER BY Fullness DESC, IngredientCount ASC, Name ASC
+                ";
 
-                var cocktails = db.Query<CocktailMatch>(cocktailSql, new { ingredients });
+                var cocktails = db.Query<CocktailMatch>(cocktailSql, new { ingredients, exgredients });
+
                 foreach (var cocktail in cocktails)
                 {
                     var ingredientSql =

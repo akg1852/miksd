@@ -25,14 +25,23 @@ namespace Mix.Controllers
          */
         public ActionResult Index(List<Ingredients> i, byte m = 0, byte f = 0, string n = "Cocktails")
         {
-            var cocktails = cocktailService.Cocktails(i, true);
+            IEnumerable<CocktailMatch> cocktails;
             var matchCount = -1;
 
-            Func<CocktailMatch, bool> IsMatch = c => c.MatchCount >= i.Count;
-            Func<CocktailMatch, bool> IsFull = c => c.Fullness == 1;
-
-            if (i != null)
+            if (i == null)
             {
+                cocktails = cocktailService.FeaturedCocktails();
+            }
+            else
+            {
+                var includedIngredients = i.Where(ii => ii > 0);
+                var excludedIngredients = i.Where(ii => ii < 0).Select(ii => ii.Negate());
+
+                cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, true);
+
+                Func<CocktailMatch, bool> IsMatch = c => c.MatchCount >= includedIngredients.Count();
+                Func<CocktailMatch, bool> IsFull = c => c.Fullness == 1;
+
                 if (m != 0)
                 {
                     cocktails = cocktails.Where(IsMatch);
@@ -60,8 +69,10 @@ namespace Mix.Controllers
         private Dictionary<string, List<Ingredients>> Categories = new Dictionary<string, List<Ingredients>>
         {
             { "Sours", new List<Ingredients> { Ingredients.Spirit, Ingredients.Citrus } },
-            { "Ancestrals", new List<Ingredients> { Ingredients.Spirit, Ingredients.Sugar, Ingredients.Bitters } },
-            { "Spirit Forward", new List<Ingredients> { Ingredients.Spirit, Ingredients.Vermouth } },
+            { "Ancestrals", new List<Ingredients> { Ingredients.Spirit, Ingredients.Sugar, Ingredients.Bitters,
+                Ingredients.Citrus.Negate()} },
+            { "Spirit Forward", new List<Ingredients> { Ingredients.Spirit, Ingredients.Vermouth,
+                Ingredients.Citrus.Negate()} },
         };
     }
 }
