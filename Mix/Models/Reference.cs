@@ -73,6 +73,15 @@ namespace Mix.Models
 
             new I(i.Maraschino, "Maraschino Liqueur"),
             new I(i.Drambuie, "Drambuie"),
+            new I(i.Cassis, "Crème de cassis"),
+
+            new I(i.Wine, "Wine", o.Equivalence,
+                i.SparklingWine, i.WhiteWine),
+            new I(i.SparklingWine, "Sparkling Wine", o.Equivalence,
+                i.Champagne, i.Prosecco),
+            new I(i.Champagne, "Champagne"),
+            new I(i.Prosecco, "Prosecco"),
+            new I(i.WhiteWine, "White Wine"),
 
             new I(i.Grenadine, "Grenadine"),
             new I(i.Sugar, "Sugar", o.Equivalence,
@@ -86,6 +95,7 @@ namespace Mix.Models
             new I(i.OrangeJuice, "Orange Juice"),
             new I(i.PineappleJuice, "Pineapple Juice"),
             new I(i.CranberryJuice, "Cranberry Juice"),
+            new I(i.PeachPuree, "Peach Purée", o.Hidden),
 
             new I(i.Water, "Water", o.Hidden),
             new I(i.Soda, "Soda Water"),
@@ -248,6 +258,20 @@ namespace Mix.Models
                 new CI(i.Vodka, 30M),
                 new CI(i.TripleSec, 30M),
                 new CI(i.LimeJuice, 30M)),
+
+            new C(c.Kir, "Kir",
+                new CI(i.WhiteWine, 90M),
+                new CI(i.Cassis, 10M)),
+
+            new C(c.Bellini, "Bellini",
+                new CI(i.Prosecco, 100M),
+                new CI(i.PeachPuree, 50M)),
+
+            new C(c.ChampagneCocktail, "Champagne Cocktail",
+                new CI(i.Champagne, 90M),
+                new CI(i.Cognac, 10M),
+                new CI(i.Angostura, 2 * dash),
+                new CI(i.Sugar, teaspoon)),
         };
     }
 }

@@ -73,6 +73,7 @@ namespace Mix.Controllers
                 Ingredients.Citrus.Negate()} },
             { "Spirit Forward", new List<Ingredients> { Ingredients.Spirit, Ingredients.Vermouth,
                 Ingredients.Citrus.Negate()} },
+            { "Wine Cocktails", new List<Ingredients> { Ingredients.Wine } }
         };
     }
 }

@@ -65,5 +65,8 @@ namespace Mix.Models
         Kamikaze,
         LemonDrop,
         PiscoSour,
+        Kir,
+        Bellini,
+        ChampagneCocktail,
     }
 }
