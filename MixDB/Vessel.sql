@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Vessel]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY, 
+    [Name] NCHAR(50) NOT NULL
+)

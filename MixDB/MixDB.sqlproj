@@ -63,6 +63,7 @@
     <Build Include="IngredientRelationship.sql" />
     <Build Include="Cocktail.sql" />
     <Build Include="CocktailIngredient.sql" />
+    <Build Include="Vessel.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MixDB.publish.xml" />

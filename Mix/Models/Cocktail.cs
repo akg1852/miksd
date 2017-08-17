@@ -7,14 +7,17 @@ namespace Mix.Models
         public Cocktails Id;
         public string Name;
         public IEnumerable<CocktailIngredient> Recipe;
+        public Vessels Vessel;
+        public string VesselName;
         public IEnumerable<Cocktail> Similar;
 
         public Cocktail() { }
-        public Cocktail(Cocktails id, string name, params CocktailIngredient[] recipe)
+        public Cocktail(Cocktails id, string name, Vessels vessel, params CocktailIngredient[] recipe)
         {
             Id = id;
             Name = name;
             Recipe = recipe;
+            Vessel = vessel;
         }
     }
 
@@ -31,6 +34,19 @@ namespace Mix.Models
             Ingredient = ingredient;
             Quantity = quantity;
             IsOptional = isOptional;
+        }
+    }
+
+    public class Vessel
+    {
+        public Vessels Id;
+        public string Name;
+
+        public Vessel() { }
+        public Vessel(Vessels id, string name)
+        {
+            Id = id;
+            Name = name;
         }
     }
 
@@ -68,5 +84,16 @@ namespace Mix.Models
         Kir,
         Bellini,
         ChampagneCocktail,
+    }
+
+    public enum Vessels
+    {
+        None = 0,
+        Cocktail = 1,
+        Rocks = 2,
+        Highball = 3,
+        Shot = 4,
+        Margarita = 5,
+        Flute = 6,
     }
 }

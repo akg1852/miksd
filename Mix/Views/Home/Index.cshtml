@@ -47,18 +47,21 @@
         <dt class="cocktail-name">@cocktail.Name</dt>
         <dd><dl class="cocktail">
                 <dt>Recipe</dt>
-                <dd><ul>
-                    @foreach (var ingredient in cocktail.Recipe)
-                    {
-                        <li>
-                            @ingredient.Name: @ingredient.Quantity ml
-                            @if (ingredient.IsOptional)
-                            {
-                                <span>(optional)</span>
-                            }
-                        </li>
-                    }
-                </ul></dd>
+                <dd>
+                    <ul>
+                        @foreach (var ingredient in cocktail.Recipe)
+                        {
+                            <li>
+                                @ingredient.Name: @ingredient.Quantity ml
+                                @if (ingredient.IsOptional)
+                                {
+                                    <span>(optional)</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                    <p>Drinkware: @cocktail.VesselName</p>
+                </dd>
                 <dt>Similar Cocktails</dt>
                 <dd><ul>
                     @foreach (var similarCocktail in cocktail.Similar) {

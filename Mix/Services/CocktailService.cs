@@ -18,6 +18,7 @@ namespace Mix.Services
                 if (!db.Query("SELECT TOP 1 1 FROM Ingredient").Any())
                 {
                     InsertIngredients(db);
+                    InsertVessels(db);
                     InsertCocktails(db);
                 }
             }
@@ -65,20 +66,23 @@ namespace Mix.Services
                         AND CI.Ingredient IN (SELECT Id FROM ExcludedIngredient)
                         WHERE CI.Id IS NULL
                     )
-                    SELECT C.Id, C.Name, C.MatchCount, COUNT(*) AS IngredientCount,
+                    SELECT C.Id, C.Name, C.Vessel, C.VesselName,
+                    C.MatchCount, COUNT(*) AS IngredientCount,
                     (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness
                     FROM (
-                        SELECT C.Id, C.Name, COUNT(*) AS MatchCount,
+                        SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName,
+                        COUNT(*) AS MatchCount,
                         SUM(CASE WHEN CI.IsOptional = 0 THEN 1 ELSE 0 END) AS FullnessCount
                         FROM NonExcludedCocktail C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
+                        LEFT JOIN Vessel V ON V.Id = C.Vessel
                         WHERE NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
                         OR CI.Ingredient IN (SELECT Id FROM IncludedIngredient)
-                        GROUP BY C.Id, C.Name
+                        GROUP BY C.Id, C.Name, C.Vessel, V.Name
                     ) AS C
                     LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                     WHERE CI.IsOptional = 0
-                    GROUP BY C.Id, C.Name, C.FullnessCount, C.MatchCount
+                    GROUP BY C.Id, C.Name, C.Vessel, C.VesselName, C.FullnessCount, C.MatchCount
                     ORDER BY Fullness DESC, IngredientCount ASC, Name ASC
                 ";
 
@@ -135,12 +139,21 @@ namespace Mix.Services
             }
         }
 
+        private void InsertVessels(SqlConnection db)
+        {
+            foreach (var vessel in Reference.AllVessels)
+            {
+                db.Execute("INSERT INTO Vessel (Id, Name) VALUES (@Id, @Name)",
+                    new { vessel.Id, vessel.Name });
+            }
+        }
+
         private void InsertCocktails(SqlConnection db)
         {
             foreach (var cocktail in Reference.AllCocktails)
             {
-                db.Execute("INSERT INTO Cocktail (Id, Name) VALUES (@Id, @Name)",
-                    new { cocktail.Id, cocktail.Name });
+                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel) VALUES (@Id, @Name, @Vessel)",
+                    new { cocktail.Id, cocktail.Name, cocktail.Vessel });
 
                 foreach (var ingredient in cocktail.Recipe)
                 {
