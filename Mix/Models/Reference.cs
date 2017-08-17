@@ -5,6 +5,7 @@ using C = Mix.Models.Cocktail;
 using CI = Mix.Models.CocktailIngredient;
 using i = Mix.Models.Ingredients;
 using c = Mix.Models.Cocktails;
+using o = Mix.Models.IngredientOptions;
 
 namespace Mix.Models
 {
@@ -16,65 +17,69 @@ namespace Mix.Models
 
         public static List<Ingredient> AllIngredients = new List<Ingredient>
         {
-            new I(i.Spirit, "Spirit",
-                i.Rum, i.Whisky, i.Vodka, i.Gin, i.Brandy, i.Tequila),
+            new I(i.Spirit, "Spirit", o.Hidden,
+                i.Rum, i.Whisky, i.Vodka, i.Gin, i.Brandy, i.CognacOrRye, i.Tequila),
 
-            new I(i.Rum, "Rum", true,
+            new I(i.Rum, "Rum", o.Equivalence,
                 i.WhiteRum, i.DarkRum),
             new I(i.WhiteRum, "White Rum"),
             new I(i.DarkRum, "Dark Rum"),
 
             new I(i.Whisky, "Whisk(e)y",
-                i.Scotch, i.Bourbon, i.Rye),
+                i.Scotch, i.BourbonOrRye),
             new I(i.Scotch, "Scotch"),
-            new I(i.AmericanWhiskey, "American Whisky", true,
+            new I(i.BourbonOrRye, "Bourbon / Rye", o.Equivalence,
                 i.Bourbon, i.Rye),
-            new I(i.Bourbon, "Bourbon"),
-            new I(i.Rye, "Rye Whiskey"),
+            new I(i.Bourbon, "Bourbon", o.Hidden),
+            new I(i.Rye, "Rye Whiskey", o.Hidden),
 
-            new I(i.Vodka, "Vodka"),
+            new I(i.CognacOrRye, "Cognac / Rye", o.Hidden,
+                i.Brandy, i.BourbonOrRye),
 
-            new I(i.Gin, "Gin", true,
-                i.OldTom, i.LondonDry),
-            new I(i.OldTom, "Old Tom Gin"),
-            new I(i.LondonDry, "London Dry Gin"),
-
-            new I(i.Brandy, "Brandy", true,
+            new I(i.Brandy, "Brandy", o.Equivalence,
                 i.Cognac, i.Pisco),
             new I(i.Cognac, "Cognac"),
             new I(i.Pisco, "Pisco"),
+
+            new I(i.Vodka, "Vodka"),
+
+            new I(i.Gin, "Gin", o.Equivalence,
+                i.OldTom, i.LondonDry),
+            new I(i.OldTom, "Old Tom Gin", o.Hidden),
+            new I(i.LondonDry, "London Dry Gin", o.Hidden),
 
             new I(i.Tequila, "Tequila"),
 
             new I(i.Absinthe, "Absinthe"),
 
-            new I(i.Bitters, "Bitters", true,
+            new I(i.Bitters, "Bitters", o.Equivalence,
                 i.Angostura, i.OrangeBitters, i.Peychauds),
-            new I(i.Angostura, "Angostura Bitters"),
-            new I(i.OrangeBitters, "Orange Bitters"),
-            new I(i.Peychauds, "Peychaud's Bitters"),
+            new I(i.Angostura, "Angostura Bitters", o.Hidden),
+            new I(i.OrangeBitters, "Orange Bitters", o.Hidden),
+            new I(i.Peychauds, "Peychaud's Bitters", o.Hidden),
 
             new I(i.Campari, "Campari"),
 
-            new I(i.Vermouth, "Vermouth", true,
+            new I(i.Vermouth, "Vermouth", o.Equivalence,
                 i.SweetVermouth, i.DryVermouth),
             new I(i.SweetVermouth, "Sweet Red Vermouth"),
             new I(i.DryVermouth, "Dry White Vermouth"),
 
             new I(i.OrangeLiqueur, "Orange Liqueur",
                 i.TripleSec),
-            new I(i.TripleSec, "Triple Sec", true,
+            new I(i.TripleSec, "Triple Sec", o.Equivalence,
                 i.Cointreau),
             new I(i.Cointreau, "Cointreau"),
+
             new I(i.Maraschino, "Maraschino Liqueur"),
             new I(i.Drambuie, "Drambuie"),
 
             new I(i.Grenadine, "Grenadine"),
-            new I(i.Sugar, "Sugar", true,
+            new I(i.Sugar, "Sugar", o.Equivalence,
                 i.SimpleSyrup),
             new I(i.SimpleSyrup, "Simple Syrup"),
 
-            new I(i.Citrus, "Citrus Juice", true,
+            new I(i.Citrus, "Citrus Juice", o.Equivalence,
                 i.LemonJuice, i.LimeJuice),
             new I(i.LemonJuice, "Lemon Juice"),
             new I(i.LimeJuice, "Lime Juice"),
@@ -82,7 +87,7 @@ namespace Mix.Models
             new I(i.PineappleJuice, "Pineapple Juice"),
             new I(i.CranberryJuice, "Cranberry Juice"),
 
-            new I(i.Water, "Water"),
+            new I(i.Water, "Water", o.Hidden),
             new I(i.Soda, "Soda Water"),
             new I(i.Cola, "Cola"),
 
@@ -116,7 +121,7 @@ namespace Mix.Models
                 new CI(i.SweetVermouth, 30M)),
 
             new C(c.OldFashioned, "Old Fashioned",
-                new CI(i.Bourbon, 45M),
+                new CI(i.BourbonOrRye, 45M),
                 new CI(i.Angostura, 2 * dash),
                 new CI(i.Sugar, teaspoon),
                 new CI(i.Water, splash)),
@@ -187,7 +192,7 @@ namespace Mix.Models
                 new CI(i.Drambuie, 25M)),
 
             new C(c.Sazerac, "Sazerac",
-                new CI(i.Cognac, 50M),
+                new CI(i.CognacOrRye, 50M),
                 new CI(i.Absinthe, 10M),
                 new CI(i.Sugar, teaspoon),
                 new CI(i.Peychauds, 2 * dash)),

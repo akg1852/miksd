@@ -59,7 +59,7 @@ namespace Mix.Controllers
             ViewBag.IngredientsFilter = i;
             ViewBag.Cocktails = cocktails.ToList();
             ViewBag.MatchCount = matchCount;
-            ViewBag.Ingredients = cocktailService.Ingredients();
+            ViewBag.Ingredients = cocktailService.Ingredients().Where(ii => !ii.IsHidden);
             ViewBag.Categories = Categories;
             ViewBag.Category = n;
 

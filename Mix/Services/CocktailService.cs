@@ -121,8 +121,9 @@ namespace Mix.Services
         {
             foreach (var ingredient in Reference.AllIngredients)
             {
-                db.Execute("INSERT INTO Ingredient (Id, Name, Equivalence) VALUES (@Id, @Name, @Equivalence)",
-                    new { ingredient.Id, ingredient.Name, ingredient.Equivalence });
+                db.Execute("INSERT INTO Ingredient (Id, Name, Equivalence, IsHidden) " +
+                    "VALUES (@Id, @Name, @Equivalence, @IsHidden)",
+                    new { ingredient.Id, ingredient.Name, ingredient.Equivalence, ingredient.IsHidden });
             }
             foreach (var parent in Reference.AllIngredients)
             {

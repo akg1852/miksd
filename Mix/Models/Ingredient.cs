@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Mix.Models
 {
@@ -8,19 +9,29 @@ namespace Mix.Models
         public string Name;
         public IEnumerable<Ingredients> Children;
         public bool Equivalence;
+        public bool IsHidden;
 
         public Ingredient() { }
 
         public Ingredient(Ingredients id, string name, params Ingredients[] children)
-            : this(id, name, false, children) { }
+            : this(id, name, IngredientOptions.None, children) { }
 
-        public Ingredient(Ingredients id, string name, bool equivalence, params Ingredients[] children)
+        public Ingredient(Ingredients id, string name, IngredientOptions options, params Ingredients[] children)
         {
             Id = id;
             Name = name;
             Children = children;
-            Equivalence = equivalence;
+            Equivalence = options.HasFlag(IngredientOptions.Equivalence);
+            IsHidden = options.HasFlag(IngredientOptions.Hidden);
         }
+    }
+
+    [Flags]
+    public enum IngredientOptions
+    {
+        None = 0,
+        Equivalence = 1,
+        Hidden = 2,
     }
 
     public enum Ingredients : long // todo: explicitly number the ingredients
@@ -29,9 +40,13 @@ namespace Mix.Models
         Spirit,
         Whisky,
         Scotch,
-        AmericanWhiskey,
+        BourbonOrRye,
         Bourbon,
         Rye,
+        CognacOrRye,
+        Brandy,
+        Cognac,
+        Pisco,
         Rum,
         WhiteRum,
         DarkRum,
@@ -39,9 +54,6 @@ namespace Mix.Models
         Gin,
         OldTom,
         LondonDry,
-        Brandy,
-        Cognac,
-        Pisco,
         Tequila,
         Absinthe,
         Bitters,
