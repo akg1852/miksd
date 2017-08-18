@@ -16,7 +16,7 @@
 
         if (ingredients != null)
         {
-            link += "&m=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
+            link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
         }
         if (category.Vessel != Vessels.None)
         {

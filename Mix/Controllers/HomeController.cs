@@ -19,12 +19,12 @@ namespace Mix.Controllers
         // GET: Home
         /*
          * i: ingredient(s)
-         * m: match (all ingredients in the query must be in the cocktail)
+         * c: complete (all ingredients in the query must be in the cocktail)
          * f: full  (all ingredients in the cocktail must be in the query)
          * v: vessel
          * n: name of category
          */
-        public ActionResult Index(List<Ingredients> i, byte m = 0, byte f = 0,
+        public ActionResult Index(List<Ingredients> i, byte c = 0, byte f = 0,
             Vessels v = Vessels.None, string n = "Cocktails")
         {
             IEnumerable<CocktailMatch> cocktails;
@@ -41,20 +41,20 @@ namespace Mix.Controllers
 
                 cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, v, true);
 
-                Func<CocktailMatch, bool> IsMatch = c => c.MatchCount >= (includedIngredients?.Count() ?? 0);
-                Func<CocktailMatch, bool> IsFull = c => c.Fullness == 1;
+                Func<CocktailMatch, bool> IsComplete = co => co.MatchCount >= (includedIngredients?.Count() ?? 0);
+                Func<CocktailMatch, bool> IsFull = co => co.Fullness == 1;
 
-                if (m != 0)
+                if (c != 0)
                 {
-                    cocktails = cocktails.Where(IsMatch);
+                    cocktails = cocktails.Where(IsComplete);
                 }
                 if (f != 0)
                 {
                     cocktails = cocktails.Where(IsFull);
                 }
-                if (m == 0 && f == 0)
+                if (c == 0 && f == 0)
                 {
-                    matchCount = cocktails.TakeWhile(c => IsFull(c) || IsMatch(c)).Count();
+                    matchCount = cocktails.TakeWhile(co => IsFull(co) || IsComplete(co)).Count();
                 }
             }
 
