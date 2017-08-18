@@ -21,25 +21,27 @@ namespace Mix.Controllers
          * i: ingredient(s)
          * m: match (all ingredients in the query must be in the cocktail)
          * f: full  (all ingredients in the cocktail must be in the query)
+         * v: vessel
          * n: name of category
          */
-        public ActionResult Index(List<Ingredients> i, byte m = 0, byte f = 0, string n = "Cocktails")
+        public ActionResult Index(List<Ingredients> i, byte m = 0, byte f = 0,
+            Vessels v = Vessels.None, string n = "Cocktails")
         {
             IEnumerable<CocktailMatch> cocktails;
             var matchCount = -1;
 
-            if (i == null)
+            if (i == null && v == Vessels.None)
             {
                 cocktails = cocktailService.FeaturedCocktails();
             }
             else
             {
-                var includedIngredients = i.Where(ii => ii > 0);
-                var excludedIngredients = i.Where(ii => ii < 0).Select(ii => ii.Negate());
+                var includedIngredients = i?.Where(ii => ii > 0);
+                var excludedIngredients = i?.Where(ii => ii < 0)?.Select(ii => ii.Negate());
 
-                cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, true);
+                cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, v, true);
 
-                Func<CocktailMatch, bool> IsMatch = c => c.MatchCount >= includedIngredients.Count();
+                Func<CocktailMatch, bool> IsMatch = c => c.MatchCount >= (includedIngredients?.Count() ?? 0);
                 Func<CocktailMatch, bool> IsFull = c => c.Fullness == 1;
 
                 if (m != 0)
@@ -66,14 +68,42 @@ namespace Mix.Controllers
             return View();
         }
 
-        private Dictionary<string, List<Ingredients>> Categories = new Dictionary<string, List<Ingredients>>
+        private List<CocktailCategory> Categories = new List<CocktailCategory>
         {
-            { "Sours", new List<Ingredients> { Ingredients.Spirit, Ingredients.Citrus } },
-            { "Ancestrals", new List<Ingredients> { Ingredients.Spirit, Ingredients.Sugar, Ingredients.Bitters,
-                Ingredients.Citrus.Negate()} },
-            { "Spirit Forward", new List<Ingredients> { Ingredients.Spirit, Ingredients.Vermouth,
-                Ingredients.Citrus.Negate()} },
-            { "Wine Cocktails", new List<Ingredients> { Ingredients.Wine } }
+            new CocktailCategory
+            {
+                Name = "Sours",
+                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Citrus }
+            },
+            new CocktailCategory
+            {
+                Name = "Ancestrals",
+                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Sugar, Ingredients.Bitters,
+                    Ingredients.Citrus.Negate()}
+            },
+            new CocktailCategory
+            {
+                Name = "Spirit Forward",
+                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Vermouth,
+                    Ingredients.Citrus.Negate()}
+            },
+            new CocktailCategory
+            {
+                Name = "Wine Cocktails",
+                Ingredients = new List<Ingredients> { Ingredients.Wine }
+            },
+            new CocktailCategory
+            {
+                Name = "Highballs",
+                Vessel = Vessels.Highball
+            }
         };
+    }
+
+    public class CocktailCategory
+    {
+        public string Name;
+        public List<Ingredients> Ingredients;
+        public Vessels Vessel;
     }
 }

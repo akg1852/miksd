@@ -1,4 +1,5 @@
-﻿@using Mix.Models;
+﻿@using Mix.Controllers;
+@using Mix.Models;
 @using System.Linq;
 
 @{
@@ -8,13 +9,21 @@
 <h2>Cocktails</h2>
 
 <ul class="categories">
-    @foreach (var category in ViewBag.Categories)
+    @foreach (CocktailCategory category in ViewBag.Categories)
     {
-        var name = category.Key;
-        List<Ingredients> ingredients = category.Value;
-        var link = "?n=" + name + "&m=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
+        List<Ingredients> ingredients = category.Ingredients;
+        var link = "?n=" + category.Name;
 
-        <li><a href="@link">@name</a></li>
+        if (ingredients != null)
+        {
+            link += "&m=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
+        }
+        if (category.Vessel != Vessels.None)
+        {
+            link += "&v=" + (long)category.Vessel;
+        }
+
+        <li><a href="@link">@category.Name</a></li>
     }
 </ul>
 

@@ -34,11 +34,12 @@ namespace Mix.Services
 
         public IEnumerable<CocktailMatch> FeaturedCocktails()
         {
-            return Cocktails(null, null, true);
+            return Cocktails(null, null, Vessels.None, true);
         }
 
         public IEnumerable<CocktailMatch> Cocktails(IEnumerable<Ingredients> ingredients = null,
                                                     IEnumerable<Ingredients> exgredients = null,
+                                                    Vessels vessel = Vessels.None,
                                                     bool getSimilar = false)
         {
             using (var db = new SqlConnection(connectionString))
@@ -76,8 +77,9 @@ namespace Mix.Services
                         FROM NonExcludedCocktail C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                         LEFT JOIN Vessel V ON V.Id = C.Vessel
-                        WHERE NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
-                        OR CI.Ingredient IN (SELECT Id FROM IncludedIngredient)
+                        WHERE (@vessel = 0 OR C.Vessel = @vessel)
+                        AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
+                        OR CI.Ingredient IN (SELECT Id FROM IncludedIngredient))
                         GROUP BY C.Id, C.Name, C.Vessel, V.Name
                     ) AS C
                     LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
@@ -86,7 +88,7 @@ namespace Mix.Services
                     ORDER BY Fullness DESC, IngredientCount ASC, Name ASC
                 ";
 
-                var cocktails = db.Query<CocktailMatch>(cocktailSql, new { ingredients, exgredients });
+                var cocktails = db.Query<CocktailMatch>(cocktailSql, new { ingredients, exgredients, vessel });
 
                 foreach (var cocktail in cocktails)
                 {

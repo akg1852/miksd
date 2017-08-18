@@ -37,19 +37,6 @@ namespace Mix.Models
         }
     }
 
-    public class Vessel
-    {
-        public Vessels Id;
-        public string Name;
-
-        public Vessel() { }
-        public Vessel(Vessels id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-    }
-
     public enum Cocktails : long
     {
         None,
@@ -84,16 +71,5 @@ namespace Mix.Models
         Kir,
         Bellini,
         ChampagneCocktail,
-    }
-
-    public enum Vessels
-    {
-        None = 0,
-        Cocktail = 1,
-        Rocks = 2,
-        Highball = 3,
-        Shot = 4,
-        Margarita = 5,
-        Flute = 6,
     }
 }
