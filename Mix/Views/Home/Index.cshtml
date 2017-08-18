@@ -45,7 +45,8 @@
 
     <dd><dl>
         <dt class="cocktail-name">@cocktail.Name</dt>
-        <dd><dl class="cocktail">
+        <dd class="cocktail">
+            <dl class="column">
                 <dt>Recipe</dt>
                 <dd>
                     <ul>
@@ -62,6 +63,8 @@
                     </ul>
                     <p>Drinkware: @cocktail.VesselName</p>
                 </dd>
+            </dl>
+            <dl class="column">
                 <dt>Similar Cocktails</dt>
                 <dd><ul>
                     @foreach (var similarCocktail in cocktail.Similar) {
@@ -70,7 +73,8 @@
                         </li>
                     }
                 </ul></dd>
-        </dl></dd>
+            </dl>
+        </dd>
     </dl></dd>
 }
 </dl>
