@@ -76,7 +76,7 @@ namespace Mix.Controllers
             {
                 Name = "Ancestrals",
                 Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Sugar, Ingredients.Bitters,
-                    Ingredients.Citrus.Negate()}
+                    Ingredients.Citrus.Negate(), Ingredients.Wine.Negate() }
             },
             new CocktailCategory
             {
