@@ -20,7 +20,6 @@
         Rocks = 2,
         Highball = 3,
         Shot = 4,
-        Margarita = 5,
-        Flute = 6,
+        Flute = 5,
     }
 }

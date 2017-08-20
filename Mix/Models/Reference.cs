@@ -51,7 +51,6 @@ namespace Mix.Models
             new I(i.LondonDry, "London Dry Gin", o.Hidden),
 
             new I(i.Tequila, "Tequila"),
-
             new I(i.Absinthe, "Absinthe"),
 
             new I(i.Bitters, "Bitters", o.Equivalence,
@@ -76,6 +75,10 @@ namespace Mix.Models
             new I(i.Maraschino, "Maraschino Liqueur"),
             new I(i.Drambuie, "Drambuie"),
             new I(i.Cassis, "Crème de cassis"),
+            new I(i.Galliano, "Galliano"),
+            new I(i.Amaretto, "Amaretto"),
+            new I(i.Benedictine, "Benedictine"),
+            new I(i.Grenadine, "Grenadine"),
 
             new I(i.Wine, "Wine", o.Equivalence,
                 i.SparklingWine, i.WhiteWine),
@@ -85,10 +88,10 @@ namespace Mix.Models
             new I(i.Prosecco, "Prosecco"),
             new I(i.WhiteWine, "White Wine"),
 
-            new I(i.Grenadine, "Grenadine"),
             new I(i.Sugar, "Sugar", o.Equivalence,
-                i.SimpleSyrup),
+                i.SimpleSyrup, i.GommeSyrup),
             new I(i.SimpleSyrup, "Simple Syrup"),
+            new I(i.GommeSyrup, "Gomme Syrup"),
 
             new I(i.Citrus, "Citrus Juice", o.Equivalence,
                 i.LemonJuice, i.LimeJuice),
@@ -97,13 +100,17 @@ namespace Mix.Models
             new I(i.OrangeJuice, "Orange Juice"),
             new I(i.PineappleJuice, "Pineapple Juice"),
             new I(i.CranberryJuice, "Cranberry Juice"),
+            new I(i.GrapefruitJuice, "Grapefruit Juice"),
             new I(i.PeachPuree, "Peach Purée", o.Hidden),
 
             new I(i.Water, "Water", o.Hidden),
             new I(i.Soda, "Soda Water"),
             new I(i.Cola, "Cola"),
+            new I(i.GingerBeer, "Ginger Beer"),
 
             new I(i.EggWhite, "Egg White"),
+            new I(i.Kahlúa, "Kahlúa"),
+            new I(i.Cream, "Cream"),
         };
 
         public static List<Cocktail> AllCocktails = new List<Cocktail>
@@ -118,7 +125,7 @@ namespace Mix.Models
                 new CI(i.SimpleSyrup, 15M),
                 new CI(i.LimeJuice, 25M)),
 
-            new C(c.Martini, "Dry Martini", v.Cocktail,
+            new C(c.Martini, "Martini", v.Cocktail,
                 new CI(i.Gin, 60M),
                 new CI(i.DryVermouth, 10M)),
 
@@ -127,8 +134,19 @@ namespace Mix.Models
                 new CI(i.SweetVermouth, 20M),
                 new CI(i.Angostura, dash)),
 
+            new C(c.Martinez, "Martinez", v.Cocktail,
+                new CI(i.OldTom, 50M),
+                new CI(i.SweetVermouth, 30M),
+                new CI(i.Maraschino, teaspoon),
+                new CI(i.Angostura, dash)),
+
             new C(c.Negroni, "Negroni", v.Rocks,
                 new CI(i.Gin, 30M),
+                new CI(i.Campari, 30M),
+                new CI(i.SweetVermouth, 30M)),
+
+            new C(c.Boulevardier, "Boulevardier", v.Rocks,
+                new CI(i.Bourbon, 30M),
                 new CI(i.Campari, 30M),
                 new CI(i.SweetVermouth, 30M)),
 
@@ -246,7 +264,12 @@ namespace Mix.Models
                 new CI(i.Cola, 120M),
                 new CI(i.LimeJuice, 10M)),
 
-            new C(c.Margarita, "Margarita", v.Margarita,
+            new C(c.MoscowMule, "Moscow Mule", v.Highball,
+                new CI(i.Vodka, 45M),
+                new CI(i.GingerBeer, 120M),
+                new CI(i.LimeJuice, 5M)),
+
+            new C(c.Margarita, "Margarita", v.Cocktail,
                 new CI(i.Tequila, 35M),
                 new CI(i.Cointreau, 20M),
                 new CI(i.LimeJuice, 15M)),
@@ -274,6 +297,83 @@ namespace Mix.Models
                 new CI(i.Cognac, 10M),
                 new CI(i.Angostura, 2 * dash),
                 new CI(i.Sugar, teaspoon)),
+
+            new C(c.Mimosa, "Mimosa", v.Flute,
+                new CI(i.Champagne, 75M),
+                new CI(i.OrangeJuice, 75M)),
+
+            new C(c.French75, "French 75", v.Flute,
+                new CI(i.Gin, 30M),
+                new CI(i.Champagne, 60M),
+                new CI(i.LemonJuice, 15M),
+                new CI(i.SimpleSyrup, 2 * dash)),
+
+            new C(c.FrenchConnection, "French Connection", v.Rocks,
+                new CI(i.Cognac, 35M),
+                new CI(i.Amaretto, 35M)),
+
+            new C(c.Godfather, "Godfather", v.Rocks,
+                new CI(i.Scotch, 35M),
+                new CI(i.Amaretto, 35M)),
+
+            new C(c.Godmother, "Godmother", v.Rocks,
+                new CI(i.Vodka, 35M),
+                new CI(i.Amaretto, 35M)),
+
+            new C(c.SeaBreeze, "Sea Breeze", v.Highball,
+                new CI(i.Vodka, 40M),
+                new CI(i.CranberryJuice, 120M),
+                new CI(i.GrapefruitJuice, 30M)),
+
+            new C(c.MaryPickford, "MaryPickford", v.Rocks,
+                new CI(i.WhiteRum, 60M),
+                new CI(i.PineappleJuice, 60M),
+                new CI(i.Grenadine, 10M),
+                new CI(i.Maraschino, 10M)),
+
+            new C(c.BlackRussian, "Black Russian", v.Rocks,
+                new CI(i.Vodka, 50M),
+                new CI(i.Kahlúa, 20M)),
+
+            new C(c.WhiteRussian, "White Russian", v.Rocks,
+                new CI(i.Vodka, 50M),
+                new CI(i.Kahlúa, 20M),
+                new CI(i.Cream, 30M)),
+
+            new C(c.LongIsland, "Long Island Iced Tea", v.Highball,
+                new CI(i.Tequila, 15M),
+                new CI(i.Vodka, 15M),
+                new CI(i.Gin, 15M),
+                new CI(i.WhiteRum, 15M),
+                new CI(i.TripleSec, 15M),
+                new CI(i.LemonJuice, 25M),
+                new CI(i.GommeSyrup, 30M),
+                new CI(i.Cola, dash)),
+
+            new C(c.HemingwaySpecial, "Hemingway Special", v.Cocktail,
+                new CI(i.WhiteRum, 60M),
+                new CI(i.GrapefruitJuice, 40M),
+                new CI(i.LimeJuice, 15M),
+                new CI(i.Maraschino, 15M)),
+
+            new C(c.HarveyWallbanger, "Harvey Wallbanger", v.Highball,
+                new CI(i.Vodka, 45M),
+                new CI(i.Galliano, 15M),
+                new CI(i.OrangeJuice, 90M)),
+
+            new C(c.GoldenDream, "Golden Dream", v.Cocktail,
+                new CI(i.Galliano, 20M),
+                new CI(i.TripleSec, 20M),
+                new CI(i.OrangeJuice, 20M),
+                new CI(i.Cream, 10M)),
+
+            new C(c.VieuxCarré, "Vieux Carré", v.Rocks,
+                new CI(i.BourbonOrRye, 60M),
+                new CI(i.Cognac, 60M),
+                new CI(i.SweetVermouth, 60M),
+                new CI(i.Benedictine, teaspoon),
+                new CI(i.Angostura, dash),
+                new CI(i.Peychauds, dash)),
         };
 
         public static List<Vessel> AllVessels = new List<Vessel>
@@ -282,7 +382,6 @@ namespace Mix.Models
             new V(v.Rocks, "Old Fashioned Glass"),
             new V(v.Highball, "Highball/Collins Glass"),
             new V(v.Shot, "Shot Glass"),
-            new V(v.Margarita, "Margarita Glass"),
             new V(v.Flute, "Champagne Flute"),
         };
     }
