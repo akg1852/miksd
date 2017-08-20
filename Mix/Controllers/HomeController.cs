@@ -41,20 +41,17 @@ namespace Mix.Controllers
 
                 cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, v, true);
 
-                Func<CocktailMatch, bool> IsComplete = co => co.MatchCount >= (includedIngredients?.Count() ?? 0);
-                Func<CocktailMatch, bool> IsFull = co => co.Fullness == 1;
-
                 if (c != 0)
                 {
-                    cocktails = cocktails.Where(IsComplete);
+                    cocktails = cocktails.Where(co => co.Completeness == 1);
                 }
                 if (f != 0)
                 {
-                    cocktails = cocktails.Where(IsFull);
+                    cocktails = cocktails.Where(co => co.Fullness == 1);
                 }
                 if (c == 0 && f == 0)
                 {
-                    matchCount = cocktails.TakeWhile(co => IsFull(co) || IsComplete(co)).Count();
+                    matchCount = cocktails.TakeWhile(co => co.Fullness == 1 || co.Completeness == 1).Count();
                 }
             }
 

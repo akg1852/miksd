@@ -47,18 +47,22 @@ namespace Mix.Services
                 var cocktailSql = @"
                     WITH
                     IncludedIngredient AS (
-                        SELECT * FROM Ingredient WHERE Id IN @ingredients
+                        SELECT *, Id AS QueryIngredient
+                        FROM Ingredient WHERE Id IN @ingredients
                         UNION ALL
-                        SELECT I.* FROM IncludedIngredient C
-                        JOIN IngredientRelationship IR ON IR.Parent = C.Id
-                        JOIN Ingredient I ON I.Id = IR.Child
+                        SELECT C.*, P.QueryIngredient
+                        FROM IncludedIngredient P
+                        JOIN IngredientRelationship IR ON IR.Parent = P.Id
+                        JOIN Ingredient C ON C.Id = IR.Child
                     ),
                     ExcludedIngredient AS (
-                        SELECT * FROM Ingredient WHERE Id IN @exgredients
+                        SELECT *
+                        FROM Ingredient WHERE Id IN @exgredients
                         UNION ALL
-                        SELECT I.* FROM ExcludedIngredient C
-                        JOIN IngredientRelationship IR ON IR.Parent = C.Id
-                        JOIN Ingredient I ON I.Id = IR.Child
+                        SELECT C.*
+                        FROM ExcludedIngredient P
+                        JOIN IngredientRelationship IR ON IR.Parent = P.Id
+                        JOIN Ingredient C ON C.Id = IR.Child
                     ),
                     NonExcludedCocktail AS (
                         SELECT C.*
@@ -68,27 +72,29 @@ namespace Mix.Services
                         WHERE CI.Id IS NULL
                     )
                     SELECT C.Id, C.Name, C.Vessel, C.VesselName,
-                    C.MatchCount, COUNT(*) AS IngredientCount,
-                    (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness
+                    (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
+                    (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
                     FROM (
                         SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName,
-                        COUNT(*) AS MatchCount,
-                        SUM(CASE WHEN CI.IsOptional = 0 THEN 1 ELSE 0 END) AS FullnessCount
+                        COUNT(DISTINCT (CASE WHEN CI.IsOptional = 0 THEN II.Id END)) AS FullnessCount,
+                        COUNT(DISTINCT II.QueryIngredient) AS CompletenessCount
                         FROM NonExcludedCocktail C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
+                        LEFT JOIN IncludedIngredient II ON II.Id = CI.Ingredient
                         LEFT JOIN Vessel V ON V.Id = C.Vessel
                         WHERE (@vessel = 0 OR C.Vessel = @vessel)
                         AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
-                        OR CI.Ingredient IN (SELECT Id FROM IncludedIngredient))
+                        OR II.Id IS NOT NULL)
                         GROUP BY C.Id, C.Name, C.Vessel, V.Name
                     ) AS C
                     LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                     WHERE CI.IsOptional = 0
-                    GROUP BY C.Id, C.Name, C.Vessel, C.VesselName, C.FullnessCount, C.MatchCount
-                    ORDER BY Fullness DESC, IngredientCount ASC, Name ASC
+                    GROUP BY C.Id, C.Name, C.Vessel, C.VesselName, C.FullnessCount, C.CompletenessCount
+                    ORDER BY Fullness DESC, Completeness DESC, Name ASC
                 ";
 
-                var cocktails = db.Query<CocktailMatch>(cocktailSql, new { ingredients, exgredients, vessel });
+                var cocktails = db.Query<CocktailMatch>(cocktailSql,
+                    new { ingredientsCount = ingredients?.Count() ?? 0, ingredients, exgredients, vessel });
 
                 foreach (var cocktail in cocktails)
                 {
@@ -174,7 +180,7 @@ namespace Mix.Services
 
     public class CocktailMatch : Cocktail
     {
-        public int MatchCount;
         public double Fullness;
+        public double Completeness;
     }
 }
