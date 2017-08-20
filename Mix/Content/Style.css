@@ -17,10 +17,13 @@ ul.categories {
 
 /* search form */
 
+.filters {
+    column-count: 6;
+}
+
 .filter-select {
-    display: inline-block;
+    display: block;
     white-space: nowrap;
-    width: 15%;
 }
 
 input[type="submit"] {
