@@ -70,11 +70,8 @@ namespace Mix.Services
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                         AND CI.Ingredient IN (SELECT Id FROM ExcludedIngredient)
                         WHERE CI.Id IS NULL
-                    )
-                    SELECT C.Id, C.Name, C.Vessel, C.VesselName,
-                    (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
-                    (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
-                    FROM (
+                    ),
+                    MatchingCocktail AS (
                         SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName,
                         COUNT(DISTINCT (CASE WHEN CI.IsOptional = 0 THEN II.Id END)) AS FullnessCount,
                         COUNT(DISTINCT II.QueryIngredient) AS CompletenessCount
@@ -86,7 +83,11 @@ namespace Mix.Services
                         AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
                         OR II.Id IS NOT NULL)
                         GROUP BY C.Id, C.Name, C.Vessel, V.Name
-                    ) AS C
+                    )
+                    SELECT C.Id, C.Name, C.Vessel, C.VesselName,
+                    (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
+                    (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
+                    FROM MatchingCocktail AS C
                     LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                     WHERE CI.IsOptional = 0
                     GROUP BY C.Id, C.Name, C.Vessel, C.VesselName, C.FullnessCount, C.CompletenessCount
