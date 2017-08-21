@@ -4,7 +4,7 @@
     [Cocktail] BIGINT NOT NULL, 
     [Ingredient] BIGINT NOT NULL, 
     [IsOptional] BIT NOT NULL DEFAULT 0, 
-    [Quantity] DECIMAL NOT NULL, 
+    [Quantity] DECIMAL(6, 2) NOT NULL, 
     CONSTRAINT [FK_CocktailIngredient_Cocktail] FOREIGN KEY ([Cocktail]) REFERENCES [Cocktail]([Id]),
     CONSTRAINT [FK_CocktailIngredient_Ingredient] FOREIGN KEY ([Ingredient]) REFERENCES [Ingredient]([Id])
 )
