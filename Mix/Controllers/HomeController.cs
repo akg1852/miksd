@@ -69,12 +69,13 @@ namespace Mix.Controllers
             new CocktailCategory
             {
                 Name = "Sours",
-                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Citrus }
+                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Citrus, Ingredients.Sweetener,
+                    Ingredients.Carbonated.Negate()}
             },
             new CocktailCategory
             {
                 Name = "Ancestrals",
-                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Sugar, Ingredients.Bitters,
+                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Sweetener, Ingredients.Bitters,
                     Ingredients.Citrus.Negate(), Ingredients.Wine.Negate() }
             },
             new CocktailCategory

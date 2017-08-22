@@ -62,12 +62,13 @@ namespace Mix.Models
             new I(i.SweetVermouth, "Sweet Red Vermouth"),
             new I(i.DryVermouth, "Dry White Vermouth"),
 
+            new I(i.SweetLiqueur, "Liqueur (Sweet)", o.Hidden,
+                i.OrangeLiqueur, i.Maraschino, i.Drambuie, i.Cassis, i.Galliano, i.Amaretto, i.Benedictine),
             new I(i.OrangeLiqueur, "Orange Liqueur",
                 i.TripleSec),
             new I(i.TripleSec, "Triple Sec", o.Equivalence,
                 i.Cointreau),
             new I(i.Cointreau, "Cointreau"),
-
             new I(i.Maraschino, "Maraschino Liqueur"),
             new I(i.Drambuie, "Drambuie"),
             new I(i.Cassis, "Crème de cassis"),
@@ -84,6 +85,8 @@ namespace Mix.Models
             new I(i.Prosecco, "Prosecco"),
             new I(i.WhiteWine, "White Wine"),
 
+            new I(i.Sweetener, "Sweetener", o.Hidden,
+                i.Sugar, i.SweetLiqueur, i.Grenadine),
             new I(i.Sugar, "Sugar", o.Equivalence,
                 i.SimpleSyrup, i.GommeSyrup),
             new I(i.SimpleSyrup, "Simple Syrup"),
@@ -99,6 +102,8 @@ namespace Mix.Models
             new I(i.GrapefruitJuice, "Grapefruit Juice"),
             new I(i.PeachPuree, "Peach Purée", o.Hidden),
 
+            new I(i.Carbonated, "Carbonated Drink", o.Hidden,
+                i.Soda, i.Cola, i.GingerBeer),
             new I(i.Water, "Water", o.Hidden),
             new I(i.Soda, "Soda Water"),
             new I(i.Cola, "Cola"),
