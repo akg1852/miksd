@@ -9,7 +9,7 @@ namespace Mix.Services
 {
     public class CocktailService
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["MixDB"].ConnectionString;
+        private string connectionString = DbHelpers.GetConnectionString();
 
         public CocktailService()
         {
