@@ -4,6 +4,7 @@ using I = Mix.Models.Ingredient;
 using C = Mix.Models.Cocktail;
 using CI = Mix.Models.CocktailIngredient;
 using V = Mix.Models.Vessel;
+using q = Mix.Models.CommonQuantity;
 using i = Mix.Models.Ingredients;
 using c = Mix.Models.Cocktails;
 using o = Mix.Models.IngredientOptions;
@@ -112,6 +113,8 @@ namespace Mix.Models
             new I(i.EggWhite, "Egg White"),
             new I(i.Kahlúa, "Kahlúa"),
             new I(i.Cream, "Cream"),
+
+            new I(i.MintLeaf, "Mint Leaves", o.Discrete),
         };
 
         public static List<Cocktail> AllCocktails = new List<Cocktail>
@@ -119,7 +122,7 @@ namespace Mix.Models
             new C(c.Americano, "Americano", v.Rocks,
                 new CI(i.Campari, 30M),
                 new CI(i.SweetVermouth, 30M),
-                new CI(i.Soda, Quantity.Splash)),
+                new CI(i.Soda, q.Splash)),
 
             new C(c.Daiquiri, "Daiquiri", v.Cocktail,
                 new CI(i.WhiteRum, 45M),
@@ -133,13 +136,13 @@ namespace Mix.Models
             new C(c.Manhattan, "Manhattan", v.Cocktail,
                 new CI(i.Rye, 50M),
                 new CI(i.SweetVermouth, 20M),
-                new CI(i.Angostura, Quantity.Dash)),
+                new CI(i.Angostura, q.Dash)),
 
             new C(c.Martinez, "Martinez", v.Cocktail,
                 new CI(i.OldTom, 50M),
                 new CI(i.SweetVermouth, 30M),
-                new CI(i.Maraschino, Quantity.Teaspoon),
-                new CI(i.Angostura, Quantity.Dash)),
+                new CI(i.Maraschino, q.Teaspoon),
+                new CI(i.Angostura, q.Dash)),
 
             new C(c.Negroni, "Negroni", v.Rocks,
                 new CI(i.Gin, 30M),
@@ -153,21 +156,21 @@ namespace Mix.Models
 
             new C(c.OldFashioned, "Old Fashioned", v.Rocks,
                 new CI(i.BourbonOrRye, 45M),
-                new CI(i.Angostura, 2 * Quantity.Dash),
-                new CI(i.Sugar, Quantity.Teaspoon),
-                new CI(i.Water, Quantity.Splash)),
+                new CI(i.Angostura, 2 * q.Dash),
+                new CI(i.Sugar, q.Teaspoon),
+                new CI(i.Water, q.Splash)),
 
             new C(c.WhiskeySour, "Whiskey Sour", v.Cocktail,
                 new CI(i.Bourbon, 45M),
                 new CI(i.SimpleSyrup, 15M),
                 new CI(i.LemonJuice, 30M),
-                new CI(i.EggWhite, Quantity.Splash, true)),
+                new CI(i.EggWhite, q.Splash, true)),
 
             new C(c.PiscoSour, "Pisco Sour", v.Rocks,
                 new CI(i.Pisco, 45M),
                 new CI(i.SimpleSyrup, 20M),
                 new CI(i.LemonJuice, 30M),
-                new CI(i.EggWhite, Quantity.Splash, true)),
+                new CI(i.EggWhite, q.Splash, true)),
 
             new C(c.Aviation, "Aviation", v.Cocktail,
                 new CI(i.Gin, 45M),
@@ -206,8 +209,8 @@ namespace Mix.Models
             new C(c.MonkeyGland, "Monkey Gland", v.Cocktail,
                 new CI(i.Gin, 50M),
                 new CI(i.OrangeJuice, 30M),
-                new CI(i.Absinthe, Quantity.Splash),
-                new CI(i.Grenadine, Quantity.Splash)),
+                new CI(i.Absinthe, q.Splash),
+                new CI(i.Grenadine, q.Splash)),
 
             new C(c.PlantersPunch, "Planter's Punch", v.Highball,
                 new CI(i.DarkRum, 45M),
@@ -216,7 +219,7 @@ namespace Mix.Models
                 new CI(i.LemonJuice, 20M),
                 new CI(i.Grenadine, 10M),
                 new CI(i.SimpleSyrup, 10M),
-                new CI(i.Angostura, 3 * Quantity.Dash)),
+                new CI(i.Angostura, 3 * q.Dash)),
 
             new C(c.RustyNail, "Rusty Nail", v.Rocks,
                 new CI(i.Scotch, 45M),
@@ -225,8 +228,8 @@ namespace Mix.Models
             new C(c.Sazerac, "Sazerac", v.Rocks,
                 new CI(i.CognacOrRye, 50M),
                 new CI(i.Absinthe, 10M),
-                new CI(i.Sugar, Quantity.Teaspoon),
-                new CI(i.Peychauds, 2 * Quantity.Dash)),
+                new CI(i.Sugar, q.Teaspoon),
+                new CI(i.Peychauds, 2 * q.Dash)),
 
             new C(c.Screwdriver, "Screwdriver", v.Highball,
                 new CI(i.Vodka, 50M),
@@ -240,9 +243,9 @@ namespace Mix.Models
             new C(c.Tuxedo, "Tuxedo", v.Cocktail,
                 new CI(i.OldTom, 30M),
                 new CI(i.DryVermouth, 30M),
-                new CI(i.Maraschino, Quantity.Teaspoon / 2),
-                new CI(i.Absinthe, Quantity.Teaspoon / 4),
-                new CI(i.OrangeBitters, 3 * Quantity.Dash)),
+                new CI(i.Maraschino, q.Teaspoon / 2),
+                new CI(i.Absinthe, q.Teaspoon / 4),
+                new CI(i.OrangeBitters, 3 * q.Dash)),
 
             new C(c.WhiteLady, "White Lady", v.Cocktail,
                 new CI(i.Gin, 40M),
@@ -296,8 +299,8 @@ namespace Mix.Models
             new C(c.ChampagneCocktail, "Champagne Cocktail", v.Flute,
                 new CI(i.Champagne, 90M),
                 new CI(i.Cognac, 10M),
-                new CI(i.Angostura, 2 * Quantity.Dash),
-                new CI(i.Sugar, Quantity.Teaspoon)),
+                new CI(i.Angostura, 2 * q.Dash),
+                new CI(i.Sugar, q.Teaspoon)),
 
             new C(c.Mimosa, "Mimosa", v.Flute,
                 new CI(i.Champagne, 75M),
@@ -307,7 +310,7 @@ namespace Mix.Models
                 new CI(i.Gin, 30M),
                 new CI(i.Champagne, 60M),
                 new CI(i.LemonJuice, 15M),
-                new CI(i.SimpleSyrup, 2 * Quantity.Dash)),
+                new CI(i.SimpleSyrup, 2 * q.Dash)),
 
             new C(c.FrenchConnection, "French Connection", v.Rocks,
                 new CI(i.Cognac, 35M),
@@ -349,7 +352,7 @@ namespace Mix.Models
                 new CI(i.TripleSec, 15M),
                 new CI(i.LemonJuice, 25M),
                 new CI(i.GommeSyrup, 30M),
-                new CI(i.Cola, Quantity.Dash)),
+                new CI(i.Cola, q.Dash)),
 
             new C(c.HemingwaySpecial, "Hemingway Special", v.Cocktail,
                 new CI(i.WhiteRum, 60M),
@@ -372,9 +375,16 @@ namespace Mix.Models
                 new CI(i.BourbonOrRye, 60M),
                 new CI(i.Cognac, 60M),
                 new CI(i.SweetVermouth, 60M),
-                new CI(i.Benedictine, Quantity.Teaspoon),
-                new CI(i.Angostura, Quantity.Dash),
-                new CI(i.Peychauds, Quantity.Dash)),
+                new CI(i.Benedictine, q.Teaspoon),
+                new CI(i.Angostura, q.Dash),
+                new CI(i.Peychauds, q.Dash)),
+
+            new C(c.Mojito, "Mojito", v.Highball,
+                new CI(i.WhiteRum, 50M),
+                new CI(i.LimeJuice, 30M),
+                new CI(i.MintLeaf, 12),
+                new CI(i.Sugar, 2 * q.Teaspoon),
+                new CI(i.Soda, 120M)),
         };
 
         public static List<Vessel> AllVessels = new List<Vessel>

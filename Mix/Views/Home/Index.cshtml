@@ -61,10 +61,8 @@
                     <ul>
                         @foreach (var ingredient in cocktail.Recipe)
                         {
-                            decimal quantity = @ingredient.Quantity;
                             <li>
-
-                                <span title="@quantity ml">@quantity.CommonName()</span> @ingredient.Name
+                                @ingredient.QuantityHtml() @ingredient.Name
                                 @if (ingredient.IsOptional)
                                 {
                                     <span>(optional)</span>

@@ -10,6 +10,7 @@ namespace Mix.Models
         public IEnumerable<Ingredients> Children;
         public bool Equivalence;
         public bool IsHidden;
+        public bool IsDiscrete;
 
         public Ingredient() { }
 
@@ -23,6 +24,7 @@ namespace Mix.Models
             Children = children;
             Equivalence = options.HasFlag(IngredientOptions.Equivalence);
             IsHidden = options.HasFlag(IngredientOptions.Hidden);
+            IsDiscrete = options.HasFlag(IngredientOptions.Discrete);
         }
     }
 
@@ -32,6 +34,7 @@ namespace Mix.Models
         None = 0,
         Equivalence = 1,
         Hidden = 2,
+        Discrete = 4,
     }
 
     public enum Ingredients : long // todo: explicitly number the ingredients
@@ -100,36 +103,11 @@ namespace Mix.Models
         EggWhite,
         Kahlúa,
         Cream,
-    }
-
-    public static class Quantity
-    {
-        public static decimal Dash = 0.5M;
-        public static decimal Splash = 3M;
-        public static decimal Teaspoon = 5M;
+        MintLeaf,
     }
 
     public static class IngredientHelpers
     {
         public static Ingredients Negate(this Ingredients i) => (Ingredients)(-(long)i);
-
-        public static string CommonName(this decimal quantity)
-        {
-            if (quantity == 0) return "";
-            else if (quantity < 3.5M * Quantity.Dash)
-            {
-                var dashes = Math.Round(quantity / Quantity.Dash);
-                if (dashes == 1) return "1 dash";
-                else return dashes + " dashes";
-            }
-            else if (quantity < Quantity.Teaspoon) return "A splash";
-            else if (quantity <= 2 * Quantity.Teaspoon)
-            {
-                var teaspoons = Math.Round(quantity / Quantity.Teaspoon);
-                if (teaspoons == 1) return "1 teaspoon";
-                else return teaspoons + " teaspoons";
-            }
-            else return quantity.ToString("0.#") + " ml";
-        }
     }
 }

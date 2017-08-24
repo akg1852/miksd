@@ -100,7 +100,7 @@ namespace Mix.Services
                 foreach (var cocktail in cocktails)
                 {
                     var ingredientSql =
-                        "SELECT I.Id as Ingredient, I.Name, CI.IsOptional, CI.Quantity " +
+                        "SELECT I.Id as Ingredient, I.Name, CI.IsOptional, CI.Quantity, I.IsDiscrete " +
                         "FROM CocktailIngredient CI " +
                         "LEFT JOIN Ingredient I ON CI.Ingredient = I.Id " +
                         "WHERE CI.Cocktail = @Cocktail";
@@ -134,9 +134,10 @@ namespace Mix.Services
         {
             foreach (var ingredient in Reference.AllIngredients)
             {
-                db.Execute("INSERT INTO Ingredient (Id, Name, Equivalence, IsHidden) " +
-                    "VALUES (@Id, @Name, @Equivalence, @IsHidden)",
-                    new { ingredient.Id, ingredient.Name, ingredient.Equivalence, ingredient.IsHidden });
+                db.Execute("INSERT INTO Ingredient (Id, Name, Equivalence, IsHidden, IsDiscrete) " +
+                    "VALUES (@Id, @Name, @Equivalence, @IsHidden, @IsDiscrete)",
+                    new { ingredient.Id, ingredient.Name, ingredient.Equivalence,
+                        ingredient.IsHidden, ingredient.IsDiscrete });
             }
             foreach (var parent in Reference.AllIngredients)
             {
