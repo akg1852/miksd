@@ -66,8 +66,8 @@
     <Build Include="Vessel.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MixDB.publish.local.xml" />
-    <None Include="MixDB.publish.prod.xml" />
+    <None Include="MixDB.local.publish.xml" />
+    <None Include="MixDB.prod.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeploy.sql" />
