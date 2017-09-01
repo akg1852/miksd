@@ -104,6 +104,15 @@ namespace Mix.Models
         Kahlúa = 62,
         Cream = 63,
         MintLeaf = 64,
+        Tonic = 65,
+        LimeCordial = 66,
+        Orgeat = 67,
+        Curaçao = 68,
+        CoconutCream = 69,
+        Baileys = 70,
+        GrandMarnier = 71,
+        Lime = 72,
+        Cachaça = 73,
     }
 
     public static class IngredientHelpers

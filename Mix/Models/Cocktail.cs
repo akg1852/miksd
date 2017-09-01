@@ -124,5 +124,13 @@ namespace Mix.Models
         GoldenDream = 47,
         VieuxCarré = 48,
         Mojito = 49,
+        GinAndTonic = 50,
+        DarkNStormy = 51,
+        B52 = 52,
+        MintJulep = 53,
+        MaiTai = 54,
+        PiñaColada = 55,
+        Gimlet = 56,
+        Caipirinha = 57,
     }
 }

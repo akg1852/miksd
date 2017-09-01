@@ -17,12 +17,13 @@ namespace Mix.Models
         public static List<Ingredient> AllIngredients = new List<Ingredient>
         {
             new I(i.Spirit, "Spirit", o.Hidden,
-                i.Rum, i.Whisky, i.Vodka, i.Gin, i.Brandy, i.CognacOrRye, i.Tequila),
+                i.Rum, i.Whisky, i.Vodka, i.Gin, i.Brandy, i.CognacOrRye, i.Tequila, i.Cachaça),
 
             new I(i.Rum, "Rum", o.Equivalence,
                 i.WhiteRum, i.DarkRum),
             new I(i.WhiteRum, "White Rum"),
             new I(i.DarkRum, "Dark Rum"),
+            new I(i.Cachaça, "Cachaça"),
 
             new I(i.Whisky, "Whisk(e)y",
                 i.Scotch, i.BourbonOrRye),
@@ -66,10 +67,13 @@ namespace Mix.Models
             new I(i.SweetLiqueur, "Liqueur (Sweet)", o.Hidden,
                 i.OrangeLiqueur, i.Maraschino, i.Drambuie, i.Cassis, i.Galliano, i.Amaretto, i.Benedictine),
             new I(i.OrangeLiqueur, "Orange Liqueur",
-                i.TripleSec),
+                i.TripleSec, i.Curaçao),
             new I(i.TripleSec, "Triple Sec", o.Equivalence,
                 i.Cointreau),
             new I(i.Cointreau, "Cointreau"),
+            new I(i.Curaçao, "Curaçao", o.Equivalence,
+                i.GrandMarnier),
+            new I(i.GrandMarnier, "Grand Marnier"),
             new I(i.Maraschino, "Maraschino Liqueur"),
             new I(i.Drambuie, "Drambuie"),
             new I(i.Cassis, "Crème de cassis"),
@@ -87,16 +91,20 @@ namespace Mix.Models
             new I(i.WhiteWine, "White Wine"),
 
             new I(i.Sweetener, "Sweetener", o.Hidden,
-                i.Sugar, i.SweetLiqueur, i.Grenadine),
+                i.Sugar, i.Orgeat, i.SweetLiqueur, i.Grenadine, i.LimeCordial),
             new I(i.Sugar, "Sugar", o.Equivalence,
                 i.SimpleSyrup, i.GommeSyrup),
             new I(i.SimpleSyrup, "Simple Syrup"),
             new I(i.GommeSyrup, "Gomme Syrup"),
+            new I(i.Orgeat, "Orgeat Syrup"),
 
-            new I(i.Citrus, "Citrus Juice", o.Equivalence,
-                i.LemonJuice, i.LimeJuice),
+            new I(i.Citrus, "Citrus", o.Equivalence,
+                i.LemonJuice, i.Lime, i.LimeJuice, i.LimeCordial),
             new I(i.LemonJuice, "Lemon Juice"),
+            new I(i.Lime, "Lime", o.Equivalence | o.Discrete,
+                i.LimeJuice),
             new I(i.LimeJuice, "Lime Juice"),
+            new I(i.LimeCordial, "Lime Cordial"),
             new I(i.OrangeJuice, "Orange Juice"),
             new I(i.PineappleJuice, "Pineapple Juice"),
             new I(i.CranberryJuice, "Cranberry Juice"),
@@ -104,15 +112,18 @@ namespace Mix.Models
             new I(i.PeachPuree, "Peach Purée", o.Hidden),
 
             new I(i.Carbonated, "Carbonated Drink", o.Hidden,
-                i.Soda, i.Cola, i.GingerBeer),
+                i.Soda, i.Cola, i.GingerBeer, i.Tonic),
             new I(i.Water, "Water", o.Hidden),
             new I(i.Soda, "Soda Water"),
+            new I(i.Tonic, "Tonic Water"),
             new I(i.Cola, "Cola"),
             new I(i.GingerBeer, "Ginger Beer"),
 
             new I(i.EggWhite, "Egg White"),
             new I(i.Kahlúa, "Kahlúa"),
+            new I(i.Baileys, "Baileys Irish Cream"),
             new I(i.Cream, "Cream"),
+            new I(i.CoconutCream, "Coconut Cream"),
 
             new I(i.MintLeaf, "Mint Leaves", o.Discrete),
         };
@@ -122,7 +133,7 @@ namespace Mix.Models
             new C(c.Americano, "Americano", v.Rocks,
                 new CI(i.Campari, 30M),
                 new CI(i.SweetVermouth, 30M),
-                new CI(i.Soda, q.Splash)),
+                new CI(i.Soda, CommonQuantity.Splash)),
 
             new C(c.Daiquiri, "Daiquiri", v.Cocktail,
                 new CI(i.WhiteRum, 45M),
@@ -141,7 +152,7 @@ namespace Mix.Models
             new C(c.Martinez, "Martinez", v.Cocktail,
                 new CI(i.OldTom, 50M),
                 new CI(i.SweetVermouth, 30M),
-                new CI(i.Maraschino, q.Teaspoon),
+                new CI(i.Maraschino, CommonQuantity.Teaspoon),
                 new CI(i.Angostura, q.Dash)),
 
             new C(c.Negroni, "Negroni", v.Rocks,
@@ -273,6 +284,14 @@ namespace Mix.Models
                 new CI(i.GingerBeer, 120M),
                 new CI(i.LimeJuice, 5M)),
 
+            new C(c.GinAndTonic, "Gin and Tonic", v.Highball,
+                new CI(i.Gin, 50M),
+                new CI(i.Tonic, 120M)),
+
+            new C(c.DarkNStormy, "Dark N Stormy", v.Highball,
+                new CI(i.DarkRum, 60M),
+                new CI(i.GingerBeer, 90M)),
+
             new C(c.Margarita, "Margarita", v.Cocktail,
                 new CI(i.Tequila, 35M),
                 new CI(i.Cointreau, 20M),
@@ -385,6 +404,38 @@ namespace Mix.Models
                 new CI(i.MintLeaf, 12),
                 new CI(i.Sugar, 2 * q.Teaspoon),
                 new CI(i.Soda, 120M)),
+
+            new C(c.MintJulep, "Mint Julep", v.Highball,
+                new CI(i.Bourbon, 60M),
+                new CI(i.MintLeaf, 12),
+                new CI(i.SimpleSyrup, 15M)),
+
+            new C(c.Gimlet, "Gimlet", v.Cocktail,
+                new CI(i.Gin, 60M),
+                new CI(i.LimeCordial, 20M)),
+
+            new C(c.MaiTai, "Mai Tai", v.Rocks,
+                new CI(i.WhiteRum, 40M),
+                new CI(i.DarkRum, 20M),
+                new CI(i.Curaçao, 15),
+                new CI(i.Orgeat, 15),
+                new CI(i.LimeJuice, 10M)),
+
+            new C(c.PiñaColada, "Piña Colada", v.Highball,
+                new CI(i.WhiteRum, 60M),
+                new CI(i.CoconutCream, 20M),
+                new CI(i.PineappleJuice, 90M),
+                new CI(i.LimeJuice, 15M)),
+
+            new C(c.B52, "B-52", v.Shot,
+                new CI(i.Kahlúa, 20M),
+                new CI(i.Baileys, 20M),
+                new CI(i.GrandMarnier, 20M)),
+
+            new C(c.Caipirinha, "Caipirinha", v.Rocks,
+                new CI(i.Cachaça, 60M),
+                new CI(i.Lime, 0.5M),
+                new CI(i.Sugar, 2 * q.Teaspoon)),
         };
 
         public static List<Vessel> AllVessels = new List<Vessel>
