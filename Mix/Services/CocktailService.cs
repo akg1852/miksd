@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Mix.Models;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -72,26 +71,28 @@ namespace Mix.Services
                         WHERE CI.Id IS NULL
                     ),
                     MatchingCocktail AS (
-                        SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName,
-                        COUNT(DISTINCT (CASE WHEN CI.IsOptional = 0 THEN II.Id END)) AS FullnessCount,
-                        COUNT(DISTINCT II.QueryIngredient) AS CompletenessCount
-                        FROM NonExcludedCocktail C
+                        SELECT C.Id, C.Name, C.Vessel, C.VesselName,
+                        (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
+                        (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
+                        FROM (
+                            SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName,
+                            COUNT(DISTINCT (CASE WHEN CI.IsOptional = 0 THEN II.Id END)) AS FullnessCount,
+                            COUNT(DISTINCT II.QueryIngredient) AS CompletenessCount
+                            FROM NonExcludedCocktail C
+                            LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
+                            LEFT JOIN IncludedIngredient II ON II.Id = CI.Ingredient
+                            LEFT JOIN Vessel V ON V.Id = C.Vessel
+                            WHERE (@vessel = 0 OR C.Vessel = @vessel)
+                            AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
+                            OR II.Id IS NOT NULL)
+                            GROUP BY C.Id, C.Name, C.Vessel, V.Name
+                        ) AS C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
-                        LEFT JOIN IncludedIngredient II ON II.Id = CI.Ingredient
-                        LEFT JOIN Vessel V ON V.Id = C.Vessel
-                        WHERE (@vessel = 0 OR C.Vessel = @vessel)
-                        AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
-                        OR II.Id IS NOT NULL)
-                        GROUP BY C.Id, C.Name, C.Vessel, V.Name
+                        WHERE CI.IsOptional = 0
+                        GROUP BY C.Id, C.Name, C.Vessel, C.VesselName, C.FullnessCount, C.CompletenessCount
                     )
-                    SELECT C.Id, C.Name, C.Vessel, C.VesselName,
-                    (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
-                    (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
-                    FROM MatchingCocktail AS C
-                    LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
-                    WHERE CI.IsOptional = 0
-                    GROUP BY C.Id, C.Name, C.Vessel, C.VesselName, C.FullnessCount, C.CompletenessCount
-                    ORDER BY Fullness DESC, Completeness DESC, Name ASC
+                    SELECT * FROM MatchingCocktail
+                    ORDER BY Fullness + Completeness DESC, Name ASC
                 ";
 
                 var cocktails = db.Query<CocktailMatch>(cocktailSql,
