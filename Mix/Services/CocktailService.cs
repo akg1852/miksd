@@ -23,7 +23,7 @@ namespace Mix.Services
             }
         }
 
-        public IEnumerable<Ingredient> Ingredients()
+        public IEnumerable<Ingredient> AllIngredients()
         {
             using (var db = new SqlConnection(connectionString))
             {
@@ -33,13 +33,12 @@ namespace Mix.Services
 
         public IEnumerable<CocktailMatch> FeaturedCocktails()
         {
-            return Cocktails(null, null, Vessels.None, true);
+            return Cocktails(null, null, Vessels.None);
         }
 
         public IEnumerable<CocktailMatch> Cocktails(IEnumerable<Ingredients> ingredients = null,
                                                     IEnumerable<Ingredients> exgredients = null,
-                                                    Vessels vessel = Vessels.None,
-                                                    bool getSimilar = false)
+                                                    Vessels vessel = Vessels.None)
         {
             using (var db = new SqlConnection(connectionString))
             {
@@ -100,20 +99,42 @@ namespace Mix.Services
 
                 foreach (var cocktail in cocktails)
                 {
-                    var ingredientSql =
-                        "SELECT I.Id as Ingredient, I.Name, CI.IsOptional, CI.Quantity, I.IsDiscrete " +
-                        "FROM CocktailIngredient CI " +
-                        "LEFT JOIN Ingredient I ON CI.Ingredient = I.Id " +
-                        "WHERE CI.Cocktail = @Cocktail";
-                    cocktail.Recipe = db.Query<CocktailIngredient>(ingredientSql, new { Cocktail = cocktail.Id });
-
-                    if (getSimilar)
-                    {
-                        cocktail.Similar = SimilarCocktails(db, cocktail);
-                    }
+                    cocktail.Recipe = CocktailIngredients(db, cocktail.Id);
                 }
+
                 return cocktails;
             }
+        }
+
+        public Cocktail Cocktail(long id)
+        {
+            using (var db = new SqlConnection(connectionString))
+            {
+                var results = db.Query<Cocktail>(
+                    "SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName " +
+                    "FROM Cocktail C " +
+                    "LEFT JOIN Vessel V ON V.Id = C.Vessel " +
+                    "WHERE C.Id = @id"
+                    , new { id });
+
+                if (!results.Any()) return null;
+
+                var cocktail = results.First();
+                cocktail.Recipe = CocktailIngredients(db, cocktail.Id);
+                cocktail.Similar = SimilarCocktails(db, cocktail);
+
+                return cocktail;
+            }
+        }
+
+        private IEnumerable<CocktailIngredient> CocktailIngredients(SqlConnection db, Cocktails cocktail)
+        {
+            var ingredientSql =
+                "SELECT I.Id as Ingredient, I.Name, CI.IsOptional, CI.Quantity, I.IsDiscrete " +
+                "FROM CocktailIngredient CI " +
+                "LEFT JOIN Ingredient I ON CI.Ingredient = I.Id " +
+                "WHERE CI.Cocktail = @Cocktail";
+            return db.Query<CocktailIngredient>(ingredientSql, new { Cocktail = cocktail });
         }
 
         private IEnumerable<Cocktail> SimilarCocktails(SqlConnection db, Cocktail cocktail)
@@ -128,7 +149,7 @@ namespace Mix.Services
                 new { ingredients });
             return Cocktails(ingredients.Concat(similarIngredients))
                 .Where(c => c.Id != cocktail.Id)
-                .Take(3);
+                .Take(6);
         }
 
         private void InsertIngredients(SqlConnection db)

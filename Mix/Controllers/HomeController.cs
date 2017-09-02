@@ -38,7 +38,7 @@ namespace Mix.Controllers
                 var includedIngredients = i?.Where(ii => ii > 0);
                 var excludedIngredients = i?.Where(ii => ii < 0)?.Select(ii => ii.Negate());
 
-                cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, v, true);
+                cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, v);
 
                 if (c != 0)
                 {
@@ -57,7 +57,7 @@ namespace Mix.Controllers
             ViewBag.IngredientsFilter = i;
             ViewBag.Cocktails = cocktails.ToList();
             ViewBag.MatchCount = matchCount;
-            ViewBag.Ingredients = cocktailService.Ingredients().Where(ii => !ii.IsHidden);
+            ViewBag.Ingredients = cocktailService.AllIngredients().Where(ii => !ii.IsHidden);
             ViewBag.Categories = Categories;
             ViewBag.Category = n;
 

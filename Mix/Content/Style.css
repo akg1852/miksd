@@ -37,15 +37,6 @@ input[type="submit"] {
 
 /* result lists */
 
-dd.cocktail {
-    columns: 2;
-    column-gap: 0;
-}
-
-dl.column {
-    break-inside: avoid-column;
-}
-
 dt {
     background-color: #CCCCCC;
     margin-bottom: 5px;

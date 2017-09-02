@@ -1,0 +1,34 @@
+﻿@using Mix.Models;
+
+@{
+    Cocktail cocktail = ViewBag.Cocktail;
+    ViewBag.Title = cocktail.Name;
+}
+
+<h2>@cocktail.Name</h2>
+
+<h3>Recipe</h3>
+<ul>
+    @foreach (var ingredient in cocktail.Recipe)
+    {
+        <li>
+            @ingredient.QuantityHtml() @ingredient.Name
+            @if (ingredient.IsOptional)
+            {
+                <span>(optional)</span>
+            }
+        </li>
+    }
+</ul>
+
+<p>Drinkware: @cocktail.VesselName</p>
+
+<h3>Similar Cocktails</h3>
+<ul>
+    @foreach (var similarCocktail in cocktail.Similar)
+    {
+        <li>
+            <a href="/Cocktail/@((long)similarCocktail.Id)">@similarCocktail.Name</a>
+        </li>
+    }
+</ul>

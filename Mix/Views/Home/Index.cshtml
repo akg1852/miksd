@@ -46,45 +46,26 @@
 <dt class="result-header">@ViewBag.Category</dt>
 @for (var i = 0; i < ViewBag.Cocktails.Count; i++)
 {
-    var cocktail = ViewBag.Cocktails[i];
+    Cocktail cocktail = ViewBag.Cocktails[i];
+    var ingredients = cocktail.Recipe
+        .Where(ingredient => !ingredient.IsOptional)
+        .Select(ingredient => ingredient.Name);
 
     if (i == ViewBag.MatchCount && ViewBag.MatchCount > 0)
     {
         <dt class="result-header">More Cocktails</dt>
     }
 
-    <dd><dl>
-        <dt class="cocktail-name">@cocktail.Name</dt>
-        <dd class="cocktail">
-            <dl class="column">
-                <dt>Recipe</dt>
-                <dd>
-                    <ul>
-                        @foreach (var ingredient in cocktail.Recipe)
-                        {
-                            <li>
-                                @ingredient.QuantityHtml() @ingredient.Name
-                                @if (ingredient.IsOptional)
-                                {
-                                    <span>(optional)</span>
-                                }
-                            </li>
-                        }
-                    </ul>
-                    <p>Drinkware: @cocktail.VesselName</p>
-                </dd>
-            </dl>
-            <dl class="column">
-                <dt>Similar Cocktails</dt>
-                <dd><ul>
-                    @foreach (var similarCocktail in cocktail.Similar) {
-                        <li>
-                            <span class="similar">@similarCocktail.Name</span>
-                        </li>
-                    }
-                </ul></dd>
-            </dl>
-        </dd>
-    </dl></dd>
+    <dd>
+        <dl>
+            <dt class="cocktail-name">
+                <a href="/Cocktail/@((long)cocktail.Id)">@cocktail.Name</a>
+            </dt>
+            <dd>
+                <p>Ingredients: @String.Join(", ", ingredients)</p>
+                <p>Drinkware: @cocktail.VesselName</p>
+            </dd>
+        </dl>
+    </dd>
 }
 </dl>
