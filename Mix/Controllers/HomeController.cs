@@ -58,49 +58,9 @@ namespace Mix.Controllers
             ViewBag.Cocktails = cocktails.ToList();
             ViewBag.MatchCount = matchCount;
             ViewBag.Ingredients = cocktailService.AllIngredients().Where(ii => !ii.IsHidden);
-            ViewBag.Categories = Categories;
             ViewBag.Category = n;
 
             return View();
         }
-
-        private List<CocktailCategory> Categories = new List<CocktailCategory>
-        {
-            new CocktailCategory
-            {
-                Name = "Sours",
-                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Citrus, Ingredients.Sweetener,
-                    Ingredients.Carbonated.Negate()}
-            },
-            new CocktailCategory
-            {
-                Name = "Ancestrals",
-                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Sweetener, Ingredients.Bitters,
-                    Ingredients.Citrus.Negate(), Ingredients.Wine.Negate() }
-            },
-            new CocktailCategory
-            {
-                Name = "Spirit Forward",
-                Ingredients = new List<Ingredients> { Ingredients.Spirit, Ingredients.Vermouth,
-                    Ingredients.Citrus.Negate()}
-            },
-            new CocktailCategory
-            {
-                Name = "Wine Cocktails",
-                Ingredients = new List<Ingredients> { Ingredients.Wine }
-            },
-            new CocktailCategory
-            {
-                Name = "Highballs",
-                Vessel = Vessels.Highball
-            }
-        };
-    }
-
-    public class CocktailCategory
-    {
-        public string Name;
-        public List<Ingredients> Ingredients;
-        public Vessels Vessel;
     }
 }

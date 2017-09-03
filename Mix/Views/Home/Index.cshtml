@@ -1,29 +1,9 @@
-﻿@using Mix.Controllers;
-@using Mix.Models;
+﻿@using Mix.Models;
 @using System.Linq;
 
 @{
     ViewBag.Title = ViewBag.Category;
 }
-
-<ul class="categories">
-    @foreach (CocktailCategory category in ViewBag.Categories)
-    {
-        List<Ingredients> ingredients = category.Ingredients;
-        var link = "?n=" + category.Name;
-
-        if (ingredients != null)
-        {
-            link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
-        }
-        if (category.Vessel != Vessels.None)
-        {
-            link += "&v=" + (long)category.Vessel;
-        }
-
-        <li><a href="@link">@category.Name</a></li>
-    }
-</ul>
 
 <form>
     <div class="filters">

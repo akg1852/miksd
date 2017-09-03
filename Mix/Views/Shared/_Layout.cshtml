@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Mix.Models;
+@using System.Linq;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -9,6 +12,28 @@
 <body>
     <h1>Miksd</h1>
     <p>Your guide to cocktails / mixed drinks</p>
+
+    <ul class="menu">
+        <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Home</a></li>
+
+        @foreach (var category in CocktailCategory.Categories)
+        {
+            List<Ingredients> ingredients = category.Ingredients;
+            var link = "/?n=" + Url.Encode(category.Name);
+
+            if (ingredients != null)
+            {
+                link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
+            }
+            if (category.Vessel != Vessels.None)
+            {
+                link += "&v=" + (long)category.Vessel;
+            }
+
+            <li class="@(link == Request.RawUrl ? "current" : "")"><a href="@link">@category.Name</a></li>
+        }
+    </ul>
+
     @RenderBody()
 </body>
 </html>

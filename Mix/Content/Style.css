@@ -4,7 +4,7 @@
 }
 
 body {
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
     color: #000000;
 
     border-width: 1px;
@@ -34,12 +34,30 @@ a:visited {
 }
 
 
-/* categories */
+/* menu */
 
-ul.categories {
-    margin-bottom: 20px;
+ul.menu {
+    margin: 20px 0;
+    width: 100%;
+    background-color: #CCCCCC;
 }
 
+ul.menu > li {
+    padding-left: 20px;
+    display: inline-block;
+}
+ul.menu > li:after {
+    padding-left: 20px;
+    content: "|";
+}
+
+ul.menu > li.current {
+    font-weight: bold;
+}
+
+ul.menu a, ul.menu a:visited {
+    color: #000000;
+}
 
 /* search form */
 
