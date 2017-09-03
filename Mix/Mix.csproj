@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Models\Cocktail.cs" />
     <Compile Include="Models\Ingredient.cs" />
+    <Compile Include="Models\PrepMethod.cs" />
     <Compile Include="Models\Reference.cs" />
     <Compile Include="Models\Vessel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

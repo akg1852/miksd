@@ -11,15 +11,19 @@ namespace Mix.Models
         public IEnumerable<CocktailIngredient> Recipe;
         public Vessels Vessel;
         public string VesselName;
+        public PrepMethods PrepMethod;
+        public string PrepMethodName;
         public IEnumerable<Cocktail> Similar;
 
         public Cocktail() { }
-        public Cocktail(Cocktails id, string name, Vessels vessel, params CocktailIngredient[] recipe)
+        public Cocktail(Cocktails id, string name, Vessels vessel, PrepMethods prepMethod,
+            params CocktailIngredient[] recipe)
         {
             Id = id;
             Name = name;
             Recipe = recipe;
             Vessel = vessel;
+            PrepMethod = prepMethod;
         }
     }
 

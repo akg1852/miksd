@@ -14,6 +14,7 @@ Post-Deployment Script Template
 -- (it gets regenerated in code where necessary)
 DELETE FROM CocktailIngredient
 DELETE FROM Cocktail
+DELETE FROM PrepMethod
 DELETE FROM Vessel
 DELETE FROM IngredientRelationship
 DELETE FROM Ingredient

@@ -18,6 +18,7 @@ namespace Mix.Services
                 {
                     InsertIngredients(db);
                     InsertVessels(db);
+                    InsertPrepMethods(db);
                     InsertCocktails(db);
                 }
             }
@@ -111,9 +112,11 @@ namespace Mix.Services
             using (var db = new SqlConnection(connectionString))
             {
                 var results = db.Query<Cocktail>(
-                    "SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName " +
+                    "SELECT C.Id, C.Name, " +
+                    "C.Vessel, V.Name AS VesselName, C.PrepMethod, P.Name AS PrepMethodName " +
                     "FROM Cocktail C " +
                     "LEFT JOIN Vessel V ON V.Id = C.Vessel " +
+                    "LEFT JOIN PrepMethod P ON P.Id = C.PrepMethod " +
                     "WHERE C.Id = @id"
                     , new { id });
 
@@ -180,17 +183,27 @@ namespace Mix.Services
             }
         }
 
+        private void InsertPrepMethods(SqlConnection db)
+        {
+            foreach (var prep in Reference.AllPrepMethods)
+            {
+                db.Execute("INSERT INTO PrepMethod (Id, Name) VALUES (@Id, @Name)",
+                    new { prep.Id, prep.Name });
+            }
+        }
+
         private void InsertCocktails(SqlConnection db)
         {
             foreach (var cocktail in Reference.AllCocktails)
             {
-                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel) VALUES (@Id, @Name, @Vessel)",
-                    new { cocktail.Id, cocktail.Name, cocktail.Vessel });
+                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod) " +
+                    "VALUES (@Id, @Name, @Vessel, @PrepMethod)",
+                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod });
 
                 foreach (var ingredient in cocktail.Recipe)
                 {
-                    db.Execute("INSERT INTO CocktailIngredient (Cocktail, Ingredient, IsOptional, Quantity) VALUES " +
-                        "(@Cocktail, @Ingredient, @IsOptional, @Quantity)",
+                    db.Execute("INSERT INTO CocktailIngredient (Cocktail, Ingredient, IsOptional, Quantity) " +
+                        "VALUES (@Cocktail, @Ingredient, @IsOptional, @Quantity)",
                     new {
                         Cocktail = cocktail.Id,
                         Ingredient = ingredient.Ingredient,
