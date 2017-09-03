@@ -14,9 +14,12 @@ namespace Mix.Models
         public PrepMethods PrepMethod;
         public string PrepMethodName;
         public IEnumerable<Cocktail> Similar;
+        public bool Ice;
 
         public Cocktail() { }
-        public Cocktail(Cocktails id, string name, Vessels vessel, PrepMethods prepMethod,
+        public Cocktail(Cocktails id, string name, Vessels vessel, PrepMethods prepMethod, params CocktailIngredient[] recipe) :
+            this(id, name, false, vessel, prepMethod, recipe) { }
+        public Cocktail(Cocktails id, string name, bool ice, Vessels vessel, PrepMethods prepMethod,
             params CocktailIngredient[] recipe)
         {
             Id = id;
@@ -24,6 +27,29 @@ namespace Mix.Models
             Recipe = recipe;
             Vessel = vessel;
             PrepMethod = prepMethod;
+            Ice = ice;
+        }
+
+        public string Description()
+        {
+            string description;
+
+            if (PrepMethod == PrepMethods.Shake || PrepMethod == PrepMethods.Stir)
+            {
+                description = PrepMethodName + " ingredients with ice. Strain into a " + VesselName;
+            }
+            else if (PrepMethod == PrepMethods.Build || PrepMethod == PrepMethods.Layer)
+            {
+                description = PrepMethodName + " ingredients in a " + VesselName;
+            }
+            else return null;
+
+            if (Ice)
+            {
+                description += " filled with ice";
+            }
+
+            return description + ".";
         }
     }
 

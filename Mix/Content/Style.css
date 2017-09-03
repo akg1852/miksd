@@ -1,10 +1,25 @@
 ﻿body {
+    margin: 0;
+    padding: 20px;
     color: #000000;
+
+    border-width: 1px;
+    border-style: dashed;
+    width: 80%;
+    margin: auto;
 }
 
 dl, dt, dd, ul {
     padding: 0;
     margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #000066;
+}
+a:visited {
+    color: #660066;
 }
 
 

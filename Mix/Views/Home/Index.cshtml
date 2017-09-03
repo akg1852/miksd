@@ -50,6 +50,7 @@
     var ingredients = cocktail.Recipe
         .Where(ingredient => !ingredient.IsOptional)
         .Select(ingredient => ingredient.Name);
+    var prepInVessel = cocktail.PrepMethod == PrepMethods.Build || cocktail.PrepMethod == PrepMethods.Layer;
 
     if (i == ViewBag.MatchCount && ViewBag.MatchCount > 0)
     {
@@ -62,8 +63,8 @@
                 <a href="/Cocktail/@((long)cocktail.Id)">@cocktail.Name</a>
             </dt>
             <dd>
-                <p>Ingredients: @String.Join(", ", ingredients)</p>
-                <p>Drinkware: @cocktail.VesselName</p>
+                <p>@String.Join(", ", ingredients)<br />
+                @cocktail.PrepMethodName @(prepInVessel ? " in a " : " & strain into a ") @cocktail.VesselName</p>
             </dd>
         </dl>
     </dd>

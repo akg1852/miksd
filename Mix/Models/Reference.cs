@@ -16,6 +16,8 @@ namespace Mix.Models
 {
     public class Reference
     {
+        private const bool onTheRocks = true;
+
         public static List<Ingredient> AllIngredients = new List<Ingredient>
         {
             new I(i.Spirit, "Spirit", o.Hidden,
@@ -132,7 +134,7 @@ namespace Mix.Models
 
         public static List<Cocktail> AllCocktails = new List<Cocktail>
         {
-            new C(c.Americano, "Americano",
+            new C(c.Americano, "Americano", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Campari, 30M),
                 new CI(i.SweetVermouth, 30M),
@@ -162,20 +164,20 @@ namespace Mix.Models
                 new CI(i.Maraschino, q.Teaspoon),
                 new CI(i.Angostura, q.Dash)),
 
-            new C(c.Negroni, "Negroni",
+            new C(c.Negroni, "Negroni", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Gin, 30M),
                 new CI(i.Campari, 30M),
                 new CI(i.SweetVermouth, 30M)),
 
-            new C(c.Boulevardier, "Boulevardier",
+            new C(c.Boulevardier, "Boulevardier", onTheRocks,
                 v.Rocks, p.Stir,
                 new CI(i.Bourbon, 30M),
                 new CI(i.Campari, 30M),
                 new CI(i.SweetVermouth, 30M)),
 
-            new C(c.OldFashioned, "Old Fashioned",
-                v.Rocks, p.Build,
+            new C(c.OldFashioned, "Old Fashioned", onTheRocks,
+                v.Rocks, p.Build,   
                 new CI(i.BourbonOrRye, 45M),
                 new CI(i.Angostura, 2 * q.Dash),
                 new CI(i.Sugar, q.Teaspoon),
@@ -221,14 +223,14 @@ namespace Mix.Models
                 new CI(i.OrangeBitters, 10M),
                 new CI(i.LemonJuice, 10M)),
 
-            new C(c.GinFizz, "Gin Fizz",
+            new C(c.GinFizz, "Gin Fizz", onTheRocks,
                 v.Highball, p.Shake,
                 new CI(i.Gin, 45M),
                 new CI(i.SimpleSyrup, 10M),
                 new CI(i.LemonJuice, 30M),
                 new CI(i.Soda, 80)),
 
-            new C(c.TomCollins, "Tom Collins",
+            new C(c.TomCollins, "Tom Collins", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.OldTom, 45M),
                 new CI(i.SimpleSyrup, 15M),
@@ -242,7 +244,7 @@ namespace Mix.Models
                 new CI(i.Absinthe, q.Splash),
                 new CI(i.Grenadine, q.Splash)),
 
-            new C(c.PlantersPunch, "Planter's Punch",
+            new C(c.PlantersPunch, "Planter's Punch", onTheRocks,
                 v.Highball, p.Shake,
                 new CI(i.DarkRum, 45M),
                 new CI(i.OrangeJuice, 35),
@@ -252,7 +254,7 @@ namespace Mix.Models
                 new CI(i.SimpleSyrup, 10M),
                 new CI(i.Angostura, 3 * q.Dash)),
 
-            new C(c.RustyNail, "Rusty Nail",
+            new C(c.RustyNail, "Rusty Nail", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Scotch, 45M),
                 new CI(i.Drambuie, 25M)),
@@ -264,7 +266,7 @@ namespace Mix.Models
                 new CI(i.Sugar, q.Teaspoon),
                 new CI(i.Peychauds, 2 * q.Dash)),
 
-            new C(c.Screwdriver, "Screwdriver",
+            new C(c.Screwdriver, "Screwdriver", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Vodka, 50M),
                 new CI(i.OrangeJuice, 10M)),
@@ -302,24 +304,24 @@ namespace Mix.Models
                 new CI(i.CranberryJuice, 30M),
                 new CI(i.LimeJuice, 15M)),
 
-            new C(c.CubaLibre, "Cuba Libre",
+            new C(c.CubaLibre, "Cuba Libre", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.WhiteRum, 50M),
                 new CI(i.Cola, 120M),
                 new CI(i.LimeJuice, 10M)),
 
-            new C(c.MoscowMule, "Moscow Mule",
+            new C(c.MoscowMule, "Moscow Mule", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Vodka, 45M),
                 new CI(i.GingerBeer, 120M),
                 new CI(i.LimeJuice, 5M)),
 
-            new C(c.GinAndTonic, "Gin and Tonic",
+            new C(c.GinAndTonic, "Gin and Tonic", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Gin, 50M),
                 new CI(i.Tonic, 120M)),
 
-            new C(c.DarkNStormy, "Dark N Stormy",
+            new C(c.DarkNStormy, "Dark N Stormy", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.DarkRum, 60M),
                 new CI(i.GingerBeer, 90M)),
@@ -330,7 +332,7 @@ namespace Mix.Models
                 new CI(i.Cointreau, 20M),
                 new CI(i.LimeJuice, 15M)),
 
-            new C(c.Sunrise, "Tequila Sunrise",
+            new C(c.Sunrise, "Tequila Sunrise", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Tequila, 45M),
                 new CI(i.OrangeJuice, 90M),
@@ -371,46 +373,46 @@ namespace Mix.Models
                 new CI(i.LemonJuice, 15M),
                 new CI(i.SimpleSyrup, 2 * q.Dash)),
 
-            new C(c.FrenchConnection, "French Connection",
+            new C(c.FrenchConnection, "French Connection", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Cognac, 35M),
                 new CI(i.Amaretto, 35M)),
 
-            new C(c.Godfather, "Godfather",
+            new C(c.Godfather, "Godfather", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Scotch, 35M),
                 new CI(i.Amaretto, 35M)),
 
-            new C(c.Godmother, "Godmother",
+            new C(c.Godmother, "Godmother", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Vodka, 35M),
                 new CI(i.Amaretto, 35M)),
 
-            new C(c.SeaBreeze, "Sea Breeze",
+            new C(c.SeaBreeze, "Sea Breeze", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Vodka, 40M),
                 new CI(i.CranberryJuice, 120M),
                 new CI(i.GrapefruitJuice, 30M)),
 
             new C(c.MaryPickford, "MaryPickford",
-                v.Rocks, p.Shake,
+                v.Cocktail, p.Shake,
                 new CI(i.WhiteRum, 60M),
                 new CI(i.PineappleJuice, 60M),
                 new CI(i.Grenadine, 10M),
                 new CI(i.Maraschino, 10M)),
 
-            new C(c.BlackRussian, "Black Russian",
+            new C(c.BlackRussian, "Black Russian", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Vodka, 50M),
                 new CI(i.Kahlúa, 20M)),
 
-            new C(c.WhiteRussian, "White Russian",
+            new C(c.WhiteRussian, "White Russian", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Vodka, 50M),
                 new CI(i.Kahlúa, 20M),
                 new CI(i.Cream, 30M)),
 
-            new C(c.LongIsland, "Long Island Iced Tea",
+            new C(c.LongIsland, "Long Island Iced Tea", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Tequila, 15M),
                 new CI(i.Vodka, 15M),
@@ -428,7 +430,7 @@ namespace Mix.Models
                 new CI(i.LimeJuice, 15M),
                 new CI(i.Maraschino, 15M)),
 
-            new C(c.HarveyWallbanger, "Harvey Wallbanger",
+            new C(c.HarveyWallbanger, "Harvey Wallbanger", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Vodka, 45M),
                 new CI(i.Galliano, 15M),
@@ -441,7 +443,7 @@ namespace Mix.Models
                 new CI(i.OrangeJuice, 20M),
                 new CI(i.Cream, 10M)),
 
-            new C(c.VieuxCarré, "Vieux Carré",
+            new C(c.VieuxCarré, "Vieux Carré", onTheRocks,
                 v.Rocks, p.Stir,
                 new CI(i.BourbonOrRye, 60M),
                 new CI(i.Cognac, 60M),
@@ -450,7 +452,7 @@ namespace Mix.Models
                 new CI(i.Angostura, q.Dash),
                 new CI(i.Peychauds, q.Dash)),
 
-            new C(c.Mojito, "Mojito",
+            new C(c.Mojito, "Mojito", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.WhiteRum, 50M),
                 new CI(i.LimeJuice, 30M),
@@ -458,7 +460,7 @@ namespace Mix.Models
                 new CI(i.Sugar, 2 * q.Teaspoon),
                 new CI(i.Soda, 120M)),
 
-            new C(c.MintJulep, "Mint Julep",
+            new C(c.MintJulep, "Mint Julep", onTheRocks,
                 v.Highball, p.Build,
                 new CI(i.Bourbon, 60M),
                 new CI(i.MintLeaf, 12),
@@ -469,7 +471,7 @@ namespace Mix.Models
                 new CI(i.Gin, 60M),
                 new CI(i.LimeCordial, 20M)),
 
-            new C(c.MaiTai, "Mai Tai",
+            new C(c.MaiTai, "Mai Tai", onTheRocks,
                 v.Rocks, p.Shake,
                 new CI(i.WhiteRum, 40M),
                 new CI(i.DarkRum, 20M),
@@ -477,7 +479,7 @@ namespace Mix.Models
                 new CI(i.Orgeat, 15),
                 new CI(i.LimeJuice, 10M)),
 
-            new C(c.PiñaColada, "Piña Colada",
+            new C(c.PiñaColada, "Piña Colada", onTheRocks,
                 v.Highball, p.Shake,
                 new CI(i.WhiteRum, 60M),
                 new CI(i.CoconutCream, 20M),
@@ -490,7 +492,7 @@ namespace Mix.Models
                 new CI(i.Baileys, 20M),
                 new CI(i.GrandMarnier, 20M)),
 
-            new C(c.Caipirinha, "Caipirinha",
+            new C(c.Caipirinha, "Caipirinha", onTheRocks,
                 v.Rocks, p.Build,
                 new CI(i.Cachaça, 60M),
                 new CI(i.Lime, 0.5M),
@@ -499,10 +501,10 @@ namespace Mix.Models
 
         public static List<Vessel> AllVessels = new List<Vessel>
         {
-            new V(v.Cocktail, "Cocktail Glass"),
-            new V(v.Rocks, "Old Fashioned Glass"),
-            new V(v.Highball, "Highball/Collins Glass"),
-            new V(v.Shot, "Shot Glass"),
+            new V(v.Cocktail, "Cocktail glass"),
+            new V(v.Rocks, "Old Fashioned glass"),
+            new V(v.Highball, "Highball/Collins glass"),
+            new V(v.Shot, "Shot glass"),
             new V(v.Flute, "Champagne Flute"),
         };
 

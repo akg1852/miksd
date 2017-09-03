@@ -71,25 +71,30 @@ namespace Mix.Services
                         WHERE CI.Id IS NULL
                     ),
                     MatchingCocktail AS (
-                        SELECT C.Id, C.Name, C.Vessel, C.VesselName,
+                        SELECT C.Id, C.Name, C.Vessel, C.VesselName, C.PrepMethod, C.PrepMethodName,
                         (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
                         (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
                         FROM (
-                            SELECT C.Id, C.Name, C.Vessel, V.Name AS VesselName,
+                            SELECT C.Id, C.Name,
+                            C.Vessel, V.Name AS VesselName,
+                            C.PrepMethod, P.Name AS PrepMethodName,
                             COUNT(DISTINCT (CASE WHEN CI.IsOptional = 0 THEN II.Id END)) AS FullnessCount,
                             COUNT(DISTINCT II.QueryIngredient) AS CompletenessCount
                             FROM NonExcludedCocktail C
                             LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                             LEFT JOIN IncludedIngredient II ON II.Id = CI.Ingredient
                             LEFT JOIN Vessel V ON V.Id = C.Vessel
+                            LEFT JOIN PrepMethod P ON P.Id = C.PrepMethod
                             WHERE (@vessel = 0 OR C.Vessel = @vessel)
                             AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
                             OR II.Id IS NOT NULL)
-                            GROUP BY C.Id, C.Name, C.Vessel, V.Name
+                            GROUP BY C.Id, C.Name, C.Vessel, V.Name, C.PrepMethod, P.Name
                         ) AS C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                         WHERE CI.IsOptional = 0
-                        GROUP BY C.Id, C.Name, C.Vessel, C.VesselName, C.FullnessCount, C.CompletenessCount
+                        GROUP BY C.Id, C.Name,
+                        C.Vessel, C.VesselName, C.PrepMethod, C.PrepMethodName,
+                        C.FullnessCount, C.CompletenessCount
                     )
                     SELECT * FROM MatchingCocktail
                     ORDER BY Fullness + Completeness DESC, Name ASC
@@ -112,7 +117,7 @@ namespace Mix.Services
             using (var db = new SqlConnection(connectionString))
             {
                 var results = db.Query<Cocktail>(
-                    "SELECT C.Id, C.Name, " +
+                    "SELECT C.Id, C.Name, C.Ice, " +
                     "C.Vessel, V.Name AS VesselName, C.PrepMethod, P.Name AS PrepMethodName " +
                     "FROM Cocktail C " +
                     "LEFT JOIN Vessel V ON V.Id = C.Vessel " +
@@ -196,9 +201,9 @@ namespace Mix.Services
         {
             foreach (var cocktail in Reference.AllCocktails)
             {
-                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod) " +
-                    "VALUES (@Id, @Name, @Vessel, @PrepMethod)",
-                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod });
+                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod, Ice) " +
+                    "VALUES (@Id, @Name, @Vessel, @PrepMethod, @Ice)",
+                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice });
 
                 foreach (var ingredient in cocktail.Recipe)
                 {
