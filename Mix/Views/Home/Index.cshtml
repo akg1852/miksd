@@ -9,10 +9,11 @@
     <div class="filters">
     @foreach (var ingredient in ViewBag.Ingredients)
     {
+        var id = (long)ingredient.Id;
         <span class="filter-select">
-            <input type="checkbox" name="i" value="@((long)ingredient.Id)" @(ViewBag.IngredientsFilter != null &&
+            <input type="checkbox" id="ingredient-@id" name="i" value="@id" @(ViewBag.IngredientsFilter != null &&
                 ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
-            @ingredient.Name
+            <label for="ingredient-@id">@ingredient.Name</label>
         </span>
     }
     </div>
