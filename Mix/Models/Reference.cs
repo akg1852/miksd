@@ -394,7 +394,7 @@ namespace Mix.Models
                 new CI(i.CranberryJuice, 120M),
                 new CI(i.GrapefruitJuice, 30M)),
 
-            new C(c.MaryPickford, "MaryPickford",
+            new C(c.MaryPickford, "Mary Pickford",
                 v.Cocktail, p.Shake,
                 new CI(i.WhiteRum, 60M),
                 new CI(i.PineappleJuice, 60M),
