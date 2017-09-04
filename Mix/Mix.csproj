@@ -122,6 +122,7 @@
     <Compile Include="Models\Cocktail.cs" />
     <Compile Include="Models\CocktailCategory.cs" />
     <Compile Include="Models\Ingredient.cs" />
+    <Compile Include="Models\Garnish.cs" />
     <Compile Include="Models\PrepMethod.cs" />
     <Compile Include="Models\Reference.cs" />
     <Compile Include="Models\Vessel.cs" />

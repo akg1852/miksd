@@ -19,6 +19,7 @@ namespace Mix.Services
                     InsertIngredients(db);
                     InsertVessels(db);
                     InsertPrepMethods(db);
+                    InsertGarnishes(db);
                     InsertCocktails(db);
                 }
             }
@@ -117,12 +118,18 @@ namespace Mix.Services
             using (var db = new SqlConnection(connectionString))
             {
                 var results = db.Query<Cocktail>(
-                    "SELECT C.Id, C.Name, C.Ice, " +
-                    "C.Vessel, V.Name AS VesselName, C.PrepMethod, P.Name AS PrepMethodName " +
-                    "FROM Cocktail C " +
-                    "LEFT JOIN Vessel V ON V.Id = C.Vessel " +
-                    "LEFT JOIN PrepMethod P ON P.Id = C.PrepMethod " +
-                    "WHERE C.Id = @id"
+                    @"SELECT C.Id, C.Name, C.Ice,
+                    C.Vessel, V.Name AS VesselName,
+                    C.PrepMethod, P.Name AS PrepMethodName,
+                    C.Garnish, STUFF(
+                        (SELECT ', and ' + Name
+                        FROM Garnish G
+                        WHERE (C.Garnish & G.Id) != 0
+                        For XML PATH ('')), 1, 6, '') AS GarnishName
+                    FROM Cocktail C
+                    LEFT JOIN Vessel V ON V.Id = C.Vessel
+                    LEFT JOIN PrepMethod P ON P.Id = C.PrepMethod
+                    WHERE C.Id = @id"
                     , new { id });
 
                 if (!results.Any()) return null;
@@ -197,13 +204,24 @@ namespace Mix.Services
             }
         }
 
+        private void InsertGarnishes(SqlConnection db)
+        {
+            foreach (var garnish in Reference.AllGarnishes)
+            {
+                db.Execute("INSERT INTO Garnish (Id, Name) VALUES (@Id, @Name)",
+                    new { garnish.Id, garnish.Name });
+            }
+        }
+
         private void InsertCocktails(SqlConnection db)
         {
             foreach (var cocktail in Reference.AllCocktails)
             {
-                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod, Ice) " +
-                    "VALUES (@Id, @Name, @Vessel, @PrepMethod, @Ice)",
-                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice });
+                var garnish = (cocktail.Garnish == Garnishes.None) ? (Garnishes?)null : cocktail.Garnish;
+
+                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod, Ice, Garnish) " +
+                    "VALUES (@Id, @Name, @Vessel, @PrepMethod, @Ice, @Garnish)",
+                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice, garnish });
 
                 foreach (var ingredient in cocktail.Recipe)
                 {

@@ -9,25 +9,31 @@ namespace Mix.Models
         public Cocktails Id;
         public string Name;
         public IEnumerable<CocktailIngredient> Recipe;
+        public IEnumerable<Cocktail> Similar;
+        public bool Ice;
+
         public Vessels Vessel;
         public string VesselName;
         public PrepMethods PrepMethod;
         public string PrepMethodName;
-        public IEnumerable<Cocktail> Similar;
-        public bool Ice;
+        public Garnishes Garnish;
+        public string GarnishName;
 
         public Cocktail() { }
-        public Cocktail(Cocktails id, string name, Vessels vessel, PrepMethods prepMethod, params CocktailIngredient[] recipe) :
-            this(id, name, false, vessel, prepMethod, recipe) { }
-        public Cocktail(Cocktails id, string name, bool ice, Vessels vessel, PrepMethods prepMethod,
+        public Cocktail(Cocktails id, string name, Vessels vessel, PrepMethods prepMethod, Garnishes garnish,
+            params CocktailIngredient[] recipe) : this(id, name, false, vessel, prepMethod, garnish, recipe) { }
+        public Cocktail(Cocktails id, string name, bool ice, Vessels vessel, PrepMethods prepMethod, Garnishes garnish,
             params CocktailIngredient[] recipe)
         {
             Id = id;
             Name = name;
-            Recipe = recipe;
+            Ice = ice;
+
             Vessel = vessel;
             PrepMethod = prepMethod;
-            Ice = ice;
+            Garnish = garnish;
+
+            Recipe = recipe;
         }
 
         public string Description()
@@ -48,8 +54,14 @@ namespace Mix.Models
             {
                 description += " filled with ice";
             }
+            description += ".";
 
-            return description + ".";
+            if (Garnish != Garnishes.None)
+            {
+                description += " Garnish with " + GarnishName + ".";
+            }
+
+            return description;
         }
     }
 

@@ -113,6 +113,7 @@ namespace Mix.Models
         GrandMarnier = 71,
         Lime = 72,
         Cachaça = 73,
+        Violette = 74,
     }
 
     public static class IngredientHelpers

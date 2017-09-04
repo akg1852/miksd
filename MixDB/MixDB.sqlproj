@@ -65,6 +65,7 @@
     <Build Include="CocktailIngredient.sql" />
     <Build Include="Vessel.sql" />
     <Build Include="PrepMethod.sql" />
+    <Build Include="Garnish.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MixDB.local.publish.xml" />
