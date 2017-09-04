@@ -8,6 +8,7 @@ namespace Mix.Models
         public string Name;
         public List<i> Ingredients;
         public Vessels Vessel;
+        public bool Full;
 
         public static List<CocktailCategory> Categories = new List<CocktailCategory>
         {
@@ -38,7 +39,13 @@ namespace Mix.Models
             {
                 Name = "Highballs",
                 Vessel = Vessels.Highball
-            }
+            },
+            new CocktailCategory
+            {
+                Name = "Duos",
+                Ingredients = new List<i> { i.Spirit, i.SweetLiqueur },
+                Full = true
+            },
         };
     }
 }

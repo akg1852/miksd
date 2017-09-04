@@ -23,6 +23,10 @@
 
             if (ingredients != null)
             {
+                if (category.Full)
+                {
+                    link += "&f=1";
+                }
                 link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
             }
             if (category.Vessel != Vessels.None)
