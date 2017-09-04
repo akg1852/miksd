@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Mix.Models
 {
@@ -63,55 +61,6 @@ namespace Mix.Models
 
             return description;
         }
-    }
-
-    public class CocktailIngredient
-    {
-        public Ingredients Ingredient;
-        public string Name;
-        public bool IsOptional;
-        public decimal Quantity;
-        public bool IsDiscrete;
-
-        public CocktailIngredient() { }
-        public CocktailIngredient(Ingredients ingredient, decimal quantity, bool isOptional = false)
-        {
-            Ingredient = ingredient;
-            Quantity = quantity;
-            IsOptional = isOptional;
-        }
-
-        public HtmlString QuantityHtml()
-        {
-            var quantity = Quantity.ToString("0.#") + (IsDiscrete ? "" : " ml");
-
-            if (IsDiscrete) return new HtmlString(quantity);
-
-            string quantityString;
-            if (Quantity < 3.5M * CommonQuantity.Dash)
-            {
-                var dashes = Math.Round(Quantity / CommonQuantity.Dash);
-                if (dashes == 1) quantityString = "1 dash";
-                else quantityString = dashes + " dashes";
-            }
-            else if (Quantity < CommonQuantity.Teaspoon) quantityString = "A splash";
-            else if (Quantity <= 2 * CommonQuantity.Teaspoon)
-            {
-                var teaspoons = Math.Round(Quantity / CommonQuantity.Teaspoon);
-                if (teaspoons == 1) quantityString = "1 teaspoon";
-                else quantityString = teaspoons + " teaspoons";
-            }
-            else quantityString = quantity;
-
-            return new HtmlString($"<span title=\"{quantity}\" >{quantityString}</span>");
-        }
-    }
-
-    public static class CommonQuantity
-    {
-        public static decimal Dash = 0.5M;
-        public static decimal Splash = 3M;
-        public static decimal Teaspoon = 5M;
     }
 
     public enum Cocktails : long

@@ -119,8 +119,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CocktailIngredient.cs" />
     <Compile Include="Models\Cocktail.cs" />
     <Compile Include="Models\CocktailCategory.cs" />
+    <Compile Include="Models\CommonQuantity.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Garnish.cs" />
     <Compile Include="Models\PrepMethod.cs" />
