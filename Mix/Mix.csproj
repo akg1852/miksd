@@ -126,9 +126,11 @@
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Garnish.cs" />
     <Compile Include="Models\PrepMethod.cs" />
-    <Compile Include="Models\Reference.cs" />
+    <Compile Include="Models\Reference\Reference.cs" />
     <Compile Include="Models\Vessel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Reference\ReferenceIngredients.cs" />
+    <Compile Include="Models\Reference\ReferenceCocktails.cs" />
     <Compile Include="Services\CocktailService.cs" />
     <Compile Include="Services\DbHelpers.cs" />
   </ItemGroup>

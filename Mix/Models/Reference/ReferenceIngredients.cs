@@ -1,0 +1,126 @@
+﻿using System.Collections.Generic;
+
+using I = Mix.Models.Ingredient;
+using i = Mix.Models.Ingredients;
+using o = Mix.Models.IngredientOptions;
+
+namespace Mix.Models
+{
+    public static partial class Reference
+    {
+        public static List<Ingredient> AllIngredients = new List<Ingredient>
+        {
+            new I(i.Spirit, "Spirit", o.Hidden,
+                i.Rum, i.Whisky, i.Vodka, i.Gin, i.Brandy, i.CognacOrRye, i.Tequila, i.Cachaça),
+
+            new I(i.Rum, "Rum", o.Equivalence,
+                i.WhiteRum, i.DarkRum),
+            new I(i.WhiteRum, "White Rum"),
+            new I(i.DarkRum, "Dark Rum"),
+            new I(i.Cachaça, "Cachaça"),
+
+            new I(i.Whisky, "Whisk(e)y",
+                i.Scotch, i.BourbonOrRye),
+            new I(i.Scotch, "Scotch"),
+            new I(i.BourbonOrRye, "Bourbon / Rye", o.Equivalence,
+                i.Bourbon, i.Rye),
+            new I(i.Bourbon, "Bourbon", o.Hidden),
+            new I(i.Rye, "Rye Whiskey", o.Hidden),
+
+            new I(i.CognacOrRye, "Cognac / Rye", o.Hidden,
+                i.Brandy, i.BourbonOrRye),
+
+            new I(i.Brandy, "Brandy", o.Equivalence,
+                i.Cognac, i.Pisco),
+            new I(i.Cognac, "Cognac"),
+            new I(i.Pisco, "Pisco"),
+
+            new I(i.Vodka, "Vodka"),
+
+            new I(i.Gin, "Gin", o.Equivalence,
+                i.OldTom, i.LondonDry),
+            new I(i.OldTom, "Old Tom Gin", o.Hidden),
+            new I(i.LondonDry, "London Dry Gin", o.Hidden),
+
+            new I(i.Tequila, "Tequila"),
+            new I(i.Absinthe, "Absinthe"),
+
+            new I(i.Bitters, "Bitters", o.Equivalence,
+                i.Angostura, i.OrangeBitters, i.Peychauds),
+            new I(i.Angostura, "Angostura Bitters", o.Hidden),
+            new I(i.OrangeBitters, "Orange Bitters", o.Hidden),
+            new I(i.Peychauds, "Peychaud's Bitters", o.Hidden),
+
+            new I(i.Campari, "Campari"),
+
+            new I(i.Vermouth, "Vermouth", o.Equivalence,
+                i.SweetVermouth, i.DryVermouth),
+            new I(i.SweetVermouth, "Sweet Red Vermouth"),
+            new I(i.DryVermouth, "Dry White Vermouth"),
+
+            new I(i.SweetLiqueur, "Liqueur (Sweet)", o.Hidden,
+                i.OrangeLiqueur, i.Maraschino, i.Drambuie, i.Cassis, i.Violette, i.Galliano, i.Amaretto, i.Benedictine),
+            new I(i.OrangeLiqueur, "Orange Liqueur",
+                i.TripleSec, i.Curaçao),
+            new I(i.TripleSec, "Triple Sec", o.Equivalence,
+                i.Cointreau),
+            new I(i.Cointreau, "Cointreau"),
+            new I(i.Curaçao, "Curaçao", o.Equivalence,
+                i.GrandMarnier),
+            new I(i.GrandMarnier, "Grand Marnier"),
+            new I(i.Maraschino, "Maraschino Liqueur"),
+            new I(i.Drambuie, "Drambuie"),
+            new I(i.Cassis, "Crème de cassis"),
+            new I(i.Violette, "Crème de violette"),
+            new I(i.Galliano, "Galliano"),
+            new I(i.Amaretto, "Amaretto"),
+            new I(i.Benedictine, "Benedictine"),
+            new I(i.Grenadine, "Grenadine"),
+
+            new I(i.Wine, "Wine", o.Equivalence,
+                i.SparklingWine, i.WhiteWine),
+            new I(i.SparklingWine, "Sparkling Wine", o.Equivalence,
+                i.Champagne, i.Prosecco),
+            new I(i.Champagne, "Champagne"),
+            new I(i.Prosecco, "Prosecco"),
+            new I(i.WhiteWine, "White Wine"),
+
+            new I(i.Sweetener, "Sweetener", o.Hidden,
+                i.Sugar, i.Orgeat, i.SweetLiqueur, i.Grenadine, i.LimeCordial),
+            new I(i.Sugar, "Sugar", o.Equivalence,
+                i.SimpleSyrup, i.GommeSyrup),
+            new I(i.SimpleSyrup, "Simple Syrup"),
+            new I(i.GommeSyrup, "Gomme Syrup"),
+            new I(i.Orgeat, "Orgeat Syrup"),
+
+            new I(i.Citrus, "Citrus", o.Equivalence,
+                i.LemonJuice, i.Lime, i.LimeJuice, i.LimeCordial),
+            new I(i.LemonJuice, "Lemon Juice"),
+            new I(i.Lime, "Lime", o.Equivalence | o.Discrete,
+                i.LimeJuice),
+            new I(i.LimeJuice, "Lime Juice"),
+            new I(i.LimeCordial, "Lime Cordial"),
+            new I(i.OrangeJuice, "Orange Juice"),
+            new I(i.PineappleJuice, "Pineapple Juice"),
+            new I(i.CranberryJuice, "Cranberry Juice"),
+            new I(i.GrapefruitJuice, "Grapefruit Juice"),
+            new I(i.PeachPuree, "Peach Purée", o.Hidden),
+
+            new I(i.Carbonated, "Carbonated Drink", o.Hidden,
+                i.Soda, i.Cola, i.GingerBeer, i.Tonic),
+            new I(i.Water, "Water", o.Hidden),
+            new I(i.Soda, "Soda Water"),
+            new I(i.Tonic, "Tonic Water"),
+            new I(i.Cola, "Cola"),
+            new I(i.GingerBeer, "Ginger Beer"),
+
+            new I(i.EggWhite, "Egg White"),
+            new I(i.Kahlúa, "Kahlúa"),
+            new I(i.Baileys, "Baileys Irish Cream"),
+            new I(i.Cream, "Cream"),
+            new I(i.CoconutCream, "Coconut Cream"),
+
+            new I(i.MintLeaf, "Mint Leaves", o.Discrete),
+        };
+    }
+}
