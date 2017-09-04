@@ -6,7 +6,7 @@
 }
 
 <form>
-    <div class="filters">
+    <div class="filters"><div>
     @foreach (var ingredient in ViewBag.Ingredients)
     {
         var id = (long)ingredient.Id;
@@ -16,7 +16,7 @@
             <label for="ingredient-@id">@ingredient.Name</label>
         </span>
     }
-    </div>
+    </div></div>
     <input type="submit" value="Search" />
 </form>
 
