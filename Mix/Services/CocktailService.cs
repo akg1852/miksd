@@ -217,11 +217,9 @@ namespace Mix.Services
         {
             foreach (var cocktail in Reference.AllCocktails)
             {
-                var garnish = (cocktail.Garnish == Garnishes.None) ? (Garnishes?)null : cocktail.Garnish;
-
                 db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod, Ice, Garnish) " +
                     "VALUES (@Id, @Name, @Vessel, @PrepMethod, @Ice, @Garnish)",
-                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice, garnish });
+                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice, cocktail.Garnish });
 
                 foreach (var ingredient in cocktail.Recipe)
                 {
