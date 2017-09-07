@@ -1,15 +1,20 @@
 ﻿* {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
 body {
+    background-color: #333344;
+}
+
+#content {
     padding: 0 20px 20px 20px;
     color: #000000;
+    background-color: #FFFFFF;
 
-    border-width: 1px;
-    border-style: dashed;
-    width: 90%;
+    min-height: 100vh;
+    max-width: 800px;
     margin: auto;
 }
 
@@ -18,7 +23,7 @@ ul {
 }
 
 h1, h2 {
-    margin-top: 25px;
+    padding-top: 25px;
 }
 
 h3, h4 {
@@ -37,18 +42,20 @@ a:visited {
 /* menu */
 
 ul.menu {
+    display: flex;
     margin: 20px 0;
     width: 100%;
-    background-color: #CCCCCC;
+    background-color: #CCCCFF;
+    overflow-x: auto;
 }
 
 ul.menu > li {
-    padding-left: 20px;
+    flex: 1 0 0;
+    vertical-align: top;
+    padding: 0 5px;
+    text-align: center;
     display: inline-block;
-}
-ul.menu > li:after {
-    padding-left: 20px;
-    content: "|";
+    border-right: solid #FFFFFF 1px;
 }
 
 ul.menu > li.current {
@@ -65,7 +72,7 @@ ul.menu a, ul.menu a:visited {
     visibility: hidden;
     position: absolute;
     background-color: #FFFFFF;
-    border: solid black 1px;
+    border: solid #000000 1px;
     height: 300px;
     width: 250px;
 }
@@ -75,25 +82,28 @@ ul.menu a, ul.menu a:visited {
     overflow-y: scroll;
 }
 .ingredient-category-header {
-    box-sizing: border-box;
     position: absolute;
     top: 0;
     cursor: pointer;
 
-    background-color: #CCCCCC;
+    background-color: #CCCCFF;
     padding: 2px;
-    border-right: solid black 1px;
-    border-bottom: solid black 1px;
+    border-right: solid #000000 1px;
+    border-bottom: solid #000000 1px;
 }
 .ingredient-category-header.current {
-    background-color: #999999;
+    background-color: #9999CC;
 }
 .ingredient-category {
     display: none;
+    padding-left: 10px;
 }
 .ingredient-option {
     display: block;
     white-space: nowrap;
+}
+.ingredient-checkbox:checked + label {
+    font-weight: bold;
 }
 #ingredient-search-form > input {
     height: 30px;
@@ -104,7 +114,7 @@ ul.menu a, ul.menu a:visited {
 /* result lists */
 
 dt {
-    background-color: #CCCCCC;
+    background-color: #CCCCFF;
     margin-bottom: 5px;
     padding-left: 15px;
 }
