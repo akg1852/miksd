@@ -3,20 +3,30 @@
 
 @{
     ViewBag.Title = ViewBag.Category;
+    List<IngredientCategory> ingredientCategories = ViewBag.Ingredients;
 }
 
-<form>
-    <div class="filters"><div>
-    @foreach (var ingredient in ViewBag.Ingredients)
+<input type="button" id="ingredient-search-button" value="Search by Ingredients" />
+
+<form id="ingredient-search-form">
+    <div class="ingredients">
+    @foreach (var category in ingredientCategories)
     {
-        var id = (long)ingredient.Id;
-        <span class="filter-select">
-            <input type="checkbox" id="ingredient-@id" name="i" value="@id" @(ViewBag.IngredientsFilter != null &&
-                ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
-            <label for="ingredient-@id">@ingredient.Name</label>
-        </span>
+        <div class="ingredient-category-header">@category.Name</div>
+        <div class="ingredient-category">
+            @foreach (var ingredient in category.Ingredients)
+            {
+                var id = (long)ingredient.Id;
+                <span class="ingredient-option">
+                    <input class="ingredient-checkbox" type="checkbox" id="ingredient-@id" name="i" value="@id" @(ViewBag.IngredientsFilter != null &&
+                        ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
+                    <label for="ingredient-@id">@ingredient.Name</label>
+                </span>
+            }
+        </div>
     }
-    </div></div>
+    </div>
+    <input id="ingredient-clear-button" type="button" value="Clear All" />
     <input type="submit" value="Search" />
 </form>
 
@@ -25,7 +35,7 @@
 @for (var i = 0; i < ViewBag.Cocktails.Count; i++)
 {
     Cocktail cocktail = ViewBag.Cocktails[i];
-    var ingredients = cocktail.Recipe
+    var cocktailIngredients = cocktail.Recipe
         .Where(ingredient => !ingredient.IsOptional)
         .Select(ingredient => ingredient.Name);
     var prepInVessel = cocktail.PrepMethod == PrepMethods.Build || cocktail.PrepMethod == PrepMethods.Layer;
@@ -41,7 +51,7 @@
                 <a href="/Cocktail/@((long)cocktail.Id)">@cocktail.Name</a>
             </dt>
             <dd>
-                <p>@String.Join(", ", ingredients)<br />
+                <p>@String.Join(", ", cocktailIngredients)<br />
                 @cocktail.PrepMethodName @(prepInVessel ? " in a " : " & strain into a ") @cocktail.VesselName</p>
             </dd>
         </dl>

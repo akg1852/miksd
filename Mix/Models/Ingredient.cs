@@ -7,6 +7,7 @@ namespace Mix.Models
     {
         public Ingredients Id;
         public string Name;
+        public Ingredients Category;
         public IEnumerable<Ingredients> Children;
         public bool Equivalence;
         public bool IsHidden;
@@ -114,6 +115,9 @@ namespace Mix.Models
         Lime = 72,
         Cachaça = 73,
         Violette = 74,
+        WineAll = 75,
+        Liqueur = 76,
+        BitterLiqueur = 77,
     }
 
     public static class IngredientHelpers

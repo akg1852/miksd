@@ -21,11 +21,41 @@ namespace Mix.Services
             }
         }
 
-        public IEnumerable<Ingredient> AllIngredients()
+        public List<IngredientCategory> IngredientCategories()
         {
             using (var db = new SqlConnection(connectionString))
             {
-                return db.Query<Ingredient>("SELECT * FROM Ingredient ORDER BY Name");
+                var ingredientSql = @"
+                    WITH Categorised AS (
+                        SELECT Id, Id AS Category
+                        FROM Ingredient
+                        WHERE Id IN @categoryIds
+                        UNION ALL
+                        SELECT IR.Child AS Id, P.Category
+                        FROM Categorised P
+                        JOIN IngredientRelationship IR ON IR.Parent = P.Id
+                    )
+                    SELECT DISTINCT I.*, C.Category
+                    FROM Ingredient I
+                    LEFT JOIN Categorised C ON C.Id = I.Id
+                    WHERE I.IsHidden = 0
+                    ORDER BY I.Name
+                ";
+                var categoryIds = new List<Ingredients> { Ingredients.Spirit, Ingredients.WineAll, Ingredients.Liqueur };
+                var results = db.Query<Ingredient>(ingredientSql, new { categoryIds })
+                    .GroupBy(i => i.Category)
+                    .ToDictionary(i => i.Key, i => i.ToList());
+
+                var categories = new List<IngredientCategory>
+                {
+                    new IngredientCategory { Id = Ingredients.Spirit, Name = "Spirits" },
+                    new IngredientCategory { Id = Ingredients.Liqueur, Name = "Liqueurs" },
+                    new IngredientCategory { Id = Ingredients.WineAll, Name = "Wine" },
+                    new IngredientCategory { Id = Ingredients.None, Name = "Other" },
+                };
+
+                categories.ForEach(c => c.Ingredients = results[c.Id]);
+                return categories;
             }
         }
 

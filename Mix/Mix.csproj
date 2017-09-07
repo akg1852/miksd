@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\favicon.ico" />
+    <Content Include="Content\Mix.js" />
     <Content Include="Content\Style.css" />
     <Content Include="Error.html" />
     <Content Include="Global.asax" />
@@ -126,6 +127,7 @@
     <Compile Include="Models\CommonQuantity.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Garnish.cs" />
+    <Compile Include="Models\IngredientCategory.cs" />
     <Compile Include="Models\PrepMethod.cs" />
     <Compile Include="Models\Reference\Reference.cs" />
     <Compile Include="Models\Vessel.cs" />

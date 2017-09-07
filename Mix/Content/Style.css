@@ -59,31 +59,45 @@ ul.menu a, ul.menu a:visited {
     color: #000000;
 }
 
-/* search form */
+/* ingredient search form */
 
-.filters {
-    padding: 10px;
-    max-height: 70vh;
-    overflow: auto;
-    border-style: solid;
-    border-width: 1px 0;
+#ingredient-search-form {
+    visibility: hidden;
+    position: absolute;
+    background-color: #FFFFFF;
+    border: solid black 1px;
+    height: 300px;
+    width: 250px;
 }
-.filters > div {
-    column-count: auto;
-    column-width: 180px;
+.ingredients {
+    margin-top: 25px;
+    height: 245px;
+    overflow-y: scroll;
 }
+.ingredient-category-header {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
 
-.filter-select {
+    background-color: #CCCCCC;
+    padding: 2px;
+    border-right: solid black 1px;
+    border-bottom: solid black 1px;
+}
+.ingredient-category-header.current {
+    background-color: #999999;
+}
+.ingredient-category {
+    display: none;
+}
+.ingredient-option {
     display: block;
     white-space: nowrap;
 }
-
-input[type="submit"] {
-    margin: 20px;
-}
-
-.similar:not(:last-child):after {
-    content: ", "
+#ingredient-search-form > input {
+    height: 30px;
+    width: 45%;
 }
 
 
