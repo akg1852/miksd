@@ -109,6 +109,12 @@ ul.menu a, ul.menu a:visited {
     height: 30px;
     width: 45%;
 }
+#ingredient-clear-button {
+    background-color: #FF9933;
+}
+#ingredient-search-form > input[type='submit'] {
+    background-color: #669966;
+}
 
 
 /* result lists */
