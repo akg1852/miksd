@@ -66,6 +66,7 @@
     <Build Include="Vessel.sql" />
     <Build Include="PrepMethod.sql" />
     <Build Include="Garnish.sql" />
+    <Build Include="SpecialPrep.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MixDB.local.publish.xml" />

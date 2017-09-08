@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Mix.Models
 {
@@ -36,27 +37,83 @@ namespace Mix.Models
 
         public string Description()
         {
-            string description;
+            var description = "";
+            var ingredients = Recipe.GroupBy(i => i.SpecialPrep)
+                .ToDictionary(g => g.Key, g => g.ToList().Select(i => i.Name));
+            var isRinsed = ingredients.ContainsKey(SpecialPreps.Rinse);
+            var isMuddled = ingredients.ContainsKey(SpecialPreps.Muddle);
+            var isFloated = ingredients.ContainsKey(SpecialPreps.Float);
+            var vesselMentioned = false;
 
-            if (PrepMethod == PrepMethods.Shake || PrepMethod == PrepMethods.Stir)
+            // rinse
+            if (isRinsed)
             {
-                description = PrepMethodName + " ingredients with ice. Strain into a " + VesselName;
+                var rinseIngredients = string.Join(" and ", ingredients[SpecialPreps.Rinse]);
+                description += $"Rinse {VesselName} with {rinseIngredients}. ";
+                vesselMentioned = true;
             }
-            else if (PrepMethod == PrepMethods.Build || PrepMethod == PrepMethods.Layer)
-            {
-                description = PrepMethodName + " ingredients in a " + VesselName;
-            }
-            else return null;
 
-            if (Ice)
+            // muddle
+            if (isMuddled)
             {
-                description += " filled with ice";
+                var muddleIngredients = string.Join(" and ", ingredients[SpecialPreps.Muddle]);
+                var vessel = vesselMentioned ? "the glass" : VesselName;
+                description += $"Muddle the {muddleIngredients} in {vessel}. ";
+                vesselMentioned = true;
             }
-            description += ".";
 
+            // combine
+            if (ingredients.ContainsKey(SpecialPreps.None))
+            {
+                // ice (first attempt)
+                if (Ice && vesselMentioned)
+                {
+                    description += "Fill the glass with ice. ";
+                }
+
+                var regularIngredients = ingredients[SpecialPreps.None].ToList();
+                var remaining = isRinsed || isMuddled ? "remaining " : "";
+                var ingredientWords = (regularIngredients.Count == 1)
+                    ? regularIngredients.First()
+                    : $"{remaining}ingredients";
+
+                var vessel = vesselMentioned ? "the glass" : VesselName;
+
+                if (PrepMethod == PrepMethods.Shake || PrepMethod == PrepMethods.Stir)
+                {
+                    description += $"{PrepMethodName} {ingredientWords} with ice, and strain into {vessel}";
+                }
+                else if (regularIngredients.Count == 1)
+                {
+                    description += $"Add {ingredientWords}";
+                    description += vesselMentioned ? "" : $" to {vessel}";
+                }
+                else if (PrepMethod == PrepMethods.Build || PrepMethod == PrepMethods.Layer)
+                {
+                    description += $"{PrepMethodName} {ingredientWords} in {vessel}";
+                }
+                else return null;
+
+                // ice (second attempt)
+                if (Ice && !vesselMentioned)
+                {
+                    description += " filled with ice";
+                }
+                description += ". ";
+                vesselMentioned = true;
+            }
+
+            // float
+            if (isFloated)
+            {
+                var floatIngredients = string.Join(" and ", ingredients[SpecialPreps.Float]);
+                description += $"Float the {floatIngredients} on top. ";
+            }
+
+            // garnish
             if (Garnish != Garnishes.None)
             {
-                description += " Garnish with " + GarnishName + ".";
+                description += $"Garnish with {GarnishName}. ";
             }
 
             return description;

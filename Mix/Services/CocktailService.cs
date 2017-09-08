@@ -198,9 +198,11 @@ namespace Mix.Services
         private IEnumerable<CocktailIngredient> CocktailIngredients(SqlConnection db, Cocktails cocktail)
         {
             var ingredientSql =
-                "SELECT I.Id as Ingredient, I.Name, CI.IsOptional, CI.Quantity, I.IsDiscrete " +
+                "SELECT CI.Ingredient, I.Name, CI.IsOptional, CI.Quantity, I.IsDiscrete, " +
+                "CI.SpecialPrep, S.Name AS SpecialPrepName " +
                 "FROM CocktailIngredient CI " +
-                "LEFT JOIN Ingredient I ON CI.Ingredient = I.Id " +
+                "LEFT JOIN Ingredient I ON I.Id = CI.Ingredient " +
+                "LEFT JOIN SpecialPrep S ON S.Id = CI.SpecialPrep " +
                 "WHERE CI.Cocktail = @Cocktail";
             return db.Query<CocktailIngredient>(ingredientSql, new { Cocktail = cocktail });
         }

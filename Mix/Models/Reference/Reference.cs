@@ -3,9 +3,11 @@
 using V = Mix.Models.Vessel;
 using P = Mix.Models.PrepMethod;
 using G = Mix.Models.Garnish;
+using S = Mix.Models.SpecialPrep;
 using v = Mix.Models.Vessels;
 using p = Mix.Models.PrepMethods;
 using g = Mix.Models.Garnishes;
+using s = Mix.Models.SpecialPreps;
 
 namespace Mix.Models
 {
@@ -13,11 +15,11 @@ namespace Mix.Models
     {
         public static List<Vessel> AllVessels = new List<Vessel>
         {
-            new V(v.Cocktail, "Cocktail glass"),
-            new V(v.Rocks, "Old Fashioned glass"),
-            new V(v.Highball, "Highball/Collins glass"),
-            new V(v.Shot, "Shot glass"),
-            new V(v.Flute, "Champagne Flute"),
+            new V(v.Cocktail, "a Cocktail glass"),
+            new V(v.Rocks, "an Old Fashioned glass"),
+            new V(v.Highball, "a Highball/Collins glass"),
+            new V(v.Shot, "a Shot glass"),
+            new V(v.Flute, "a Champagne Flute"),
         };
 
         public static List<PrepMethod> AllPrepMethods = new List<PrepMethod>
@@ -38,6 +40,14 @@ namespace Mix.Models
             new G(g.LimeWedge, "a lime wedge"),
             new G(g.OrangeTwist, "an orange twist"),
             new G(g.LemonTwist, "a lemon twist"),
+        };
+
+        public static List<SpecialPrep> AllSpecialPreps = new List<SpecialPrep>
+        {
+            new S(s.None, ""),
+            new S(s.Rinse, "rinse"),
+            new S(s.Muddle, "muddle"),
+            new S(s.Float, "float"),
         };
     }
 }

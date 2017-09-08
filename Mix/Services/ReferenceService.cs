@@ -12,6 +12,7 @@ namespace Mix.Services
             InsertVessels(db);
             InsertPrepMethods(db);
             InsertGarnishes(db);
+            InsertSpecialPreps(db);
             InsertCocktails(db);
         }
 
@@ -23,11 +24,8 @@ namespace Mix.Services
                     "VALUES (@Id, @Name, @Equivalence, @IsHidden, @IsDiscrete)",
                     new
                     {
-                        ingredient.Id,
-                        ingredient.Name,
-                        ingredient.Equivalence,
-                        ingredient.IsHidden,
-                        ingredient.IsDiscrete
+                        ingredient.Id, ingredient.Name,
+                        ingredient.Equivalence, ingredient.IsHidden, ingredient.IsDiscrete
                     });
             }
             foreach (var parent in Reference.AllIngredients)
@@ -67,24 +65,35 @@ namespace Mix.Services
             }
         }
 
+        private static void InsertSpecialPreps(SqlConnection db)
+        {
+            foreach (var specialPrep in Reference.AllSpecialPreps)
+            {
+                db.Execute("INSERT INTO SpecialPrep (Id, Name) VALUES (@Id, @Name)",
+                    new { specialPrep.Id, specialPrep.Name });
+            }
+        }
+
         private static void InsertCocktails(SqlConnection db)
         {
             foreach (var cocktail in Reference.AllCocktails)
             {
                 db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod, Ice, Garnish) " +
                     "VALUES (@Id, @Name, @Vessel, @PrepMethod, @Ice, @Garnish)",
-                    new { cocktail.Id, cocktail.Name, cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice, cocktail.Garnish });
+                    new
+                    {
+                        cocktail.Id, cocktail.Name,
+                        cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice, cocktail.Garnish
+                    });
 
                 foreach (var ingredient in cocktail.Recipe)
                 {
-                    db.Execute("INSERT INTO CocktailIngredient (Cocktail, Ingredient, IsOptional, Quantity) " +
-                        "VALUES (@Cocktail, @Ingredient, @IsOptional, @Quantity)",
+                    db.Execute("INSERT INTO CocktailIngredient (Cocktail, Ingredient, IsOptional, Quantity, SpecialPrep) " +
+                        "VALUES (@Cocktail, @Ingredient, @IsOptional, @Quantity, @SpecialPrep)",
                     new
                     {
-                        Cocktail = cocktail.Id,
-                        Ingredient = ingredient.Ingredient,
-                        IsOptional = ingredient.IsOptional,
-                        Quantity = ingredient.Quantity
+                        Cocktail = cocktail.Id, ingredient.Ingredient, ingredient.IsOptional,
+                        ingredient.Quantity, ingredient.SpecialPrep
                     });
                 }
             }

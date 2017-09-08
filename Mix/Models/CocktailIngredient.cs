@@ -11,12 +11,17 @@ namespace Mix.Models
         public decimal Quantity;
         public bool IsDiscrete;
 
+        public SpecialPreps SpecialPrep;
+        public string SpecialPrepName;
+
         public CocktailIngredient() { }
-        public CocktailIngredient(Ingredients ingredient, decimal quantity, bool isOptional = false)
+        public CocktailIngredient(Ingredients ingredient, decimal quantity,
+            SpecialPreps specialPrep = SpecialPreps.None, bool isOptional = false)
         {
             Ingredient = ingredient;
             Quantity = quantity;
             IsOptional = isOptional;
+            SpecialPrep = specialPrep;
         }
 
         public HtmlString QuantityHtml()

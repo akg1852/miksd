@@ -130,6 +130,7 @@
     <Compile Include="Models\IngredientCategory.cs" />
     <Compile Include="Models\PrepMethod.cs" />
     <Compile Include="Models\Reference\Reference.cs" />
+    <Compile Include="Models\SpecialPrep.cs" />
     <Compile Include="Models\Vessel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Reference\ReferenceIngredients.cs" />
