@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Mix.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -61,7 +62,35 @@ namespace Mix.Services
 
         public IEnumerable<CocktailMatch> FeaturedCocktails()
         {
-            return Cocktails(null, null, Vessels.None);
+            using (var db = new SqlConnection(connectionString))
+            {
+                var dailySeed = (int)(DateTime.Now - new DateTime(1970, 1, 1)).TotalDays;
+                var rand = new Random(dailySeed);
+
+                var cocktailIds = ((Cocktails[])Enum.GetValues(typeof(Cocktails)))
+                    .Where(i => i != Models.Cocktails.None)
+                    .OrderBy(o => rand.Next())
+                    .Take(10).ToList();
+
+                var featuredSql = @"
+                    SELECT C.Id, C.Name,
+                    C.Vessel, V.Name AS VesselName,
+                    C.PrepMethod, P.Name AS PrepMethodName
+                    FROM Cocktail C
+                    LEFT JOIN Vessel V on V.Id = C.Vessel
+                    LEFT JOIN PrepMethod P on P.Id = C.PrepMethod
+                    WHERE C.Id IN @cocktailIds
+                ";
+
+                var cocktails = db.Query<CocktailMatch>(featuredSql, new { cocktailIds })
+                    .OrderBy(c => cocktailIds.IndexOf(c.Id));
+
+                foreach (var cocktail in cocktails)
+                {
+                    cocktail.Recipe = CocktailIngredients(db, cocktail.Id);
+                }
+                return cocktails;
+            }
         }
 
         public IEnumerable<CocktailMatch> Cocktails(IEnumerable<Ingredients> ingredients = null,
@@ -134,7 +163,6 @@ namespace Mix.Services
                 {
                     cocktail.Recipe = CocktailIngredients(db, cocktail.Id);
                 }
-
                 return cocktails;
             }
         }
@@ -163,7 +191,6 @@ namespace Mix.Services
                 var cocktail = results.First();
                 cocktail.Recipe = CocktailIngredients(db, cocktail.Id);
                 cocktail.Similar = SimilarCocktails(db, cocktail);
-
                 return cocktail;
             }
         }

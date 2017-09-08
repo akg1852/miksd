@@ -16,7 +16,7 @@
     <p>Your guide to cocktails / mixed drinks</p>
 
     <ul class="menu">
-        <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Home</a></li>
+        <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Featured</a></li>
 
         @foreach (var category in CocktailCategory.Categories)
         {
