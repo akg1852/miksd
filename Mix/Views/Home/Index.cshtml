@@ -3,32 +3,7 @@
 
 @{
     ViewBag.Title = ViewBag.Category;
-    List<IngredientCategory> ingredientCategories = ViewBag.Ingredients;
 }
-
-<input type="button" id="ingredient-search-button" value="Search by Ingredients" />
-
-<form id="ingredient-search-form">
-    <div class="ingredients">
-    @foreach (var category in ingredientCategories)
-    {
-        <div class="ingredient-category-header">@category.Name</div>
-        <div class="ingredient-category">
-            @foreach (var ingredient in category.Ingredients)
-            {
-                var id = (long)ingredient.Id;
-                <span class="ingredient-option">
-                    <input class="ingredient-checkbox" type="checkbox" id="ingredient-@id" name="i" value="@id" @(ViewBag.IngredientsFilter != null &&
-                        ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
-                    <label for="ingredient-@id">@ingredient.Name</label>
-                </span>
-            }
-        </div>
-    }
-    </div>
-    <input id="ingredient-clear-button" type="button" value="Clear All" />
-    <input type="submit" value="Search" />
-</form>
 
 <dl>
 <dt class="result-header">@ViewBag.Category</dt>

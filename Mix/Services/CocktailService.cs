@@ -195,6 +195,26 @@ namespace Mix.Services
             }
         }
 
+        public IEnumerable<Cocktail> Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return null;
+            }
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var textSearchSql = $@"
+                    SELECT C.Id, C.Name
+                    FROM Cocktail C
+                    LEFT JOIN CONTAINSTABLE(Cocktail, Name, @search) M ON  M.[KEY] = C.Id
+                    WHERE M.RANK IS NOT NULL
+                    ORDER BY M.RANK DESC
+                ";
+                return db.Query<Cocktail>(textSearchSql, new { search = ContainsSearchCondition(query) });
+            }
+        }
+
         private IEnumerable<CocktailIngredient> CocktailIngredients(SqlConnection db, Cocktails cocktail)
         {
             var ingredientSql =
@@ -220,6 +240,18 @@ namespace Mix.Services
             return Cocktails(ingredients.Concat(similarIngredients))
                 .Where(c => c.Id != cocktail.Id)
                 .Take(6);
+        }
+
+        private string ContainsSearchCondition(string query)
+        {
+            var terms = query.Replace("\"", "")
+                .Split(new char[0], StringSplitOptions.RemoveEmptyEntries).ToList();
+            var conditions = terms.Select(t => $"FORMSOF(INFLECTIONAL, \"{t}\")").ToList();
+            if (terms.Count == 1 || terms.Last().Length > 1)
+            {
+                conditions.Add($"\"{terms.Last()}*\"");
+            }
+            return string.Join(" OR ", conditions);
         }
     }
 

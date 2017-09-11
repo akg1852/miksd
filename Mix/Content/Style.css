@@ -66,6 +66,22 @@ ul.menu a, ul.menu a:visited {
     color: #000000;
 }
 
+/* cocktail search */
+
+#text-search {
+    float: right;
+    position: relative;
+}
+
+#search-results {
+    display: none;
+    float: right;
+    position: absolute;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: solid #000000 1px;
+}
+
 /* ingredient search form */
 
 #ingredient-search-form {

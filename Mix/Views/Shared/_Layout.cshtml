@@ -3,46 +3,74 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="~/Content/Style.css">
-    <link rel="icon" href="~/Content/favicon.ico" />
-    <title>@ViewBag.Title - Miksd</title>
-</head>
-<body>
-<div id="content">
-    <h1>Miksd</h1>
-    <p>Your guide to cocktails / mixed drinks</p>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="~/Content/Style.css">
+        <link rel="icon" href="~/Content/favicon.ico" />
+        <title>@ViewBag.Title - Miksd</title>
+    </head>
+    <body>
+        <div id="content">
+            <h1>Miksd</h1>
 
-    <ul class="menu">
-        <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Featured</a></li>
+            <form id="text-search">
+                <input id="search-field" type="search" autocomplete="off" placeholder="Search" />
+                <div id="search-results"></div>
+            </form>
 
-        @foreach (var category in CocktailCategory.Categories)
-        {
-            List<Ingredients> ingredients = category.Ingredients;
-            var link = "/?n=" + Url.Encode(category.Name);
+            <p>Your guide to cocktails / mixed drinks</p>
 
-            if (ingredients != null)
-            {
-                if (category.Full)
+            <ul class="menu">
+                <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Featured</a></li>
+
+                @foreach (var category in CocktailCategory.Categories)
                 {
-                    link += "&f=1";
+                    List<Ingredients> ingredients = category.Ingredients;
+                    var link = "/?n=" + Url.Encode(category.Name);
+
+                    if (ingredients != null)
+                    {
+                        if (category.Full)
+                        {
+                            link += "&f=1";
+                        }
+                        link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
+                    }
+                    if (category.Vessel != Vessels.None)
+                    {
+                        link += "&v=" + (long)category.Vessel;
+                    }
+
+                    <li class="@(link == Request.RawUrl ? "current" : "")"><a href="@link">@category.Name</a></li>
                 }
-                link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
-            }
-            if (category.Vessel != Vessels.None)
-            {
-                link += "&v=" + (long)category.Vessel;
-            }
+            </ul>
 
-            <li class="@(link == Request.RawUrl ? "current" : "")"><a href="@link">@category.Name</a></li>
-        }
-    </ul>
+            <input type="button" id="ingredient-search-button" value="Search by Ingredients" />
+            <form id="ingredient-search-form" action="/">
+                <div class="ingredients">
+                    @foreach (var category in ViewBag.Ingredients)
+                    {
+                        <div class="ingredient-category-header">@category.Name</div>
+                        <div class="ingredient-category">
+                            @foreach (var ingredient in category.Ingredients)
+                            {
+                                var id = (long)ingredient.Id;
+                                <span class="ingredient-option">
+                                    <input class="ingredient-checkbox" type="checkbox" id="ingredient-@id" name="i" value="@id" @(ViewBag.IngredientsFilter != null && ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
+                                    <label for="ingredient-@id">@ingredient.Name</label>
+                                </span>
+                            }
+                        </div>
+                    }
+                </div>
+                <input id="ingredient-clear-button" type="button" value="Clear All" />
+                <input type="submit" value="Search" />
+            </form>
 
-    @RenderBody()
+            @RenderBody()
 
-    <script src="~/Content/Mix.js"></script>
-</div>
-</body>
+            <script src="~/Content/Mix.js"></script>
+        </div>
+    </body>
 </html>
