@@ -6,6 +6,7 @@
     var searchField = document.getElementById('search-field');
     var searchResults = document.getElementById('search-results');
     var searchCocktails = null;
+    var selectedSearch = 0;
 
     searchField.oninput = function () {
         var query = searchField.value;
@@ -20,6 +21,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 searchCocktails = JSON.parse(xhr.responseText);
+                selectedSearch = 0;
 
                 if (searchCocktails === null) {
                     searchResults.style.display = 'none';
@@ -28,9 +30,10 @@
 
                 searchResults.style.display = 'block';
                 var results = (searchCocktails.length === 0) ? 'No results' :
-                    searchCocktails.map(function (c) {
-                        return '<a href="/Cocktail/' + c.Id + '">' + c.Name + '</a>';
-                    }).join('<br>');
+                    searchCocktails.map(function (c, i) {
+                        return '<a href="/Cocktail/' + c.Id + '" class="search-result' +
+                            (i == 0 ? ' search-result-selected' : '') + '">' + c.Name + '</a>';
+                    }).join('');
 
                 searchResults.innerHTML = results;
             }
@@ -43,9 +46,23 @@
     textSearch.onsubmit = function (e) {
         e.preventDefault();
         if (searchCocktails && searchCocktails.length) {
-            window.location = '/Cocktail/' + searchCocktails[0].Id;
+            window.location = '/Cocktail/' + searchCocktails[selectedSearch].Id;
         }
     }
+
+    searchField.addEventListener('keydown', function (e) {
+        e = e || window.event;
+        var keyCode = e.keyCode || e.which;
+
+        if (keyCode == '38' || keyCode == '40') {
+            e.preventDefault();
+            var results = document.getElementsByClassName('search-result');
+            [].forEach.call(results, function (el) { el.classList.remove('search-result-selected'); });
+
+            selectedSearch = (results.length + selectedSearch + (keyCode == '38' ? -1 : 1)) % results.length;
+            results[selectedSearch].classList.add('search-result-selected');
+        }
+    });
 
     document.body.addEventListener('click', function (e) {
         if (!textSearch.contains(e.target)) {

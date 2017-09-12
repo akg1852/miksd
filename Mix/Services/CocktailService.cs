@@ -209,7 +209,7 @@ namespace Mix.Services
                     FROM Cocktail C
                     LEFT JOIN CONTAINSTABLE(Cocktail, Name, @search) M ON  M.[KEY] = C.Id
                     WHERE M.RANK IS NOT NULL
-                    ORDER BY M.RANK DESC
+                    ORDER BY M.RANK DESC, C.Name
                 ";
                 return db.Query<Cocktail>(textSearchSql, new { search = ContainsSearchCondition(query) });
             }

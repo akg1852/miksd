@@ -82,6 +82,16 @@ ul.menu a, ul.menu a:visited {
     border: solid #000000 1px;
 }
 
+.search-result {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.search-result-selected {
+    background-color: #CCCCFF;
+}
+
 /* ingredient search form */
 
 #ingredient-search-form {
