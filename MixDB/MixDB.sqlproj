@@ -58,16 +58,17 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Ingredient.sql" />
-    <Build Include="IngredientRelationship.sql" />
-    <Build Include="Cocktail.sql" />
-    <Build Include="CocktailIngredient.sql" />
-    <Build Include="Vessel.sql" />
-    <Build Include="PrepMethod.sql" />
-    <Build Include="Garnish.sql" />
-    <Build Include="SpecialPrep.sql" />
+    <Build Include="Tables\Ingredient.sql" />
+    <Build Include="Tables\IngredientRelationship.sql" />
+    <Build Include="Tables\Cocktail.sql" />
+    <Build Include="Tables\CocktailIngredient.sql" />
+    <Build Include="Tables\Vessel.sql" />
+    <Build Include="Tables\PrepMethod.sql" />
+    <Build Include="Tables\Garnish.sql" />
+    <Build Include="Tables\SpecialPrep.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MixDB.local.publish.xml" />
