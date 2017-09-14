@@ -28,5 +28,6 @@ namespace Mix.Models
         LemonTwist = 32,
         LimeWedge = 64,
         LimeSlice = 128,
+        Nutmeg = 256,
     }
 }

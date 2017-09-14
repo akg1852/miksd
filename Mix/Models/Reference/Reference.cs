@@ -40,6 +40,7 @@ namespace Mix.Models
             new G(g.LimeWedge, "a lime wedge"),
             new G(g.OrangeTwist, "an orange twist"),
             new G(g.LemonTwist, "a lemon twist"),
+            new G(g.Nutmeg, "grated nutmeg"),
         };
 
         public static List<SpecialPrep> AllSpecialPreps = new List<SpecialPrep>

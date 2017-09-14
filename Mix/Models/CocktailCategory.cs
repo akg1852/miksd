@@ -22,7 +22,7 @@ namespace Mix.Models
             {
                 Name = "Ancestrals",
                 Ingredients = new List<i> { i.Spirit, i.Sweetener, i.Bitters,
-                    i.Citrus.Negate(), i.Wine.Negate() }
+                    i.Citrus.Negate(), i.WineAll.Negate() }
             },
             new CocktailCategory
             {

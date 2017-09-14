@@ -118,6 +118,23 @@ namespace Mix.Models
         WineAll = 75,
         Liqueur = 76,
         BitterLiqueur = 77,
+        GingerAle = 78,
+        RhumAgricole = 79,
+        IslayScotch = 80,
+        HoneySyrup = 81,
+        GingerSlice = 82,
+        Aperol = 83,
+        ChartreuseVerte = 84,
+        Mûre = 85,
+        CherryHeering = 86,
+        Cacao = 87,
+        SouthernComfort = 88,
+        FortifiedWine = 89,
+        Port = 90,
+        LilletBlanc = 91,
+        EggYolk = 92,
+        PeachSchnapps = 93,
+        Midori = 94,
     }
 
     public static class IngredientHelpers
