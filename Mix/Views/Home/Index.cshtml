@@ -3,10 +3,10 @@
 
 @{
     ViewBag.Title = ViewBag.Category;
+    var more = false;
 }
 
-<dl>
-<dt class="result-header">@ViewBag.Category</dt>
+<h2 class="result-header">@ViewBag.Category</h2>
 @for (var i = 0; i < ViewBag.Cocktails.Count; i++)
 {
     Cocktail cocktail = ViewBag.Cocktails[i];
@@ -17,19 +17,17 @@
 
     if (i == ViewBag.MatchCount && ViewBag.MatchCount > 0)
     {
-        <dt class="result-header">More Cocktails</dt>
+        more = true;
+        <div id="show-more">Show More…</div>
     }
 
-    <dd>
-        <dl>
-            <dt class="cocktail-name">
-                <a href="/Cocktail/@((long)cocktail.Id)">@cocktail.Name</a>
-            </dt>
-            <dd>
-                <p>@String.Join(", ", cocktailIngredients)<br />
-                @cocktail.PrepMethodName @(prepInVessel ? " in " : " & strain into ") @cocktail.VesselName</p>
-            </dd>
-        </dl>
-    </dd>
+    <div class="@(more ? "more" : "")">
+        <div class="cocktail-name">
+            <a href="/Cocktail/@((long)cocktail.Id)">@cocktail.Name</a>
+        </div>
+        <div>
+            <p>@String.Join(", ", cocktailIngredients)<br />
+            @cocktail.PrepMethodName @(prepInVessel ? " in " : " & strain into ") @cocktail.VesselName</p>
+        </div>
+    </div>
 }
-</dl>
