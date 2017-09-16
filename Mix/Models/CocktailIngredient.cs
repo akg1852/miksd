@@ -31,7 +31,11 @@ namespace Mix.Models
             if (IsDiscrete) return new HtmlString(quantity);
 
             string quantityString;
-            if (Quantity < 3.5M * CommonQuantity.Dash)
+            if (SpecialPrep == SpecialPreps.Squeeze)
+            {
+                quantityString = "A squeeze";
+            }
+            else if (Quantity < 3.5M * CommonQuantity.Dash)
             {
                 var dashes = Math.Round(Quantity / CommonQuantity.Dash);
                 if (dashes == 1) quantityString = "1 dash";

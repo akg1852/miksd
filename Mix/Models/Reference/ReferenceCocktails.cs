@@ -415,7 +415,7 @@ namespace Mix.Models
             new C(c.TiPunch, "Ti' Punch",
                 v.Rocks, p.Build, g.LimeSlice,
                 new CI(i.RhumAgricole, 45M),
-                new CI(i.LimeJuice, q.Teaspoon),
+                new CI(i.LimeJuice, q.Teaspoon, s.Squeeze),
                 new CI(i.SimpleSyrup, q.Teaspoon)),
 
             new C(c.Penicillin, "Penicillin", onTheRocks,

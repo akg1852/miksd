@@ -19,5 +19,6 @@
         Rinse = 1,
         Muddle = 2,
         Float = 3,
+        Squeeze = 4,
     }
 }

@@ -49,6 +49,7 @@ namespace Mix.Models
             new S(s.Rinse, "rinse"),
             new S(s.Muddle, "muddle"),
             new S(s.Float, "float"),
+            new S(s.Squeeze, "Squeeze"),
         };
     }
 }
