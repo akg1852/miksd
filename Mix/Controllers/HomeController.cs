@@ -50,7 +50,7 @@ namespace Mix.Controllers
                 }
                 if (c == 0 && f == 0)
                 {
-                    matchCount = cocktails.TakeWhile(co => (co.Fullness + co.Completeness) > 1).Count();
+                    matchCount = cocktails.TakeWhile(co => (co.Fullness + co.Completeness) >= 1).Count();
                 }
             }
 
