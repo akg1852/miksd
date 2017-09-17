@@ -137,6 +137,7 @@
     <Compile Include="Models\Reference\ReferenceCocktails.cs" />
     <Compile Include="Services\CocktailService.cs" />
     <Compile Include="Services\DbHelpers.cs" />
+    <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\ReferenceService.cs" />
   </ItemGroup>
   <ItemGroup>

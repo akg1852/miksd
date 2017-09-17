@@ -78,12 +78,13 @@ namespace Mix.Services
         {
             foreach (var cocktail in Reference.AllCocktails)
             {
-                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod, Ice, Garnish) " +
-                    "VALUES (@Id, @Name, @Vessel, @PrepMethod, @Ice, @Garnish)",
+                db.Execute("INSERT INTO Cocktail (Id, Name, Vessel, PrepMethod, Ice, Garnish, Color) " +
+                    "VALUES (@Id, @Name, @Vessel, @PrepMethod, @Ice, @Garnish, @Color)",
                     new
                     {
                         cocktail.Id, cocktail.Name,
-                        cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice, cocktail.Garnish
+                        cocktail.Vessel, cocktail.PrepMethod, cocktail.Ice, cocktail.Garnish,
+                        cocktail.Color
                     });
 
                 foreach (var ingredient in cocktail.Recipe)

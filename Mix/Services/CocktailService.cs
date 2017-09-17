@@ -73,7 +73,7 @@ namespace Mix.Services
                     .Take(10).ToList();
 
                 var featuredSql = @"
-                    SELECT C.Id, C.Name,
+                    SELECT C.Id, C.Name, C.Color,
                     C.Vessel, V.Name AS VesselName,
                     C.PrepMethod, P.Name AS PrepMethodName
                     FROM Cocktail C
@@ -127,11 +127,11 @@ namespace Mix.Services
                         WHERE CI.Id IS NULL
                     ),
                     MatchingCocktail AS (
-                        SELECT C.Id, C.Name, C.Vessel, C.VesselName, C.PrepMethod, C.PrepMethodName,
+                        SELECT C.Id, C.Name, C.Color, C.Vessel, C.VesselName, C.PrepMethod, C.PrepMethodName,
                         (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
                         (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
                         FROM (
-                            SELECT C.Id, C.Name,
+                            SELECT C.Id, C.Name, C.Color,
                             C.Vessel, V.Name AS VesselName,
                             C.PrepMethod, P.Name AS PrepMethodName,
                             COUNT(DISTINCT (CASE WHEN CI.IsOptional = 0 THEN II.Id END)) AS FullnessCount,
@@ -144,11 +144,11 @@ namespace Mix.Services
                             WHERE (@vessel = 0 OR C.Vessel = @vessel)
                             AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
                             OR II.Id IS NOT NULL)
-                            GROUP BY C.Id, C.Name, C.Vessel, V.Name, C.PrepMethod, P.Name
+                            GROUP BY C.Id, C.Name, C.Color, C.Vessel, V.Name, C.PrepMethod, P.Name
                         ) AS C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                         WHERE CI.IsOptional = 0
-                        GROUP BY C.Id, C.Name,
+                        GROUP BY C.Id, C.Name, C.Color,
                         C.Vessel, C.VesselName, C.PrepMethod, C.PrepMethodName,
                         C.FullnessCount, C.CompletenessCount
                     )
@@ -172,7 +172,7 @@ namespace Mix.Services
             using (var db = new SqlConnection(connectionString))
             {
                 var results = db.Query<Cocktail>(
-                    @"SELECT C.Id, C.Name, C.Ice,
+                    @"SELECT C.Id, C.Name, C.Ice, C.Color,
                     C.Vessel, V.Name AS VesselName,
                     C.PrepMethod, P.Name AS PrepMethodName,
                     C.Garnish, STUFF(

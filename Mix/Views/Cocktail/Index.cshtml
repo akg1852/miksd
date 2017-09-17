@@ -1,4 +1,5 @@
 ﻿@using Mix.Models;
+@using Mix.Services;
 
 @{
     Cocktail cocktail = ViewBag.Cocktail;
@@ -6,6 +7,8 @@
 }
 
 <h2>@cocktail.Name</h2>
+
+@ImageService.CocktailImage(cocktail, 200, "cocktail-image")
 
 <h3>Recipe</h3>
 <ul>

@@ -168,3 +168,12 @@ h2.result-header {
 .more {
     display: none;
 }
+
+/* cocktail image */
+
+.cocktail-thumbnail {
+    float: left;
+}
+.cocktail-image {
+    float: right;
+}

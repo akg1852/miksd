@@ -1,5 +1,6 @@
 ﻿@using Mix.Models;
 @using System.Linq;
+@using Mix.Services;
 
 @{
     ViewBag.Title = ViewBag.Category;
@@ -7,6 +8,7 @@
 }
 
 <h2 class="result-header">@ViewBag.Category</h2>
+
 @for (var i = 0; i < ViewBag.Cocktails.Count; i++)
 {
     Cocktail cocktail = ViewBag.Cocktails[i];
@@ -25,6 +27,7 @@
         <div class="cocktail-name">
             <a href="/Cocktail/@((long)cocktail.Id)">@cocktail.Name</a>
         </div>
+        @ImageService.CocktailImage(cocktail, 50, "cocktail-thumbnail")
         <div>
             <p>@String.Join(", ", cocktailIngredients)<br />
             @cocktail.PrepMethodName @(prepInVessel ? " in " : " & strain into ") @cocktail.VesselName</p>

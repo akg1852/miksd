@@ -18,10 +18,12 @@ namespace Mix.Models
         public Garnishes Garnish;
         public string GarnishName;
 
+        public string Color;
+
         public Cocktail() { }
-        public Cocktail(Cocktails id, string name, Vessels vessel, PrepMethods prepMethod, Garnishes garnish,
-            params CocktailIngredient[] recipe) : this(id, name, false, vessel, prepMethod, garnish, recipe) { }
-        public Cocktail(Cocktails id, string name, bool ice, Vessels vessel, PrepMethods prepMethod, Garnishes garnish,
+        public Cocktail(Cocktails id, string name, string color, Vessels vessel, PrepMethods prepMethod, Garnishes garnish,
+            params CocktailIngredient[] recipe) : this(id, name, color, false, vessel, prepMethod, garnish, recipe) { }
+        public Cocktail(Cocktails id, string name, string color, bool ice, Vessels vessel, PrepMethods prepMethod, Garnishes garnish,
             params CocktailIngredient[] recipe)
         {
             Id = id;
@@ -33,6 +35,8 @@ namespace Mix.Models
             Garnish = garnish;
 
             Recipe = recipe;
+
+            Color = color;
         }
 
         public string Description()
