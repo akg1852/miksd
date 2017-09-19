@@ -46,7 +46,7 @@ namespace Mix.Services
                     break;
                 case Vessels.Rocks:
                     svg += $@"
-                        <polyline fill='{fill}' points='20,30 20,80 80,80 80,30' /> <!-- liquid -->
+                        <polyline fill='{fill}' points='20,40 20,80 80,80 80,40' /> <!-- liquid -->
                         <polyline fill='none' stroke='black' points='20,10 20,80 80,80 80,10' /> <!-- bowl -->
                         <polyline fill='none' stroke='black' points='20,80 20,90 80,90 80,80' /> <!-- base -->
                     ";
