@@ -60,6 +60,13 @@ a.link:visited {
     color: #660066;
 }
 
+/* logo */
+
+.glass {
+    height: 100px;
+    float: left;
+}
+
 /* menu */
 
 ul.menu {
