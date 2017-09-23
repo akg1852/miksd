@@ -23,14 +23,17 @@
         <div id="show-more">Show More…</div>
     }
 
-    <div class="@(more ? "more" : "")">
-        <div class="cocktail-name">
-            <a href="/Cocktail/@((long)cocktail.Id)">@cocktail.Name</a>
+    <a href="/Cocktail/@((long)cocktail.Id)">
+        <div class="cocktail-result @(more ? "more" : "")">
+            <div class="cocktail-name">
+                @cocktail.Name
+            </div>
+            @ImageService.CocktailImage(cocktail, 50, "cocktail-thumbnail")
+            <div>
+                <p>@String.Join(", ", cocktailIngredients)<br />
+                @cocktail.PrepMethodName @(prepInVessel ? " in " : " & strain into ") @cocktail.VesselName</p>
+            </div>
+            <div class="spacer"></div>
         </div>
-        @ImageService.CocktailImage(cocktail, 50, "cocktail-thumbnail")
-        <div>
-            <p>@String.Join(", ", cocktailIngredients)<br />
-            @cocktail.PrepMethodName @(prepInVessel ? " in " : " & strain into ") @cocktail.VesselName</p>
-        </div>
-    </div>
+    </a>
 }

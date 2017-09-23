@@ -78,7 +78,7 @@ namespace Mix.Models
             new I(i.Maraschino, "Maraschino Liqueur"),
             new I(i.Drambuie, "Drambuie"),
             new I(i.Cassis, "Crème de Cassis"),
-            new I(i.Mûre, "Crème de Mure"),
+            new I(i.Mûre, "Crème de Mûre"),
             new I(i.Violette, "Crème de Violette"),
             new I(i.Cacao, "Crème de Cacao"),
             new I(i.Galliano, "Galliano"),

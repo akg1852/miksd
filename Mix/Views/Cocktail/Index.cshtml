@@ -31,7 +31,7 @@
     @foreach (var similarCocktail in cocktail.Similar)
     {
         <li>
-            <a href="/Cocktail/@((long)similarCocktail.Id)">@similarCocktail.Name</a>
+            <a class="link" href="/Cocktail/@((long)similarCocktail.Id)">@similarCocktail.Name</a>
         </li>
     }
 </ul>
