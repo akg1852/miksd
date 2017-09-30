@@ -135,6 +135,12 @@ namespace Mix.Models
         EggYolk = 92,
         PeachSchnapps = 93,
         Midori = 94,
+        BlueCuraçao = 95,
+        Lemonade = 96,
+        PlymouthGin = 97,
+        SloeGin = 98,
+        ApricotLiqueur = 99,
+        Sherry = 100,
     }
 
     public static class IngredientHelpers

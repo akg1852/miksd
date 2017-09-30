@@ -207,5 +207,18 @@ namespace Mix.Models
         SexOnTheBeach = 78,
         JapaneseSlipper = 79,
         YellowBird = 80,
+        BlueLagoon = 81,
+        SmokyMartini = 82,
+        PinkGin = 83,
+        GoldenCadillac = 84,
+        FuzzyNavel = 85,
+        Millionaire = 86,
+        Paradise = 87,
+        Painkiller = 88,
+        Beachcomber = 89,
+        FogCutter = 90,
+        Mudslide = 91,
+        Orgasm = 92,
+        QuickFuck = 93,
     }
 }
