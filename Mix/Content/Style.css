@@ -219,3 +219,16 @@ h2.result-header {
 .cocktail-image {
     float: right;
 }
+
+/* similar cocktails list */
+
+.similar-cocktails {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.similar-cocktail {
+    width: 115px;
+    text-align: center;
+    margin: 5px;
+}

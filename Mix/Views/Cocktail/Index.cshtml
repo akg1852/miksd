@@ -26,12 +26,13 @@
 
 <p>@cocktail.Description()</p>
 
-<h3>Similar Cocktails</h3>
-<ul>
+<h3 class="spacer">Similar Cocktails</h3>
+<div class="similar-cocktails">
     @foreach (var similarCocktail in cocktail.Similar)
     {
-        <li>
-            <a class="link" href="/Cocktail/@((long)similarCocktail.Id)">@similarCocktail.Name</a>
-        </li>
+        <a href="/Cocktail/@((long)similarCocktail.Id)" class="cocktail-result similar-cocktail">
+            @ImageService.CocktailImage(similarCocktail, 100, "")
+            <div>@similarCocktail.Name</div>
+        </a>
     }
-</ul>
+</div>
