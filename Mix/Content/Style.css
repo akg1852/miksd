@@ -15,14 +15,16 @@ body {
     overflow-y: scroll;
 }
 
-#content {
-    padding: 0 20px 20px 20px;
+#all {
+    min-height: 100vh;
     color: #000000;
     background-color: #FFFFFF;
-
-    min-height: 100vh;
     max-width: 800px;
-    margin: auto;
+    margin: 0 auto;
+}
+
+#content {
+    padding: 0 20px 20px 20px;
 }
 
 ul {
@@ -63,6 +65,7 @@ a.link:visited {
 /* logo */
 
 .glass {
+    margin: 10px;
     height: 100px;
     float: left;
 }
@@ -71,7 +74,7 @@ a.link:visited {
 
 ul.menu {
     display: flex;
-    margin: 20px 0;
+    margin: 0;
     width: 100%;
     background-color: #CCCCFF;
     overflow-x: auto;
@@ -81,6 +84,9 @@ ul.menu > li {
     flex: 1 0 0;
     text-align: center;
     display: inline-block;
+}
+
+ul.menu > li:not(:last-child) {
     border-right: solid #FFFFFF 1px;
 }
 
@@ -103,6 +109,7 @@ ul.menu a, ul.menu a:visited {
 /* cocktail search */
 
 #text-search {
+    margin: 10px;
     float: right;
     position: relative;
 }
