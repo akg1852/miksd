@@ -25,15 +25,12 @@
 
     <a href="/Cocktail/@((long)cocktail.Id)">
         <div class="cocktail-result @(more ? "more" : "")">
-            <div class="cocktail-name">
-                @cocktail.Name
-            </div>
-            @ImageService.CocktailImage(cocktail, 50, "cocktail-thumbnail")
-            <div>
+            <div class="cocktail-name">@cocktail.Name</div>
+            <div class="cocktail-summary">
+                @ImageService.CocktailImage(cocktail, 50, "cocktail-thumbnail")
                 <p>@String.Join(", ", cocktailIngredients)<br />
                 @cocktail.PrepMethodName @(prepInVessel ? " in " : " & strain into ") @cocktail.VesselName</p>
             </div>
-            <div class="spacer"></div>
         </div>
     </a>
 }

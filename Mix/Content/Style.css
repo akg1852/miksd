@@ -109,7 +109,6 @@ ul.menu a, ul.menu a:visited {
 
 #search-results {
     display: none;
-    float: right;
     position: absolute;
     width: 100%;
     background-color: #FFFFFF;
@@ -192,11 +191,18 @@ h2.result-header {
     margin-top: 20px;
 }
 
+.cocktail-summary {
+    display: flex;
+}
+.cocktail-summary > p {
+    flex: 1;
+}
+
 .cocktail-result {
     box-shadow: 2px 2px 10px #CCCCCC;
 }
 .cocktail-result:hover {
-    background-color: #F9F9F9;
+    background-color: #F5F5F5;
 }
 
 #show-more {
@@ -213,9 +219,6 @@ h2.result-header {
 
 /* cocktail image */
 
-.cocktail-thumbnail {
-    float: left;
-}
 .cocktail-image {
     float: right;
 }
