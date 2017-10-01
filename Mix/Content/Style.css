@@ -34,7 +34,6 @@ ul {
 h1 {
     font-size: 2em;
     font-weight: bold;
-    padding-top: 25px;
 }
 
 h2 {
@@ -62,12 +61,86 @@ a.link:visited {
     color: #660066;
 }
 
-/* logo */
+/* header */
 
 .glass {
-    margin: 10px;
     height: 100px;
-    float: left;
+    padding-right: 10px;
+}
+
+#header {
+    display: flex;
+    padding: 10px;
+    position: relative;
+}
+
+#header-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#header-top {
+    display: flex;
+}
+
+#header-bottom {
+    display: flex;
+    padding-right: 50px;
+}
+
+#title {
+    flex: 1 0 0;
+}
+
+/* text search */
+
+#text-search {
+    position: relative;
+    flex: 1 1 0;
+    text-align: right;
+}
+
+#search-field {
+    width: 100%;
+    height: 30px;
+}
+
+#search-results {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: solid #000000 1px;
+}
+
+.search-result {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.search-result-selected {
+    background-color: #CCCCFF;
+}
+
+/* ingredient search button */
+
+#ingredient-search {
+    position: absolute;
+    right: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+#ingredient-search-button {
+    cursor: pointer;
+    filter: drop-shadow( 3px 3px 3px #CCCCCC );
+}
+#ingredient-search-button > circle {
+    fill: #FF6633;
 }
 
 /* menu */
@@ -106,37 +179,12 @@ ul.menu a, ul.menu a:visited {
     color: #000000;
 }
 
-/* cocktail search */
-
-#text-search {
-    margin: 10px;
-    float: right;
-    position: relative;
-}
-
-#search-results {
-    display: none;
-    position: absolute;
-    width: 100%;
-    background-color: #FFFFFF;
-    border: solid #000000 1px;
-}
-
-.search-result {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-
-.search-result-selected {
-    background-color: #CCCCFF;
-}
-
 /* ingredient search form */
 
 #ingredient-search-form {
     visibility: hidden;
     position: absolute;
+    top: 50px;
     background-color: #FFFFFF;
     border: solid #000000 1px;
     height: 300px;
@@ -200,6 +248,7 @@ h2.result-header {
 
 .cocktail-summary {
     display: flex;
+    padding-right: 20px;
 }
 .cocktail-summary > p {
     flex: 1;

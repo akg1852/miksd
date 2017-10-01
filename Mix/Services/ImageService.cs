@@ -78,5 +78,18 @@ namespace Mix.Services
             svg += "</svg>";
             return new HtmlString(svg);
         }
+
+        public static HtmlString IngredientSearchIcon()
+        {
+            var svg = @"
+                <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'>
+                    <circle cx='50' cy='50' r='50' />
+                    <path fill='none' stroke='#FFFFFF' stroke-width='36' stroke-linecap='round'
+                        d='m280,278a153,153 0 1,0-2,2l170,170m-91-117 110,110-26,26-110-110'
+                        transform='scale(0.1) translate(280 250)' />
+                </svg>
+            ";
+            return new HtmlString(svg);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using Mix.Models;
+@using Mix.Services;
 @using System.Linq;
 
 <!DOCTYPE html>
@@ -15,61 +16,71 @@
     <div id="all">
         <div id="header">
             <img class="glass" src="~/Content/glass.png" />
-            <h1>Miksd</h1>
-            <p>Your guide to cocktails / mixed drinks</p>
 
-            <form id="text-search">
-                <input id="search-field" type="search" autocomplete="off" spellcheck="false" placeholder="Search" />
-                <div id="search-results"></div>
-            </form>
+            <div id="header-main">
+                <div id="header-top">
+                    <h1 id="title">Miksd</h1>
 
-            <input type="button" id="ingredient-search-button" value="Search by Ingredients" />
-            <form id="ingredient-search-form" action="/">
-                <div class="ingredients">
-                    @foreach (var category in ViewBag.Ingredients)
-                    {
-                        <div class="ingredient-category-header">@category.Name</div>
-                        <div class="ingredient-category">
-                            @foreach (var ingredient in category.Ingredients)
-                            {
-                                var id = (long)ingredient.Id;
-                                <span class="ingredient-option">
-                                    <input class="ingredient-checkbox" type="checkbox" id="ingredient-@id" name="i" value="@id" @(ViewBag.IngredientsFilter != null && ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
-                                    <label for="ingredient-@id">@ingredient.Name</label>
-                                </span>
-                            }
-                        </div>
-                    }
+                    <form id="text-search">
+                        <input id="search-field" type="search" autocomplete="off" spellcheck="false" placeholder="Search" />
+                        <div id="search-results"></div>
+                    </form>
                 </div>
-                <input id="ingredient-clear-button" type="button" value="Clear All" />
-                <input type="submit" value="Search" />
-            </form>
 
-            <ul class="menu">
-                <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Featured</a></li>
+                <div id="header-bottom">
+                    <p id="subtitle">Your guide to cocktails / mixed drinks</p>
 
-                @foreach (var category in CocktailCategory.Categories)
-                {
-                    List<Ingredients> ingredients = category.Ingredients;
-                    var link = "/?n=" + Url.Encode(category.Name);
-
-                    if (ingredients != null)
-                    {
-                        if (category.Full)
-                        {
-                            link += "&f=1";
-                        }
-                        link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
-                    }
-                    if (category.Vessel != Vessels.None)
-                    {
-                        link += "&v=" + (long)category.Vessel;
-                    }
-
-                    <li class="@(link == Request.RawUrl ? "current" : "")"><a href="@link">@category.Name</a></li>
-                }
-            </ul>
+                    <div id="ingredient-search">
+                        @ImageService.IngredientSearchIcon()
+                        <form id="ingredient-search-form" action="/">
+                            <div class="ingredients">
+                                @foreach (var category in ViewBag.Ingredients)
+                                {
+                                    <div class="ingredient-category-header">@category.Name</div>
+                                    <div class="ingredient-category">
+                                        @foreach (var ingredient in category.Ingredients)
+                                        {
+                                            var id = (long)ingredient.Id;
+                                            <span class="ingredient-option">
+                                                <input class="ingredient-checkbox" type="checkbox" id="ingredient-@id" name="i" value="@id" @(ViewBag.IngredientsFilter != null && ViewBag.IngredientsFilter.Contains(ingredient.Id) ? "checked='checked'" : string.Empty) />
+                                                <label for="ingredient-@id">@ingredient.Name</label>
+                                            </span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <input id="ingredient-clear-button" type="button" value="Clear All" />
+                            <input type="submit" value="Search" />
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <ul class="menu">
+            <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Featured</a></li>
+
+            @foreach (var category in CocktailCategory.Categories)
+            {
+                List<Ingredients> ingredients = category.Ingredients;
+                var link = "/?n=" + Url.Encode(category.Name);
+
+                if (ingredients != null)
+                {
+                    if (category.Full)
+                    {
+                        link += "&f=1";
+                    }
+                    link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
+                }
+                if (category.Vessel != Vessels.None)
+                {
+                    link += "&v=" + (long)category.Vessel;
+                }
+
+                <li class="@(link == Request.RawUrl ? "current" : "")"><a href="@link">@category.Name</a></li>
+            }
+        </ul>
 
         <div id="content">
             @RenderBody()
