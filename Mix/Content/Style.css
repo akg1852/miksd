@@ -39,13 +39,13 @@ h1 {
 h2 {
     font-size: 1.5em;
     font-weight: bold;
-    padding-top: 25px;
+    margin-top: 30px;
 }
 
 h3 {
     font-size: 1.2em;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 a {
@@ -135,6 +135,7 @@ a.link:visited {
     flex-direction: column;
     align-items: flex-end;
 }
+
 #ingredient-search-button {
     cursor: pointer;
     filter: drop-shadow( 3px 3px 3px #CCCCCC );
