@@ -1,6 +1,8 @@
 ﻿/* Miksd */
 (function () {
 
+    var header = document.getElementById('header');
+
     // search field
     var textSearch = document.getElementById('text-search');
     var searchField = document.getElementById('search-field');
@@ -70,14 +72,27 @@
         }
     });
 
-    // ingredient search button
+    // ingredient search
+    var ingredientSearch = document.getElementById('ingredient-search');
+    var headerBottom = document.getElementById('header-bottom');
     var ingredientSearchButton = document.getElementById('ingredient-search-button');
     var ingredientSearchForm = document.getElementById('ingredient-search-form');
-    ingredientSearchButton.addEventListener('click', function ()
-    {
+    ingredientSearchButton.addEventListener('click', function () {
         ingredientSearchForm.style.visibility =
             ingredientSearchForm.style.visibility === 'visible' ? 'hidden' : 'visible';
     });
+    window.addEventListener('scroll', function () {
+        if (window.pageYOffset > headerBottom.offsetTop - 10) {
+            ingredientSearch.style.position = 'fixed';
+            ingredientSearch.style.top = '10px';
+            ingredientSearch.style.right = (header.offsetLeft + 10) + 'px';
+        }
+        else {
+            ingredientSearch.style.position = 'absolute';
+            ingredientSearch.style.top = '';
+            ingredientSearch.style.right = '';
+        }
+    })
 
     // ingredient search categories
     var ingredientCategories = [];
