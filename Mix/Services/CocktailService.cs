@@ -97,6 +97,8 @@ namespace Mix.Services
                                                     IEnumerable<Ingredients> exgredients = null,
                                                     Vessels vessel = Vessels.None)
         {
+            ingredients = ingredients.Distinct().ToList();
+
             using (var db = new SqlConnection(connectionString))
             {
                 var cocktailSql = @"
@@ -230,14 +232,17 @@ namespace Mix.Services
         private IEnumerable<Cocktail> SimilarCocktails(SqlConnection db, Cocktail cocktail)
         {
             var ingredients = cocktail.Recipe.Select(i => i.Ingredient);
-            var similarIngredients = db.Query<Ingredients>(
-                "SELECT Parent " +
+            var equivalence = db.Query(
+                "SELECT Parent, Child " +
                 "FROM IngredientRelationship IR " +
                 "LEFT JOIN Ingredient I ON I.Id = IR.Parent " +
                 "WHERE Child IN @ingredients " +
                 "AND I.Equivalence = 1",
-                new { ingredients });
-            return Cocktails(ingredients.Concat(similarIngredients))
+                new { ingredients }).ToList();
+            var similarIngredients = ingredients.Where(i => !equivalence.Any(e => (Ingredients)e.Child == i))
+                .Concat(equivalence.Select(e => (Ingredients)e.Parent));
+
+            return Cocktails(similarIngredients)
                 .Where(c => c.Id != cocktail.Id)
                 .Take(6);
         }
