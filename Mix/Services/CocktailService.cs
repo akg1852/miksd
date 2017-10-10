@@ -97,7 +97,7 @@ namespace Mix.Services
                                                     IEnumerable<Ingredients> exgredients = null,
                                                     Vessels vessel = Vessels.None)
         {
-            ingredients = ingredients.Distinct().ToList();
+            ingredients = ingredients?.Distinct()?.ToList();
 
             using (var db = new SqlConnection(connectionString))
             {
