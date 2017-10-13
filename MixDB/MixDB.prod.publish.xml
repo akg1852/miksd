@@ -4,7 +4,7 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseName>MixDB</TargetDatabaseName>
     <DeployScriptFileName>MixDB.sql</DeployScriptFileName>
-    <TargetConnectionString>Data Source=aatzoe9p8btc2d.cbohrnx54xfe.us-west-2.rds.amazonaws.com,1433;Persist Security Info=False;User ID=root;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
+    <TargetConnectionString>Data Source=aabq4m0x5ybg3c.cbohrnx54xfe.us-west-2.rds.amazonaws.com,1433;Persist Security Info=True;User ID=root;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
     <ScriptDatabaseOptions>False</ScriptDatabaseOptions>
