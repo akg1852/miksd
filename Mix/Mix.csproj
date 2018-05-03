@@ -110,6 +110,9 @@
     <Content Include="Content\Style.css" />
     <Content Include="Error.html" />
     <Content Include="Global.asax" />
+    <None Include="React\.babelrc" />
+    <Content Include="React\src\index.js" />
+    <Content Include="React\webpack.config.babel.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -148,6 +151,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cocktail\Index.cshtml" />
+    <Content Include="React\package.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -157,6 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="React\dist\" />
+    <Folder Include="React\src\components\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

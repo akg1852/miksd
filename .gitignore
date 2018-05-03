@@ -8,6 +8,9 @@
 *.[Cc]ache
 !*.[Cc]ache/
 
+node_modules/
+dist/
+
 .vs/
 *.suo
 *.user
