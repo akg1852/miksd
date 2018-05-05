@@ -6,7 +6,7 @@ const Ingredients = ({ ingredients, selectedCategory, handleCategoryChange, hand
             {ingredients.map(c => <IngredientCategoryHeader key={c.Category}
                 name={c.Category}
                 isCurrent={c.Category === selectedCategory}
-                count={c.Ingredients.filter(i => i.isSelected).length}
+                count={c.Ingredients.filter(i => typeof(i.selection) === 'boolean').length}
                 handleCategoryChange={handleCategoryChange} />)}
         </div>
         {ingredients.map(c => <IngredientCategory key={c.Category}
@@ -28,19 +28,26 @@ const IngredientCategory = ({ ingredients, isCurrent, handleIngredientSelect }) 
     <div className={"ingredient-category " + (isCurrent ? 'current' : '')}>
         {ingredients.map(i => <Ingredient key={i.Id} id={i.Id}
             name={i.Name}
-            isSelected={i.isSelected}
+            selection={i.selection}
             handleSelect={handleIngredientSelect} />)}
     </div>
 );
 
-const Ingredient = ({ id, name, isSelected, handleSelect }) => (
+const Ingredient = ({ id, name, selection, handleSelect }) => (
     <span className="ingredient-option">
-        <input className="ingredient-checkbox" type="checkbox" name="i"
-            checked={!!isSelected}
-            onChange={(e) => handleSelect(id, e.target.checked)}
-            id={"ingredient-" + id}
+        <input className="ingredient-checkbox include" type="checkbox" name="i"
+            checked={selection === true}
+            onChange={(e) => handleSelect(id, e.target.checked ? true : undefined)}
+            id={"ingredient+" + id}
             value={id} />
-        <label htmlFor={"ingredient-" + id}>{name}</label>
+        <label htmlFor={"ingredient+" + id}>✔</label>
+        <input className="ingredient-checkbox exclude" type="checkbox" name="i"
+            checked={selection === false}
+            onChange={(e) => handleSelect(id, e.target.checked ? false : undefined )}
+            id={"ingredient-" + id}
+            value={-id} />
+        <label htmlFor={"ingredient-" + id}>✘</label>
+        <span className="ingredient-name">{name}</span>
     </span>
 );
 

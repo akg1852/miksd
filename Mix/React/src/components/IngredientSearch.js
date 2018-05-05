@@ -20,14 +20,14 @@ class IngredientSearch extends React.Component {
         this.setState({ selectedCategory: category });
     }
 
-    handleIngredientSelect(id, isSelected) {
+    handleIngredientSelect(id, selection) {
         const ingredients = this.state.ingredients;
         for (var c = 0; c < ingredients.length; c++) {
             const ii = ingredients[c].Ingredients;
             for (var i = 0; i < ii.length; i++) {
                 const ingredient = ii[i];
                 if (ingredient.Id === id) {
-                    ingredient.isSelected = isSelected;
+                    ingredient.selection = selection;
                     this.setState({ ingredients });
                     return;
                 }
@@ -38,7 +38,7 @@ class IngredientSearch extends React.Component {
     unselectAllIngredients() {
         const ingredients = this.state.ingredients;
         ingredients.forEach(c => c.Ingredients.forEach(i => {
-            i.isSelected = false
+            i.selection = undefined;
         }));
         this.setState({ ingredients });
     }
@@ -63,7 +63,9 @@ class IngredientSearch extends React.Component {
 const setSelectedIngredients = (ingredients) => {
     const selectedIngredients = getQueryString()['i'] || [];
     ingredients.forEach(c => c.Ingredients.forEach(i => {
-        i.isSelected = selectedIngredients.includes(i.Id.toString())
+        i.selection = selectedIngredients.includes(i.Id.toString()) ? true
+                    : selectedIngredients.includes((-i.Id).toString()) ? false
+                    : undefined;
     }));
 };
 
