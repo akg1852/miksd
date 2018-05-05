@@ -111,6 +111,8 @@
     <Content Include="Error.html" />
     <Content Include="Global.asax" />
     <None Include="React\.babelrc" />
+    <Content Include="React\src\components\Ingredients.js" />
+    <Content Include="React\src\components\IngredientSearch.js" />
     <Content Include="React\src\index.js" />
     <Content Include="React\webpack.config.babel.js" />
     <Content Include="Web.config">
@@ -162,7 +164,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="React\dist\" />
-    <Folder Include="React\src\components\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

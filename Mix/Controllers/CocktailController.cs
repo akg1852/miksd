@@ -17,7 +17,6 @@ namespace Mix.Controllers
         public ActionResult Index(long id)
         {
             ViewBag.Cocktail = cocktailService.Cocktail(id);
-            ViewBag.Ingredients = cocktailService.IngredientCategories();
             return View();
         }
 
@@ -25,6 +24,16 @@ namespace Mix.Controllers
         {
             var results = cocktailService.Search(q);
             var json = JsonConvert.SerializeObject(results?.Select(c => new { c.Id, c.Name }));
+            return Content(json, "application/json");
+        }
+
+        public ActionResult Ingredients()
+        {
+            var results = cocktailService.IngredientCategories();
+            var json = JsonConvert.SerializeObject(results.Select(c => new {
+                Category = c.Name,
+                Ingredients = c.Ingredients.Select(i => new { i.Id, i.Name })
+            }));
             return Content(json, "application/json");
         }
     }
