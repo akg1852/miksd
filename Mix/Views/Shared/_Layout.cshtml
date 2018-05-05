@@ -44,7 +44,7 @@
             @foreach (var category in CocktailCategory.Categories)
             {
                 List<Ingredients> ingredients = category.Ingredients;
-                var link = "/?n=" + Url.Encode(category.Name);
+                var link = "/?title=" + Url.Encode(category.Name);
 
                 if (ingredients != null)
                 {

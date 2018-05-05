@@ -24,7 +24,7 @@ namespace Mix.Controllers
          * n: name of category
          */
         public ActionResult Index(List<Ingredients> i, byte c = 0, byte f = 0,
-            Vessels v = Vessels.None, string n = "Cocktails")
+            Vessels v = Vessels.None, string title = "Cocktails")
         {
             IEnumerable<CocktailMatch> cocktails;
             var matchCount = -1;
@@ -56,7 +56,7 @@ namespace Mix.Controllers
 
             ViewBag.Cocktails = cocktails.ToList();
             ViewBag.MatchCount = matchCount;
-            ViewBag.Category = n;
+            ViewBag.Title = title;
 
             return View();
         }

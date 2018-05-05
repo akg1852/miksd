@@ -3,11 +3,10 @@
 @using Mix.Services;
 
 @{
-    ViewBag.Title = ViewBag.Category;
     var more = false;
 }
 
-<h2 class="result-header">@ViewBag.Category</h2>
+<h2 class="result-header">@ViewBag.Title</h2>
 
 @for (var i = 0; i < ViewBag.Cocktails.Count; i++)
 {
