@@ -6,6 +6,7 @@ const Ingredients = ({ ingredients, selectedCategory, handleCategoryChange, hand
             {ingredients.map(c => <IngredientCategoryHeader key={c.Category}
                 name={c.Category}
                 isCurrent={c.Category === selectedCategory}
+                count={c.Ingredients.filter(i => i.isSelected).length}
                 handleCategoryChange={handleCategoryChange} />)}
         </div>
         {ingredients.map(c => <IngredientCategory key={c.Category}
@@ -15,9 +16,12 @@ const Ingredients = ({ ingredients, selectedCategory, handleCategoryChange, hand
     </div>
 );
 
-const IngredientCategoryHeader = ({ name, isCurrent, handleCategoryChange }) => (
+const IngredientCategoryHeader = ({ name, isCurrent, count, handleCategoryChange }) => (
     <div className={"ingredient-category-header " + (isCurrent ? 'current' : '')}
-        onClick={() => handleCategoryChange(name)}>{name}</div>
+        onClick={() => handleCategoryChange(name)}>
+        {name}
+        {(count > 0) && <span className="ingredient-count"> ({count})</span>}
+    </div>
 );
 
 const IngredientCategory = ({ ingredients, isCurrent, handleIngredientSelect }) => (
