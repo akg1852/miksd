@@ -40,13 +40,13 @@ const Ingredient = ({ id, name, selection, handleSelect }) => (
             onChange={(e) => handleSelect(id, e.target.checked ? true : undefined)}
             id={"ingredient+" + id}
             value={id} />
-        <label htmlFor={"ingredient+" + id}>✔</label>
+        <label htmlFor={"ingredient+" + id}>✓</label>
         <input className="ingredient-checkbox exclude" type="checkbox" name="i"
             checked={selection === false}
             onChange={(e) => handleSelect(id, e.target.checked ? false : undefined )}
             id={"ingredient-" + id}
             value={-id} />
-        <label htmlFor={"ingredient-" + id}>✘</label>
+        <label htmlFor={"ingredient-" + id}>✗</label>
         <span className="ingredient-name">{name}</span>
     </span>
 );
