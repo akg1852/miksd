@@ -215,31 +215,37 @@ ul.menu a, ul.menu a:visited {
 .ingredient-category.current {
     display: block;
 }
+
 .ingredient-option {
     display: block;
     white-space: nowrap;
 }
-
-.ingredient-checkbox {
+.ingredient-option input[type='checkbox'] {
     display: none;
 }
 .ingredient-name {
     margin-left: 15px;
 }
-.ingredient-checkbox + label {
+.ingredient-option label {
     margin-left: 10px;
     color: #999999;
     font-weight: bold;
     cursor: pointer;
 }
-.ingredient-checkbox:checked + label {
+.ingredient-option.include label.include {
+    color: #009900;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
-.ingredient-checkbox.include:checked + label {
-    color: #009900;
-}
-.ingredient-checkbox.exclude:checked + label {
+.ingredient-option.exclude label.exclude {
     color: #CC0000;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+.ingredient-option.include .ingredient-name {
+    font-weight: bold;
+}
+.ingredient-option.exclude .ingredient-name {
+    color: #999999;
+    text-decoration: line-through;
 }
 
 #ingredient-clear-button {

@@ -33,22 +33,26 @@ const IngredientCategory = ({ ingredients, isCurrent, handleIngredientSelect }) 
     </div>
 );
 
-const Ingredient = ({ id, name, selection, handleSelect }) => (
-    <span className="ingredient-option">
-        <input className="ingredient-checkbox include" type="checkbox" name="i"
-            checked={selection === true}
-            onChange={(e) => handleSelect(id, e.target.checked ? true : undefined)}
-            id={"ingredient+" + id}
-            value={id} />
-        <label htmlFor={"ingredient+" + id}>✓</label>
-        <input className="ingredient-checkbox exclude" type="checkbox" name="i"
-            checked={selection === false}
-            onChange={(e) => handleSelect(id, e.target.checked ? false : undefined )}
-            id={"ingredient-" + id}
-            value={-id} />
-        <label htmlFor={"ingredient-" + id}>✗</label>
-        <span className="ingredient-name">{name}</span>
-    </span>
-);
+const Ingredient = ({ id, name, selection, handleSelect }) => {
+    const include = selection === true;
+    const exclude = selection === false;
+    return (
+        <span className={"ingredient-option " + (include ? 'include' : exclude ? 'exclude' : '')}>
+            <input type="checkbox" name="i"
+                checked={include}
+                onChange={(e) => handleSelect(id, e.target.checked ? true : undefined)}
+                id={"ingredient+" + id}
+                value={id} />
+            <label className="include" htmlFor={"ingredient+" + id}>✓</label>
+            <input type="checkbox" name="i"
+                checked={exclude}
+                onChange={(e) => handleSelect(id, e.target.checked ? false : undefined)}
+                id={"ingredient-" + id}
+                value={-id} />
+            <label className="exclude" htmlFor={"ingredient-" + id}>✗</label>
+            <span className="ingredient-name">{name}</span>
+        </span>
+    );
+}
 
 export default Ingredients;
