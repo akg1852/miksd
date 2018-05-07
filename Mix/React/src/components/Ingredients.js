@@ -6,7 +6,7 @@ const Ingredients = ({ ingredients, selectedCategory, handleCategoryChange, hand
             {ingredients.map(c => <IngredientCategoryHeader key={c.Category}
                 name={c.Category}
                 isCurrent={c.Category === selectedCategory}
-                count={c.Ingredients.filter(i => typeof(i.selection) === 'boolean').length}
+                count={c.Ingredients.filter(i => i.selection !== undefined).length}
                 handleCategoryChange={handleCategoryChange} />)}
         </div>
         {ingredients.map(c => <IngredientCategory key={c.Category}
@@ -36,21 +36,20 @@ const IngredientCategory = ({ ingredients, isCurrent, handleIngredientSelect }) 
 const Ingredient = ({ id, name, selection, handleSelect }) => {
     const include = selection === true;
     const exclude = selection === false;
+    const noSelection = selection === undefined;
+
     return (
         <span className={"ingredient-option " + (include ? 'include' : exclude ? 'exclude' : '')}>
-            <input type="checkbox" name="i"
-                checked={include}
-                onChange={(e) => handleSelect(id, e.target.checked ? true : undefined)}
-                id={"ingredient+" + id}
-                value={id} />
-            <label className="include" htmlFor={"ingredient+" + id}>✓</label>
-            <input type="checkbox" name="i"
-                checked={exclude}
-                onChange={(e) => handleSelect(id, e.target.checked ? false : undefined)}
-                id={"ingredient-" + id}
-                value={-id} />
-            <label className="exclude" htmlFor={"ingredient-" + id}>✗</label>
-            <span className="ingredient-name">{name}</span>
+            <input type="checkbox" name="i" id={"ingredient+" + id}
+                checked={include} value={id} />
+            <label className="include" htmlFor={"ingredient+" + id}
+                onClick={() => handleSelect(id, !include ? true : undefined)}>✓</label>
+            <input type="checkbox" name="i" id={"ingredient-" + id}
+                checked={exclude} value={-id} />
+            <label className="exclude" htmlFor={"ingredient-" + id}
+                onClick={() => handleSelect(id, !exclude ? false : undefined)}>✗</label>
+            <span className="ingredient-name"
+                onClick={() => handleSelect(id, noSelection ? true : undefined)}>{name}</span>
         </span>
     );
 }

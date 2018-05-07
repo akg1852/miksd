@@ -219,12 +219,14 @@ ul.menu a, ul.menu a:visited {
 .ingredient-option {
     display: block;
     white-space: nowrap;
+    user-select: none;
 }
 .ingredient-option input[type='checkbox'] {
     display: none;
 }
 .ingredient-name {
     margin-left: 15px;
+    cursor: default;
 }
 .ingredient-option label {
     margin-left: 10px;

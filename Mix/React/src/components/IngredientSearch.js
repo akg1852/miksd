@@ -53,7 +53,7 @@ class IngredientSearch extends React.Component {
                     handleIngredientSelect={this.handleIngredientSelect} />
                 <input id="ingredient-clear-button" type="button"
                     disabled={this.state.ingredients.every(c =>
-                        c.Ingredients.every(i => !(typeof (i.selection) === 'boolean')))}
+                        c.Ingredients.every(i => i.selection === undefined))}
                     value="Clear All"
                     onClick={this.unselectAllIngredients} />
                 <input type="submit" value="Search" />
