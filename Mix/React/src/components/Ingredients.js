@@ -41,11 +41,11 @@ const Ingredient = ({ id, name, selection, handleSelect }) => {
     return (
         <span className={"ingredient-option " + (include ? 'include' : exclude ? 'exclude' : '')}>
             <input type="checkbox" name="i" id={"ingredient+" + id}
-                checked={include} value={id} />
+                checked={include} readOnly value={id} />
             <label className="include" htmlFor={"ingredient+" + id}
                 onClick={() => handleSelect(id, !include ? true : undefined)}>✓</label>
             <input type="checkbox" name="i" id={"ingredient-" + id}
-                checked={exclude} value={-id} />
+                checked={exclude} readOnly value={-id} />
             <label className="exclude" htmlFor={"ingredient-" + id}
                 onClick={() => handleSelect(id, !exclude ? false : undefined)}>✗</label>
             <span className="ingredient-name"
