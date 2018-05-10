@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import IngredientSearch from './components/IngredientSearch';
+import CocktailSearch from './components/CocktailSearch';
 
 fetch('/Cocktail/Ingredients')
     .then(response => {
@@ -13,3 +14,8 @@ fetch('/Cocktail/Ingredients')
             });
         }
     });
+
+ReactDOM.render(
+    <CocktailSearch />,
+    document.getElementById('cocktail-search')
+);

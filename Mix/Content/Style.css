@@ -95,7 +95,7 @@ a.link:visited {
 
 /* text search */
 
-#text-search {
+#cocktail-search {
     position: relative;
     flex: 1 1 0;
 }
@@ -106,7 +106,6 @@ a.link:visited {
 }
 
 #search-results {
-    display: none;
     position: absolute;
     z-index: 10;
     width: 100%;
