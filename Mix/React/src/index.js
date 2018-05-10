@@ -8,7 +8,7 @@ fetch('/Cocktail/Ingredients')
             response.json().then(data => {
                 ReactDOM.render(
                     <IngredientSearch ingredients={data} />,
-                    document.getElementById('ingredient-search-form')
+                    document.getElementById('ingredient-search')
                 );
             });
         }

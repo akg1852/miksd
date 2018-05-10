@@ -66,10 +66,10 @@
 
     // ingredient search
     var ingredientSearchButton = document.getElementById('ingredient-search-button');
-    var ingredientSearchForm = document.getElementById('ingredient-search-form');
+    var ingredientSearch = document.getElementById('ingredient-search');
     ingredientSearchButton.addEventListener('click', function () {
-        ingredientSearchForm.style.visibility =
-            ingredientSearchForm.style.visibility === 'visible' ? 'hidden' : 'visible';
+        ingredientSearch.style.visibility =
+            ingredientSearch.style.visibility === 'visible' ? 'hidden' : 'visible';
     });
 
     // scrolling magic
@@ -95,8 +95,8 @@
             searchResults.style.display = 'none';
         }
         if (!ingredientSearchButton.contains(e.target) &&
-            !ingredientSearchForm.contains(e.target)) {
-            ingredientSearchForm.style.visibility = 'hidden';
+            !ingredientSearch.contains(e.target)) {
+            ingredientSearch.style.visibility = 'hidden';
         }
     });
 

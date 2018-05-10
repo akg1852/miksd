@@ -126,7 +126,7 @@ a.link:visited {
 
 /* ingredient search button */
 
-#ingredient-search {
+#ingredient-search-wrapper {
     position: absolute;
     right: 10px;
 
@@ -179,9 +179,9 @@ ul.menu a, ul.menu a:visited {
     color: #000000;
 }
 
-/* ingredient search form */
+/* ingredient search */
 
-#ingredient-search-form {
+#ingredient-search {
     visibility: hidden;
     position: absolute;
     top: 50px;
@@ -255,7 +255,7 @@ ul.menu a, ul.menu a:visited {
     width: 128px;
     background-color: #999999;
 }
-#ingredient-search-form input[type='submit'] {
+#ingredient-search input[type='submit'] {
     height: 27px;
     width: 188px;
     background-color: #669966;
