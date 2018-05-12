@@ -10,18 +10,18 @@
 
     // scrolling magic
     var header = document.getElementById('header');
-    var ingredientSearch = document.getElementById('ingredient-search');
+    var ingredientSearchWrapper = document.getElementById('ingredient-search-wrapper');
     var headerBottom = document.getElementById('header-bottom');
     window.addEventListener('scroll', function () {
         if (window.pageYOffset > headerBottom.offsetTop - 10) {
-            ingredientSearch.style.position = 'fixed';
-            ingredientSearch.style.top = '10px';
-            ingredientSearch.style.right = (header.offsetLeft + 10) + 'px';
+            ingredientSearchWrapper.style.position = 'fixed';
+            ingredientSearchWrapper.style.top = '10px';
+            ingredientSearchWrapper.style.right = (header.offsetLeft + 10) + 'px';
         }
         else {
-            ingredientSearch.style.position = 'absolute';
-            ingredientSearch.style.top = '';
-            ingredientSearch.style.right = '';
+            ingredientSearchWrapper.style.position = 'absolute';
+            ingredientSearchWrapper.style.top = '';
+            ingredientSearchWrapper.style.right = '';
         }
     })
 
