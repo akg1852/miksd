@@ -3,15 +3,15 @@
 const Ingredients = ({ ingredients, selectedCategory, handleCategoryChange, handleIngredientSelect }) => (
     <div id="ingredients" className="ingredients">
         <div className="ingredient-category-headers">
-            {ingredients.map(c => <IngredientCategoryHeader key={c.Category}
-                name={c.Category}
-                isCurrent={c.Category === selectedCategory}
-                count={c.Ingredients.filter(i => i.selection !== undefined).length}
+            {ingredients.map(c => <IngredientCategoryHeader key={c.category}
+                name={c.category}
+                isCurrent={c.category === selectedCategory}
+                count={c.ingredients.filter(i => i.selection !== undefined).length}
                 handleCategoryChange={handleCategoryChange} />)}
         </div>
-        {ingredients.map(c => <IngredientCategory key={c.Category}
-            ingredients={c.Ingredients}
-            isCurrent={c.Category === selectedCategory}
+        {ingredients.map(c => <IngredientCategory key={c.category}
+            ingredients={c.ingredients}
+            isCurrent={c.category === selectedCategory}
             handleIngredientSelect={handleIngredientSelect} />)}
     </div>
 );
@@ -26,8 +26,8 @@ const IngredientCategoryHeader = ({ name, isCurrent, count, handleCategoryChange
 
 const IngredientCategory = ({ ingredients, isCurrent, handleIngredientSelect }) => (
     <div className={"ingredient-category " + (isCurrent ? 'current' : '')}>
-        {ingredients.map(i => <Ingredient key={i.Id} id={i.Id}
-            name={i.Name}
+        {ingredients.map(i => <Ingredient key={i.id} id={i.id}
+            name={i.name}
             selection={i.selection}
             handleSelect={handleIngredientSelect} />)}
     </div>

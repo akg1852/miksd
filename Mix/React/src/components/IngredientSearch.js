@@ -6,7 +6,7 @@ class IngredientSearch extends React.Component {
         super(props);
 
         const ingredients = this.props.ingredients;
-        const selectedCategory = ingredients[0].Category;
+        const selectedCategory = ingredients[0].category;
         setSelectedIngredients(ingredients);
 
         this.state = { selectedCategory, ingredients };
@@ -23,10 +23,10 @@ class IngredientSearch extends React.Component {
     handleIngredientSelect(id, selection) {
         const ingredients = this.state.ingredients;
         for (var c = 0; c < ingredients.length; c++) {
-            const ii = ingredients[c].Ingredients;
+            const ii = ingredients[c].ingredients;
             for (var i = 0; i < ii.length; i++) {
                 const ingredient = ii[i];
-                if (ingredient.Id === id) {
+                if (ingredient.id === id) {
                     ingredient.selection = selection;
                     this.setState({ ingredients });
                     return;
@@ -37,7 +37,7 @@ class IngredientSearch extends React.Component {
 
     unselectAllIngredients() {
         const ingredients = this.state.ingredients;
-        ingredients.forEach(c => c.Ingredients.forEach(i => {
+        ingredients.forEach(c => c.ingredients.forEach(i => {
             i.selection = undefined;
         }));
         this.setState({ ingredients });
@@ -53,7 +53,7 @@ class IngredientSearch extends React.Component {
                     handleIngredientSelect={this.handleIngredientSelect} />
                 <input id="ingredient-clear-button" type="button"
                     disabled={this.state.ingredients.every(c =>
-                        c.Ingredients.every(i => i.selection === undefined))}
+                        c.ingredients.every(i => i.selection === undefined))}
                     value="Clear All"
                     onClick={this.unselectAllIngredients} />
                 <input type="submit" value="Search" />
@@ -64,9 +64,9 @@ class IngredientSearch extends React.Component {
 
 const setSelectedIngredients = (ingredients) => {
     const selectedIngredients = getQueryString()['i'] || [];
-    ingredients.forEach(c => c.Ingredients.forEach(i => {
-        i.selection = selectedIngredients.includes(i.Id.toString()) ? true
-                    : selectedIngredients.includes((-i.Id).toString()) ? false
+    ingredients.forEach(c => c.ingredients.forEach(i => {
+        i.selection = selectedIngredients.includes(i.id.toString()) ? true
+                    : selectedIngredients.includes((-i.id).toString()) ? false
                     : undefined;
     }));
 };

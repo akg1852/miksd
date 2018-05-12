@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Mix.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private CocktailService cocktailService;
 

@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace Mix.Controllers
 {
-    public class CocktailController : Controller
+    public class CocktailController : BaseController
     {
         private CocktailService cocktailService;
 
@@ -23,18 +23,16 @@ namespace Mix.Controllers
         public ActionResult Search(string q)
         {
             var results = cocktailService.Search(q);
-            var json = JsonConvert.SerializeObject(results?.Select(c => new { c.Id, c.Name }));
-            return Content(json, "application/json");
+            return JsonContent(results?.Select(c => new { c.Id, c.Name }));
         }
 
         public ActionResult Ingredients()
         {
-            var results = cocktailService.IngredientCategories();
-            var json = JsonConvert.SerializeObject(results.Select(c => new {
+            var ingredients = cocktailService.IngredientCategories();
+            return JsonContent(ingredients.Select(c => new {
                 Category = c.Name,
                 Ingredients = c.Ingredients.Select(i => new { i.Id, i.Name })
             }));
-            return Content(json, "application/json");
         }
     }
 }

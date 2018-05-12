@@ -40,7 +40,7 @@ class CocktailSearch extends React.Component {
     goToCocktail() {
         const cocktails = this.state.cocktails;
         if (cocktails && cocktails.length) {
-            window.location = '/Cocktail/' + this.state.cocktails[this.state.selection].Id;
+            window.location = '/Cocktail/' + this.state.cocktails[this.state.selection].id;
         }
     }
 
@@ -80,10 +80,10 @@ class CocktailSearch extends React.Component {
 const CocktailSearchResults = ({ cocktails, selection, handleSelection }) => (
     <div id="search-results">
         {(cocktails.length === 0) ? 'No results' :
-            cocktails.map((c, i) => (<a key={c.Id} href={"/Cocktail/" + c.Id}
+            cocktails.map((c, i) => (<a key={c.id} href={"/Cocktail/" + c.id}
                 className={"search-result " + (i === selection ? ' search-result-selected' : '')}
                 onMouseMove={() => handleSelection(i)}>
-                {c.Name}</a>
+                {c.name}</a>
             ))}
     </div>
 );
