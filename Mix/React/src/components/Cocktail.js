@@ -27,7 +27,7 @@ class Cocktail extends React.Component {
 
 const Ingredient = ({ name, isOptional, quantity, quantityWords }) => (
     <li>
-        <span title="{quantity}">{quantityWords || quantity}</span>
+        <span title={quantity}>{quantityWords || quantity}</span>
         {' ' + name}
         {isOptional && ' (optional)'}
     </li>
