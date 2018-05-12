@@ -5,10 +5,6 @@
     font-size: 1em;
 }
 
-.spacer {
-    clear: both;
-}
-
 body {
     --primary-color: #BCAAA4;
     --primary-color-dark: #A1887F;
@@ -323,15 +319,8 @@ h2.result-header {
     float: right;
 }
 
-/* similar cocktails list */
-
-.similar-cocktails {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.similar-cocktail {
-    width: 115px;
-    text-align: center;
-    margin: 5px;
+/* similar cocktails */
+.similar {
+    margin-top: 60px;
+    clear: both;
 }

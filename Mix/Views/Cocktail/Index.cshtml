@@ -3,37 +3,7 @@
 @using System.Web;
 
 @{
-    Cocktail cocktail = ViewBag.Cocktail;
-    ViewBag.Title = cocktail.Name;
+    ViewBag.Title = "Cocktail";
 }
 
-<h2>@cocktail.Name</h2>
-
-@(new HtmlString(ImageService.CocktailImage(cocktail, 200, "cocktail-image")))
-
-<h3>Recipe</h3>
-<ul>
-    @foreach (var ingredient in cocktail.Recipe)
-    {
-        <li>
-            @ingredient.QuantityHtml() @ingredient.Name
-            @if (ingredient.IsOptional)
-            {
-                <span>(optional)</span>
-            }
-        </li>
-    }
-</ul>
-
-<p>@cocktail.Description()</p>
-
-<h3 class="spacer">Similar Cocktails</h3>
-<div class="similar-cocktails">
-    @foreach (var similarCocktail in cocktail.Similar)
-    {
-        <a href="/Cocktail/@((long)similarCocktail.Id)" class="cocktail-result similar-cocktail">
-            @(new HtmlString(ImageService.CocktailImage(similarCocktail, 100, "")))
-            <div>@similarCocktail.Name</div>
-        </a>
-    }
-</div>
+<div id="cocktail"></div>

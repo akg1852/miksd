@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 
 namespace Mix.Models
 {
@@ -24,11 +23,9 @@ namespace Mix.Models
             SpecialPrep = specialPrep;
         }
 
-        public HtmlString QuantityHtml()
+        public string QuantityWords()
         {
-            var quantity = Quantity.ToString("0.#") + (IsDiscrete ? "" : " ml");
-
-            if (IsDiscrete) return new HtmlString(quantity);
+            if (IsDiscrete) return null;
 
             string quantityString;
             if (SpecialPrep == SpecialPreps.Squeeze)
@@ -48,9 +45,9 @@ namespace Mix.Models
                 if (teaspoons == 1) quantityString = "1 teaspoon";
                 else quantityString = teaspoons + " teaspoons";
             }
-            else quantityString = quantity;
+            else return null;
 
-            return new HtmlString($"<span title=\"{quantity}\" >{quantityString}</span>");
+            return quantityString;
         }
     }
 }

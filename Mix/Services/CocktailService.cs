@@ -244,7 +244,7 @@ namespace Mix.Services
 
             return Cocktails(similarIngredients)
                 .Where(c => c.Id != cocktail.Id)
-                .Take(6);
+                .Take(10);
         }
 
         private string ContainsSearchCondition(string query)
