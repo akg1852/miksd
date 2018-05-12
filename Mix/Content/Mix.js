@@ -28,16 +28,4 @@
         }
     });
 
-    // search results
-    var showMore = document.getElementById('show-more');
-    if (showMore != null) {
-        showMore.onclick = function () {
-            var more = document.getElementsByClassName('more');
-            showMore.style.display = 'none';
-            [].forEach.call(more, function (el) {
-                el.style.display = 'block';
-            });
-        };
-    }
-
 })();

@@ -317,10 +317,6 @@ h2.result-header {
     background-color: var(--primary-color);
 }
 
-.more {
-    display: none;
-}
-
 /* cocktail image */
 
 .cocktail-image {

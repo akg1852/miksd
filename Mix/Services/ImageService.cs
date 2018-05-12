@@ -1,11 +1,10 @@
-﻿using System.Web;
-using Mix.Models;
+﻿using Mix.Models;
 
 namespace Mix.Services
 {
     public static class ImageService
     {
-        public static HtmlString CocktailImage(Cocktail cocktail, float size, string cssClass)
+        public static string CocktailImage(Cocktail cocktail, float size, string cssClass)
         {
             var colors = cocktail.Color.Split(',');
             var svg = $"<svg width='{size}' height='{size}' viewBox='0 0 100 100' class='{cssClass}'>";
@@ -76,12 +75,12 @@ namespace Mix.Services
             }
 
             svg += "</svg>";
-            return new HtmlString(svg);
+            return svg;
         }
 
-        public static HtmlString IngredientSearchIcon()
+        public static string IngredientSearchIcon()
         {
-            var svg = @"
+            return @"
                 <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'>
                     <circle cx='50' cy='50' r='50' />
                     <path fill='none' stroke='#FFFFFF' stroke-width='36' stroke-linecap='round'
@@ -89,7 +88,6 @@ namespace Mix.Services
                         transform='scale(0.1) translate(280 250)' />
                 </svg>
             ";
-            return new HtmlString(svg);
         }
     }
 }

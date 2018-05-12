@@ -1,5 +1,6 @@
 ﻿@using Mix.Models;
 @using Mix.Services;
+@using System.Web;
 
 @{
     Cocktail cocktail = ViewBag.Cocktail;
@@ -8,7 +9,7 @@
 
 <h2>@cocktail.Name</h2>
 
-@ImageService.CocktailImage(cocktail, 200, "cocktail-image")
+@(new HtmlString(ImageService.CocktailImage(cocktail, 200, "cocktail-image")))
 
 <h3>Recipe</h3>
 <ul>
@@ -31,7 +32,7 @@
     @foreach (var similarCocktail in cocktail.Similar)
     {
         <a href="/Cocktail/@((long)similarCocktail.Id)" class="cocktail-result similar-cocktail">
-            @ImageService.CocktailImage(similarCocktail, 100, "")
+            @(new HtmlString(ImageService.CocktailImage(similarCocktail, 100, "")))
             <div>@similarCocktail.Name</div>
         </a>
     }
