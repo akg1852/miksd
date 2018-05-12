@@ -262,6 +262,9 @@ ul.menu a, ul.menu a:visited {
     width: 128px;
     background-color: #999999;
 }
+#ingredient-clear-button:disabled {
+    color: #666666;
+}
 #ingredient-search input[type='submit'] {
     height: 27px;
     width: 188px;
