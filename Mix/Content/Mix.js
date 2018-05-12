@@ -37,8 +37,10 @@
             }
         }
 
-        if (!ingredientSearchButton.contains(e.target) &&
+        if (ingredientSearch.style.visibility == 'visible' &&
+            !ingredientSearchButton.contains(e.target) &&
             !ingredientSearch.contains(e.target)) {
+            e.preventDefault();
             ingredientSearch.style.visibility = 'hidden';
         }
     });
