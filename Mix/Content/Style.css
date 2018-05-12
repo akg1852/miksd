@@ -5,6 +5,10 @@
     font-size: 1em;
 }
 
+.spacer {
+    clear: both;
+}
+
 body {
     --primary-color: #BCAAA4;
     --primary-color-dark: #A1887F;
@@ -317,10 +321,4 @@ h2.result-header {
 
 .cocktail-image {
     float: right;
-}
-
-/* similar cocktails */
-.similar {
-    margin-top: 60px;
-    clear: both;
 }

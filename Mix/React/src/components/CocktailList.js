@@ -14,6 +14,7 @@ class CocktailList extends React.Component {
         }
 
         return {
+            title: nextProps.title,
             show: 10,
             cocktails: nextProps.cocktails
         };
@@ -30,8 +31,9 @@ class CocktailList extends React.Component {
 
         return (
             <div>
-                {this.props.cocktails.slice(0, this.state.show).map(c => <Cocktail key={c.id} {...c} />)}
-                {(this.props.cocktails.length > this.state.show) &&
+                <h2>{this.state.title}</h2>
+                {this.state.cocktails.slice(0, this.state.show).map(c => <Cocktail key={c.id} {...c} />)}
+                {(this.state.cocktails.length > this.state.show) &&
                     <div id="show-more"
                         onClick={this.handleShowMore}>
                         Show More…

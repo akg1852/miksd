@@ -7,7 +7,7 @@ class IngredientSearch extends React.Component {
 
         const ingredients = this.props.ingredients;
         const selectedCategory = ingredients[0].category;
-        setSelectedIngredients(ingredients);
+        setSelectedIngredients(ingredients, this.props.selectedIngredients);
 
         this.state = { selectedCategory, ingredients };
 
@@ -62,28 +62,12 @@ class IngredientSearch extends React.Component {
     }
 }
 
-const setSelectedIngredients = (ingredients) => {
-    const selectedIngredients = getQueryString()['i'] || [];
+const setSelectedIngredients = (ingredients, selectedIngredients) => {
     ingredients.forEach(c => c.ingredients.forEach(i => {
         i.selection = selectedIngredients.includes(i.id.toString()) ? true
                     : selectedIngredients.includes((-i.id).toString()) ? false
                     : undefined;
     }));
-};
-
-const getQueryString = () => {
-    var result = {};
-    var vars = window.location.search.substring(1).split('&');
-
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        var key = pair[0];
-        var val = pair[1];
-
-        result[key] = result[key] || [];
-        result[key].push(val);
-    }
-    return result;
 };
 
 export default IngredientSearch;

@@ -18,8 +18,8 @@ class Cocktail extends React.Component {
 
                 <p>{description}</p>
 
-                <h3 className="similar">Similar Cocktails</h3>
-                <CocktailList cocktails={similar} />
+                <div className="spacer"></div>
+                <CocktailList cocktails={similar} title="Similar Cocktails" />
             </div>
         );
     }

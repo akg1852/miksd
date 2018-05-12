@@ -17,7 +17,6 @@ namespace Mix.Controllers
 
         public ActionResult Index(string title = "Cocktails")
         {
-            ViewBag.Title = title;
             return View();
         }
     }
