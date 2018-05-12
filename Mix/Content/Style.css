@@ -92,10 +92,13 @@ a {
 
 #header-bottom {
     display: flex;
-    padding-right: 50px;
 }
 
-#title {
+#header-bottom-right {
+    width: 40px;
+}
+
+#title, #subtitle {
     flex: 1 0 0;
 }
 
@@ -133,9 +136,7 @@ a {
 /* ingredient search button */
 
 #ingredient-search-wrapper {
-    position: absolute;
-    right: 10px;
-
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
