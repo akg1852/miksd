@@ -14,6 +14,7 @@ class CocktailSearch extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.goToCocktail = this.goToCocktail.bind(this);
         this.handleKey = this.handleKey.bind(this);
+        this.handleSelection = this.handleSelection.bind(this);
     }
 
     handleInput(query) {
@@ -51,6 +52,12 @@ class CocktailSearch extends React.Component {
             const cocktails = this.state.cocktails;
             const shift = (key == '38') ? -1 : 1;
             const selection = (cocktails.length + this.state.selection + shift) % cocktails.length;
+            this.handleSelection(selection);
+        }
+    }
+
+    handleSelection(selection) {
+        if (this.state.selection !== selection) {
             this.setState({ selection });
         }
     }
@@ -64,17 +71,18 @@ class CocktailSearch extends React.Component {
                     value={this.state.query}
                     onInput={(e) => this.handleInput(e.target.value)}
                     onKeyDown={this.handleKey} />
-                {this.state.query && <CocktailSearchResults {...this.state} />}
+                {this.state.query && <CocktailSearchResults handleSelection={this.handleSelection} {...this.state} />}
             </form>
         );
     }
 }
 
-const CocktailSearchResults = ({ cocktails, selection }) => (
+const CocktailSearchResults = ({ cocktails, selection, handleSelection }) => (
     <div id="search-results">
         {(cocktails.length === 0) ? 'No results' :
             cocktails.map((c, i) => (<a key={c.Id} href={"/Cocktail/" + c.Id}
-                className={"search-result " + (i === selection ? ' search-result-selected' : '')}>
+                className={"search-result " + (i === selection ? ' search-result-selected' : '')}
+                onMouseMove={() => handleSelection(i)}>
                 {c.Name}</a>
             ))}
     </div>
