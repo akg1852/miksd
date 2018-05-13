@@ -1,7 +1,4 @@
-﻿using Mix.Models;
-using Mix.Services;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Mix.Services;
 using System.Web.Mvc;
 
 namespace Mix.Controllers
@@ -15,7 +12,7 @@ namespace Mix.Controllers
             cocktailService = new CocktailService();
         }
 
-        public ActionResult Index(string title = "Cocktails")
+        public ActionResult Index()
         {
             return View();
         }

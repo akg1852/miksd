@@ -27,7 +27,8 @@ const cocktail = document.getElementById('cocktail');
 const titleBase = ' - Miksd';
 
 if (cocktailList) {
-    const title = (query['title'] || [])[0] || 'Cocktails';
+    let title = (query['title'] || [])[0] || 'Cocktails';
+    title = decodeURIComponent(title.replace(/\+/g, ' '));
     document.title = title + titleBase;
     fetch('/Cocktail/List' + window.location.search)
         .then(response => {
