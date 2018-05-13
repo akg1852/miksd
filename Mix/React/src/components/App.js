@@ -1,67 +1,38 @@
 ﻿import React from 'react';
+import { Route, Switch } from 'react-router-dom'
 
-import CocktailList from './CocktailList';
+import CocktailResultList from './CocktailResultList';
 import Cocktail from './Cocktail';
 import Header from './Header';
 import Menu from './Menu';
+import NotFound from './NotFound';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-
-        const path = window.location.pathname.split('/').slice(1);
-        const query = getQueryString();
-
-        this.state = {
-            page: path[0].toLowerCase() || 'home',
-            customTitle: (query['title'] || [])[0],
-            selectedIngredients: query['i'] || [],
-            cocktailId: path[1],
-        };
-
-        this.Page = this.Page.bind(this);
-    }
-
-    componentDidMount() {
-        if (this.state.page === 'home') {
-            fetch('/Cocktail/List' + window.location.search)
-                .then(response => {
-                    if (response.status == 200) {
-                        response.json().then(cocktails => {
-                            this.setState({ cocktails });
-                        });
-                    }
-                });
-        }
-    }
-
-    Page() {
-        const page = this.state.page;
-
-        if (page === 'home') {
-            let title = this.state.customTitle;
-            title = (title ? decodeURIComponent(title.replace(/\+/g, ' ')) : 'Cocktails');
-            document.title = title + ' - Miksd';
-
-            return this.state.cocktails &&
-                <CocktailList cocktails={this.state.cocktails} title={title} />
-        }
-        else if (page === 'cocktail') {
-            return <Cocktail id={this.state.cocktailId} />
-        }
-        else {
-            return <div>Page not found!</div>
-        }
     }
 
     render() {
+        const query = getQueryString();
+        const ingredients = query['i'] || [];
+
+        let title = (query['title'] || [])[0];
+        title = (title ? decodeURIComponent(title.replace(/\+/g, ' ')) : 'Cocktails');
+        document.title = title + ' - Miksd';
+
         return (
             <div>
-                <Header selectedIngredients={this.state.selectedIngredients} />
+                <Route render={(props) => <Header {...props} selectedIngredients={ingredients} />} />
                 <Menu />
 
                 <div id="content">
-                    {this.Page()}
+                    <Switch>
+                        <Route exact path='/' render={(props) => <CocktailResultList {...props}
+                            title={title}
+                            ingredients={ingredients} />} />
+                        <Route path='/Cocktail/:id' component={Cocktail} />} />
+                        <Route component={NotFound} />
+                    </Switch>
                 </div>
             </div>
         );

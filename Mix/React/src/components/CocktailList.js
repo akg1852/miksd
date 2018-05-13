@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { Link } from 'react-router-dom'
 
 class CocktailList extends React.Component {
     constructor(props) {
@@ -14,7 +15,6 @@ class CocktailList extends React.Component {
         }
 
         return {
-            title: nextProps.title,
             show: 10,
             cocktails: nextProps.cocktails
         };
@@ -25,13 +25,16 @@ class CocktailList extends React.Component {
     }
 
     render() {
+        if (!this.props.cocktails) {
+            return null;
+        }
         if (this.props.cocktails.length === 0) {
             return <span>Sorry! No cocktails available with selected ingredients.</span>
         }
 
         return (
             <div>
-                <h2>{this.state.title}</h2>
+                <h2>{this.props.title}</h2>
                 {this.state.cocktails.slice(0, this.state.show).map(c => <Cocktail key={c.id} {...c} />)}
                 {(this.state.cocktails.length > this.state.show) &&
                     <div id="show-more"
@@ -44,7 +47,7 @@ class CocktailList extends React.Component {
 }
 
 const Cocktail = ({ id, name, recipe, description, thumbnail }) => (
-    <a href={"/Cocktail/" + id}>
+    <Link to={"/Cocktail/" + id}>
         <div className="cocktail-result">
             <div className="cocktail-name">{name}</div>
             <div className="cocktail-summary">
@@ -53,7 +56,7 @@ const Cocktail = ({ id, name, recipe, description, thumbnail }) => (
                 {description}</p>
             </div>
         </div>
-    </a>
+    </Link>
 );
 
 export default CocktailList;

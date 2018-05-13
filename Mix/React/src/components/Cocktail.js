@@ -5,14 +5,23 @@ class Cocktail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+
+        this.getCocktail = this.getCocktail.bind(this);
+        this.getCocktail();
     }
 
-    componentDidMount() {
-        fetch('/Cocktail/Data/' + this.props.id)
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps !== this.props) {
+            window.scrollTo(0, 0);
+            this.getCocktail();
+        }
+    }
+
+    getCocktail() {
+        fetch('/Cocktail/Data/' + this.props.match.params.id)
             .then(response => {
                 if (response.status == 200) {
                     response.json().then(cocktail => {
-                        document.title = cocktail.name + ' - Miksd';
                         this.setState({ cocktail });
                     });
                 }
@@ -25,6 +34,8 @@ class Cocktail extends React.Component {
         }
 
         const { id, name, recipe, description, image, similar } = this.state.cocktail;
+        document.title = name + ' - Miksd';
+
         return (
             <div>
                 <h2>{name}</h2>

@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { Link } from 'react-router-dom'
 
 class Menu extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class Menu extends React.Component {
             <ul className="menu">
                 {this.state.categories.map(c =>
                     <li key={c.name} className={c.url === url ? 'current' : ''}>
-                        <a href={c.url}>{c.name}</a>
+                        <Link to={c.url}>{c.name}</Link>
                     </li>
                 )}
             </ul>

@@ -113,6 +113,8 @@
     <None Include="React\.babelrc" />
     <Content Include="React\dist\mix.js" />
     <Content Include="React\src\components\App.js" />
+    <Content Include="React\src\components\CocktailResultList.js" />
+    <Content Include="React\src\components\NotFound.js" />
     <Content Include="React\src\components\Header.js" />
     <Content Include="React\src\components\Menu.js" />
     <Content Include="React\src\components\Cocktail.js" />

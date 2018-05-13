@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { Link } from 'react-router-dom'
 
 class CocktailSearch extends React.Component {
     constructor(props) {
@@ -15,6 +16,12 @@ class CocktailSearch extends React.Component {
         this.goToCocktail = this.goToCocktail.bind(this);
         this.handleKey = this.handleKey.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        return {
+            query: '',
+        }
     }
 
     handleInput(query) {
@@ -40,7 +47,7 @@ class CocktailSearch extends React.Component {
     goToCocktail() {
         const cocktails = this.state.cocktails;
         if (cocktails && cocktails.length) {
-            window.location = '/Cocktail/' + this.state.cocktails[this.state.selection].id;
+            this.props.history.push('/Cocktail/' + this.state.cocktails[this.state.selection].id);
         }
     }
 
@@ -69,7 +76,7 @@ class CocktailSearch extends React.Component {
                 <input id="search-field" type="search" autoComplete="off" spellCheck="false"
                     placeholder="Cocktail Search"
                     value={this.state.query}
-                    onInput={(e) => this.handleInput(e.target.value)}
+                    onChange={(e) => this.handleInput(e.target.value)}
                     onKeyDown={this.handleKey} />
                 {this.state.query && <CocktailSearchResults handleSelection={this.handleSelection} {...this.state} />}
             </form>
@@ -80,10 +87,12 @@ class CocktailSearch extends React.Component {
 const CocktailSearchResults = ({ cocktails, selection, handleSelection }) => (
     <div id="search-results">
         {(cocktails.length === 0) ? 'No results' :
-            cocktails.map((c, i) => (<a key={c.id} href={"/Cocktail/" + c.id}
-                className={"search-result " + (i === selection ? ' search-result-selected' : '')}
-                onMouseMove={() => handleSelection(i)}>
-                {c.name}</a>
+            cocktails.map((c, i) => (
+                <Link key={c.id} to={"/Cocktail/" + c.id}
+                    className={"search-result " + (i === selection ? ' search-result-selected' : '')}
+                    onMouseMove={() => handleSelection(i)}>
+                    {c.name}
+                </Link>
             ))}
     </div>
 );
