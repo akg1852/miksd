@@ -5,6 +5,7 @@ import CocktailList from './components/CocktailList';
 import Cocktail from './components/Cocktail';
 import CocktailSearch from './components/CocktailSearch';
 import IngredientSearch from './components/IngredientSearch';
+import Menu from './components/Menu';
 
 const getQueryString = () => {
     var result = {};
@@ -58,6 +59,18 @@ else if (cocktail) {
             }
         });
 }
+
+fetch('/Cocktail/Categories')
+    .then(response => {
+        if (response.status == 200) {
+            response.json().then(data => {
+                ReactDOM.render(
+                    <Menu categories={data} />,
+                    document.getElementById('menu')
+                );
+            });
+        }
+    });
 
 fetch('/Cocktail/Ingredients')
     .then(response => {

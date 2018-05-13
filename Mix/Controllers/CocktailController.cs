@@ -1,6 +1,5 @@
 ﻿using Mix.Models;
 using Mix.Services;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -89,9 +88,37 @@ namespace Mix.Controllers
         public ActionResult Ingredients()
         {
             var ingredients = cocktailService.IngredientCategories();
-            return JsonContent(ingredients.Select(c => new {
+            return JsonContent(ingredients.Select(c => new
+            {
                 Category = c.Name,
                 Ingredients = c.Ingredients.Select(i => new { i.Id, i.Name })
+            }));
+        }
+
+        public ActionResult Categories()
+        {
+            return JsonContent(CocktailCategory.Categories.Select(category => {
+                var ingredients = category.Ingredients;
+                var url = "/?title=" + Url.Encode(category.Name);
+
+                if (ingredients != null)
+                {
+                    if (category.Full)
+                    {
+                        url += "&f=1";
+                    }
+                    url += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
+                }
+                if (category.Vessel != Vessels.None)
+                {
+                    url += "&v=" + (long)category.Vessel;
+                }
+
+                return new
+                {
+                    category.Name,
+                    url
+                };
             }));
         }
 

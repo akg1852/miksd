@@ -1,6 +1,4 @@
-﻿@using Mix.Models;
-@using Mix.Services;
-@using System.Linq;
+﻿@using Mix.Services;
 
 <!DOCTYPE html>
 <html>
@@ -35,30 +33,7 @@
             </div>
         </div>
 
-        <ul class="menu">
-            <li class="@(Request.RawUrl == "/" ? "current" : "")"><a href="/">Featured</a></li>
-
-            @foreach (var category in CocktailCategory.Categories)
-            {
-                List<Ingredients> ingredients = category.Ingredients;
-                var link = "/?title=" + Url.Encode(category.Name);
-
-                if (ingredients != null)
-                {
-                    if (category.Full)
-                    {
-                        link += "&f=1";
-                    }
-                    link += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
-                }
-                if (category.Vessel != Vessels.None)
-                {
-                    link += "&v=" + (long)category.Vessel;
-                }
-
-                <li class="@(link == Request.RawUrl ? "current" : "")"><a href="@link">@category.Name</a></li>
-            }
-        </ul>
+        <div id="menu"></div>
 
         <div id="content">
             @RenderBody()

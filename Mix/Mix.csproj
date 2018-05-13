@@ -112,6 +112,7 @@
     <Content Include="Global.asax" />
     <None Include="React\.babelrc" />
     <Content Include="React\dist\mix.js" />
+    <Content Include="React\src\components\Menu.js" />
     <Content Include="React\src\components\Cocktail.js" />
     <Content Include="React\src\components\CocktailList.js" />
     <Content Include="React\src\components\CocktailSearch.js" />
