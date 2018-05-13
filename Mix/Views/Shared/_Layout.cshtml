@@ -9,15 +9,9 @@
         <title>Miksd</title>
     </head>
     <body>
-    <div id="all">
-        <div id="header-wrapper"></div>
-        <div id="menu"></div>
-
-        <div id="content">
-            @RenderBody()
-            <script src="~/React/dist/mix.js"></script>
-            <script src="~/Content/Mix.js"></script>
-        </div>
-    </div>
+    <div id="app"></div>
+    @RenderBody()
+    <script src="~/React/dist/mix.js"></script>
+    <script src="~/Content/Mix.js"></script>
     </body>
 </html>

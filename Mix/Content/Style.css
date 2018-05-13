@@ -28,7 +28,7 @@ body {
     background-color: var(--background-color);
 }
 
-#all {
+#app {
     min-height: 100vh;
     color: var(--text-color);
     background-color: var(--background-color);

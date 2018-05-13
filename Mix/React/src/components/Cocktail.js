@@ -4,10 +4,27 @@ import CocktailList from './CocktailList';
 class Cocktail extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+        fetch('/Cocktail/Data/' + this.props.id)
+            .then(response => {
+                if (response.status == 200) {
+                    response.json().then(cocktail => {
+                        document.title = cocktail.name + ' - Miksd';
+                        this.setState({ cocktail });
+                    });
+                }
+            });
     }
 
     render() {
-        const { id, name, recipe, description, image, similar } = this.props;
+        if (!this.state.cocktail) {
+            return null;
+        }
+
+        const { id, name, recipe, description, image, similar } = this.state.cocktail;
         return (
             <div>
                 <h2>{name}</h2>
