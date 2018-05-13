@@ -1,13 +1,5 @@
 ﻿/* Miksd */
 (function () {
-    // ingredient search
-    var ingredientSearchButton = document.getElementById('ingredient-search-button');
-    var ingredientSearch = document.getElementById('ingredient-search');
-    ingredientSearchButton.addEventListener('click', function () {
-        ingredientSearch.style.visibility =
-            ingredientSearch.style.visibility === 'visible' ? 'hidden' : 'visible';
-    });
-
     // click away from modals
     document.body.addEventListener('click', function (e) {
         var searchResults = document.getElementById('search-results');
@@ -20,7 +12,9 @@
             }
         }
 
-        if (ingredientSearch.style.visibility == 'visible' &&
+        var ingredientSearchButton = document.getElementById('ingredient-search-button');
+        var ingredientSearch = document.getElementById('ingredient-search');
+        if (ingredientSearch && ingredientSearchButton &&
             !ingredientSearchButton.contains(e.target) &&
             !ingredientSearch.contains(e.target)) {
             e.preventDefault();

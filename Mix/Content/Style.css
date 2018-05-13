@@ -107,7 +107,7 @@ a {
 
 /* text search */
 
-#cocktail-search {
+#cocktail-search-form {
     position: relative;
     flex: 1 1 0;
 }
@@ -192,7 +192,6 @@ ul.menu a, ul.menu a:visited {
 /* ingredient search */
 
 #ingredient-search {
-    visibility: hidden;
     position: absolute;
     top: 50px;
     background-color: var(--background-color);

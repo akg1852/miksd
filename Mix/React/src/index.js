@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 
 import CocktailList from './components/CocktailList';
 import Cocktail from './components/Cocktail';
-import CocktailSearch from './components/CocktailSearch';
-import IngredientSearch from './components/IngredientSearch';
+import Header from './components/Header';
 import Menu from './components/Menu';
 
 const getQueryString = () => {
@@ -26,6 +25,12 @@ const query = getQueryString();
 const cocktailList = document.getElementById('cocktail-list');
 const cocktail = document.getElementById('cocktail');
 const titleBase = ' - Miksd';
+
+ReactDOM.render(
+    <Header
+        selectedIngredients={query['i'] || []} />,
+    document.getElementById('header-wrapper')
+);
 
 if (cocktailList) {
     let title = (query['title'] || [])[0] || 'Cocktails';
@@ -71,21 +76,3 @@ fetch('/Cocktail/Categories')
             });
         }
     });
-
-fetch('/Cocktail/Ingredients')
-    .then(response => {
-        if (response.status == 200) {
-            response.json().then(data => {
-                ReactDOM.render(
-                    <IngredientSearch ingredients={data}
-                        selectedIngredients={query['i'] || []} />,
-                    document.getElementById('ingredient-search')
-                );
-            });
-        }
-    });
-
-ReactDOM.render(
-    <CocktailSearch />,
-    document.getElementById('cocktail-search')
-);

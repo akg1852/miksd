@@ -4,16 +4,26 @@ import Ingredients from './Ingredients'
 class IngredientSearch extends React.Component {
     constructor(props) {
         super(props);
-
-        const ingredients = this.props.ingredients;
-        const selectedCategory = ingredients[0].category;
-        setSelectedIngredients(ingredients, this.props.selectedIngredients);
-
-        this.state = { selectedCategory, ingredients };
+        this.state = {};
 
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleIngredientSelect = this.handleIngredientSelect.bind(this);
         this.unselectAllIngredients = this.unselectAllIngredients.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/Cocktail/Ingredients')
+            .then(response => {
+                if (response.status == 200) {
+                    response.json().then(ingredients => {
+                        setSelectedIngredients(ingredients, this.props.selectedIngredients);
+                        this.setState({
+                            ingredients,
+                            selectedCategory: ingredients[0].category
+                        });
+                    });
+                }
+            });
     }
 
     handleCategoryChange(category) {
@@ -44,8 +54,12 @@ class IngredientSearch extends React.Component {
     }
 
     render() {
+        if (!this.state.ingredients) {
+            return null;
+        }
+
         return (
-            <form action="/">
+            <form id="ingredient-search" action="/">
                 <Ingredients
                     ingredients={this.state.ingredients}
                     selectedCategory={this.state.selectedCategory}

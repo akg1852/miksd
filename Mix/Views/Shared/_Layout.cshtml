@@ -1,6 +1,4 @@
-﻿@using Mix.Services;
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -12,27 +10,7 @@
     </head>
     <body>
     <div id="all">
-        <div id="header">
-            <img class="glass" src="~/Content/glass.png" />
-
-            <div id="header-main">
-                <div id="header-top">
-                    <h1 id="title">Miksd</h1>
-                    <div id="cocktail-search"></div>
-                </div>
-
-                <div id="header-bottom">
-                    <p id="subtitle">Your guide to cocktails / mixed drinks</p>
-                    <div id="header-bottom-right">
-                        <div id="ingredient-search-wrapper">
-                            @(new HtmlString(ImageService.IngredientSearchIcon()))
-                            <div id="ingredient-search"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <div id="header-wrapper"></div>
         <div id="menu"></div>
 
         <div id="content">
