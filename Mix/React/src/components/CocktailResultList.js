@@ -6,7 +6,6 @@ class CocktailResultList extends React.Component {
         super(props);
         this.state = {};
 
-        this.getCocktails = this.getCocktails.bind(this);
         this.getCocktails();
     }
 

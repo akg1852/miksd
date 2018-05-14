@@ -6,7 +6,6 @@ class Cocktail extends React.Component {
         super(props);
         this.state = {};
 
-        this.getCocktail = this.getCocktail.bind(this);
         this.getCocktail();
     }
 

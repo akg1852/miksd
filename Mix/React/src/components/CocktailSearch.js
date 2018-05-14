@@ -11,12 +11,10 @@ class CocktailSearch extends React.Component {
             selection: 0
         };
 
+        this.handleClickAway = this.handleClickAway.bind(this);
         this.handleInput = this.handleInput.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-        this.goToCocktail = this.goToCocktail.bind(this);
         this.handleKey = this.handleKey.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
-        this.handleClickAway = this.handleClickAway.bind(this);
 
         document.body.addEventListener('click', this.handleClickAway);
     }
@@ -27,14 +25,16 @@ class CocktailSearch extends React.Component {
         }
     }
 
-    handleInput(query) {
+    handleInput(e) {
+        const query = e.target.value;
+
         this.setState({
             query: query,
             selection: 0
-        }, () => this.handleSearch(query));
+        }, () => this.getSearchResults(query));
     }
 
-    handleSearch(query) {
+    getSearchResults(query) {
         if (!query) return;
 
         fetch('/Cocktail/Search/?q=' + encodeURIComponent(this.state.query))
@@ -89,7 +89,7 @@ class CocktailSearch extends React.Component {
                 <input id="search-field" type="search" autoComplete="off" spellCheck="false"
                     placeholder="Cocktail Search"
                     value={this.state.query}
-                    onChange={(e) => this.handleInput(e.target.value)}
+                    onChange={this.handleInput}
                     onKeyDown={this.handleKey} />
                 {this.state.query && <CocktailSearchResults handleSelection={this.handleSelection} {...this.state} />}
             </form>

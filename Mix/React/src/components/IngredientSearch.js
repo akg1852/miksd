@@ -7,11 +7,11 @@ class IngredientSearch extends React.Component {
         this.state = { showIngredientSearch: false };
 
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
-        this.handleIngredientSelect = this.handleIngredientSelect.bind(this);
-        this.unselectAllIngredients = this.unselectAllIngredients.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.toggleIngredientSearch = this.toggleIngredientSearch.bind(this);
+        this.handleClearAll = this.handleClearAll.bind(this);
         this.handleClickAway = this.handleClickAway.bind(this);
+        this.handleIngredientSelect = this.handleIngredientSelect.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleToggleShow = this.handleToggleShow.bind(this);
 
         document.body.addEventListener('click', this.handleClickAway);
     }
@@ -35,7 +35,7 @@ class IngredientSearch extends React.Component {
         this.setState({ selectedCategory: category });
     }
 
-    toggleIngredientSearch() {
+    handleToggleShow() {
         this.setState({ showIngredientSearch: !this.state.showIngredientSearch });
     }
 
@@ -64,7 +64,7 @@ class IngredientSearch extends React.Component {
         }
     }
 
-    unselectAllIngredients() {
+    handleClearAll() {
         const ingredients = this.state.ingredients;
         ingredients.forEach(c => c.ingredients.forEach(i => {
             i.selection = undefined;
@@ -92,7 +92,7 @@ class IngredientSearch extends React.Component {
             <div id="ingredient-search-wrapper">
                 <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'
                     ref={(el) => this.ingredientSearchButtonEl = el}
-                    onClick={this.toggleIngredientSearch}>
+                    onClick={this.handleToggleShow}>
                     <IngredientSearchButton />
                 </svg>
                 {this.state.showIngredientSearch &&
@@ -108,7 +108,7 @@ class IngredientSearch extends React.Component {
                             disabled={this.state.ingredients.every(c =>
                                 c.ingredients.every(i => i.selection === undefined))}
                             value="Clear All"
-                            onClick={this.unselectAllIngredients} />
+                            onClick={this.handleClearAll} />
                         <input type="submit" value="Search" />
                     </form>
                 }
