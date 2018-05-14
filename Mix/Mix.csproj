@@ -106,7 +106,6 @@
   <ItemGroup>
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\glass.png" />
-    <Content Include="Content\Mix.js" />
     <Content Include="Content\Style.css" />
     <Content Include="Error.html" />
     <Content Include="Global.asax" />

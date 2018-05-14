@@ -11,6 +11,9 @@ class IngredientSearch extends React.Component {
         this.unselectAllIngredients = this.unselectAllIngredients.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleIngredientSearch = this.toggleIngredientSearch.bind(this);
+        this.handleClickAway = this.handleClickAway.bind(this);
+
+        document.body.addEventListener('click', this.handleClickAway);
     }
 
     componentDidMount() {
@@ -34,6 +37,16 @@ class IngredientSearch extends React.Component {
 
     toggleIngredientSearch() {
         this.setState({ showIngredientSearch: !this.state.showIngredientSearch });
+    }
+
+    handleClickAway(e) {
+        if (this.state.showIngredientSearch &&
+            !this.ingredientSearchEl.contains(e.target) &&
+            !this.ingredientSearchButtonEl.contains(e.target)) {
+
+            e.preventDefault();
+            this.setState({ showIngredientSearch: false });
+        }
     }
 
     handleIngredientSelect(id, selection) {
@@ -77,10 +90,15 @@ class IngredientSearch extends React.Component {
 
         return (
             <div id="ingredient-search-wrapper">
-                <IngredientSearchButton
-                    toggleIngredientSearch={this.toggleIngredientSearch} />
+                <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'
+                    ref={(el) => this.ingredientSearchButtonEl = el}
+                    onClick={this.toggleIngredientSearch}>
+                    <IngredientSearchButton />
+                </svg>
                 {this.state.showIngredientSearch &&
-                    <form id="ingredient-search" onSubmit={this.handleSubmit}>
+                    <form id="ingredient-search"
+                        ref={(el) => this.ingredientSearchEl = el}
+                        onSubmit={this.handleSubmit}>
                         <Ingredients
                             ingredients={this.state.ingredients}
                             selectedCategory={this.state.selectedCategory}
@@ -99,14 +117,13 @@ class IngredientSearch extends React.Component {
     }
 }
 
-const IngredientSearchButton = ({ toggleIngredientSearch }) => (
-    <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'
-        onClick={toggleIngredientSearch}>
+const IngredientSearchButton = () => (
+    <g>
         <circle cx='50' cy='50' r='50' />
         <path fill='none' stroke='#FFFFFF' strokeWidth='36' strokeLinecap='round'
             d='m280,278a153,153 0 1,0-2,2l170,170m-91-117 110,110-26,26-110-110'
             transform='scale(0.1) translate(280 250)' />
-    </svg>
+    </g>
 );
 
 const setSelectedIngredients = (ingredients, selectedIngredients) => {

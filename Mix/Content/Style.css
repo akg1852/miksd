@@ -149,7 +149,7 @@ a {
     cursor: pointer;
     filter: drop-shadow( 3px 3px 3px var(--shadow-color) );
 }
-#ingredient-search-button > circle {
+#ingredient-search-button circle {
     fill: var(--secondary-color);
 }
 

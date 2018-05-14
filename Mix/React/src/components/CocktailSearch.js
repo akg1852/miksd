@@ -16,6 +16,9 @@ class CocktailSearch extends React.Component {
         this.goToCocktail = this.goToCocktail.bind(this);
         this.handleKey = this.handleKey.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
+        this.handleClickAway = this.handleClickAway.bind(this);
+
+        document.body.addEventListener('click', this.handleClickAway);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -69,9 +72,19 @@ class CocktailSearch extends React.Component {
         }
     }
 
+    handleClickAway(e) {
+        if (this.state.query &&
+            !this.cocktailSearchEl.contains(e.target)) {
+
+            e.preventDefault();
+            this.setState({ query: '' });
+        }
+    }
+
     render() {
         return (
             <form id="cocktail-search-form"
+                ref={(el) => this.cocktailSearchEl = el}
                 onSubmit={(e) => { e.preventDefault(); this.goToCocktail() }}>
                 <input id="search-field" type="search" autoComplete="off" spellCheck="false"
                     placeholder="Cocktail Search"
