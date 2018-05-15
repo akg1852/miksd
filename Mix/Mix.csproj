@@ -115,7 +115,7 @@
     <Content Include="React\src\components\CocktailResultList.js" />
     <Content Include="React\src\components\NotFound.js" />
     <Content Include="React\src\components\Header.js" />
-    <Content Include="React\src\components\Menu.js" />
+    <Content Include="React\src\components\HeaderMenu.js" />
     <Content Include="React\src\components\Cocktail.js" />
     <Content Include="React\src\components\CocktailList.js" />
     <Content Include="React\src\components\CocktailSearch.js" />

@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import CocktailResultList from './CocktailResultList';
 import Cocktail from './Cocktail';
 import Header from './Header';
-import Menu from './Menu';
+import HeaderMenu from './HeaderMenu';
 import NotFound from './NotFound';
 
 class App extends React.Component {
@@ -23,7 +23,7 @@ class App extends React.Component {
         return (
             <div>
                 <Route render={(props) => <Header {...props} selectedIngredients={ingredients} />} />
-                <Menu />
+                <HeaderMenu />
 
                 <div id="content">
                     <Switch>

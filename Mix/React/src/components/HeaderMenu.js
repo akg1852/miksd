@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom'
 
-class Menu extends React.Component {
+class HeaderMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -26,7 +26,7 @@ class Menu extends React.Component {
 
         const url = window.location.pathname + window.location.search;
         return (
-            <ul className="menu">
+            <ul className="header-menu">
                 {this.state.categories.map(c =>
                     <li key={c.name} className={c.url === url ? 'current' : ''}>
                         <Link to={c.url}>{c.name}</Link>
@@ -37,4 +37,4 @@ class Menu extends React.Component {
     }
 }
 
-export default Menu;
+export default HeaderMenu;

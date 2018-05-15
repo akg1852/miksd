@@ -153,9 +153,9 @@ a {
     fill: var(--secondary-color);
 }
 
-/* menu */
+/* header menu */
 
-ul.menu {
+ul.header-menu {
     display: flex;
     margin: 0;
     width: 100%;
@@ -163,17 +163,17 @@ ul.menu {
     overflow-x: auto;
 }
 
-ul.menu > li {
+ul.header-menu > li {
     flex: 1 0 0;
     text-align: center;
     display: inline-block;
 }
 
-ul.menu > li:not(:last-child) {
+ul.header-menu > li:not(:last-child) {
     border-right: solid var(--background-color) 1px;
 }
 
-ul.menu a {
+ul.header-menu a {
     display: inline-block;
     padding: 0 5px;
     width: 100%;
@@ -181,11 +181,11 @@ ul.menu a {
     border-bottom: solid 5px transparent;
 }
 
-ul.menu > li.current > a {
+ul.header-menu > li.current > a {
     border-bottom: solid 5px var(--primary-color-dark);
 }
 
-ul.menu a, ul.menu a:visited {
+ul.header-menu a, ul.header-menu a:visited {
     color: var(--text-color);
 }
 
