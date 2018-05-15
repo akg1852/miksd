@@ -29,7 +29,7 @@ class CocktailList extends React.Component {
             return null;
         }
         if (this.props.cocktails.length === 0) {
-            return <span>Sorry! No cocktails available with selected ingredients.</span>
+            return <div className="not-found">Sorry! No cocktails match your search criteria.</div>
         }
 
         return (

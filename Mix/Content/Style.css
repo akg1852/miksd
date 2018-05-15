@@ -323,7 +323,7 @@ h2.result-header {
 }
 
 /* not found */
-#not-found {
+.not-found {
     text-align: center;
     margin-top: 30px;
     font-size: 1.3em;
