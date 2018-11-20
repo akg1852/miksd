@@ -7,6 +7,8 @@ class Cocktail extends React.Component {
         this.state = {};
 
         this.getCocktail();
+
+        this.handleAddCocktailToMenu = this.handleAddCocktailToMenu.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -27,6 +29,14 @@ class Cocktail extends React.Component {
             });
     }
 
+    handleAddCocktailToMenu(e) {
+        const select = e.target;
+        const menu = select.value;
+        const cocktail = this.state.cocktail.id;
+        select.options[select.selectedIndex].disabled = true;
+        this.props.handleAddCocktailToMenu(menu, cocktail);
+    }
+
     render() {
         if (!this.state.cocktail) {
             return null;
@@ -44,6 +54,24 @@ class Cocktail extends React.Component {
                 <ul>{recipe.map(i => <Ingredient key={i.name} {...i} />)}</ul>
 
                 <p>{description}</p>
+
+                <select className="add-to-menu"
+                    value=""
+                    onChange={this.handleAddCocktailToMenu}
+                >
+                    <option hidden>Add to Menu</option>
+                    <React.Fragment>
+                        {this.props.menus.map(menu =>
+                            <option
+                                key={menu.id}
+                                value={menu.id}
+                                disabled={menu.cocktailIds.includes(id)}
+                            >
+                                {menu.name}
+                            </option>
+                        )}
+                    </React.Fragment>
+                </select>
 
                 <div className="spacer"></div>
                 <CocktailList cocktails={similar} title="Similar Cocktails" />

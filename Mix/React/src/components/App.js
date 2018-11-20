@@ -29,6 +29,8 @@ class App extends React.Component {
         this.handleAddMenu = this.handleAddMenu.bind(this);
         this.handleRemoveMenu = this.handleRemoveMenu.bind(this);
         this.handleRenameMenu = this.handleRenameMenu.bind(this);
+        this.handleAddCocktailToMenu = this.handleAddCocktailToMenu.bind(this);
+        this.handleRemoveCocktailFromMenu = this.handleRemoveCocktailFromMenu.bind(this);
     }
 
     handleAddMenu() {
@@ -61,9 +63,31 @@ class App extends React.Component {
     handleRenameMenu(id, name) {
         const menus = this.state.menus
         const menu = menus.find(m => m.id === id);
-        menu.name = name;
 
+        menu.name = name;
         this.saveMenus(menus);
+    }
+
+    handleAddCocktailToMenu(menuId, cocktailId) {
+        const menus = this.state.menus;
+        const cocktailIds = menus.find(m => m.id === menuId).cocktailIds;
+
+        if (!cocktailIds.includes(cocktailId)) {
+            cocktailIds.push(cocktailId);
+            this.saveMenus(menus);
+        }
+    }
+
+    handleRemoveCocktailFromMenu(menuId, cocktailId) {
+        const menus = this.state.menus;
+        const cocktailIds = menus.find(m => m.id === menuId).cocktailIds;
+        const cocktailIndex = cocktailIds.indexOf(cocktailId);
+
+        if (cocktailIndex !== -1) {
+            cocktailIds.splice(cocktailIndex, 1);
+            this.setState({ menus });
+            this.saveMenus(menus);
+        }
     }
 
     saveMenus(menus) {
@@ -85,15 +109,22 @@ class App extends React.Component {
 
                 <div id="content">
                     <Switch>
-                        <Route exact path='/' render={(props) => <CocktailResultList {...props}
-                            title={title}
-                            ingredients={ingredients} />
+                        <Route exact path='/' render={(props) =>
+                            <CocktailResultList {...props}
+                                title={title}
+                                ingredients={ingredients} />
                         } />
-                        <Route path='/Cocktail/:id' component={Cocktail} />
+                        <Route path='/Cocktail/:id' render={(props) =>
+                            <Cocktail {...props}
+                                menus={this.state.menus}
+                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
+                            />
+                        } />
                         <Route path='/Menu/Edit/:id' render={(props) =>
                             <Menu {...props}
                                 {...this.state.menus.find(m => m.id === props.match.params.id) }
                                 handleRenameMenu={this.handleRenameMenu}
+                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
                             />
                         } />
                         <Route path='/Menu/' render={(props) =>

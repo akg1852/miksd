@@ -33,6 +33,11 @@ namespace Mix.Controllers
 
         public ActionResult Data(List<Cocktails> c)
         {
+            if (c == null || c.Count == 0)
+            {
+                return JsonContent(new List<object>());
+            }
+
             var cocktails = cocktailService.Cocktails(c);
             return JsonContent(cocktails.Select(cocktail => new {
                 cocktail.Id,

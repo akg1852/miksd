@@ -171,6 +171,8 @@ namespace Mix.Services
 
         public IEnumerable<Cocktail> Cocktails(IEnumerable<Cocktails> ids)
         {
+            var idsList = ids.ToList();
+
             using (var db = new SqlConnection(connectionString))
             {
                 var cocktails = db.Query<Cocktail>(
@@ -183,7 +185,7 @@ namespace Mix.Services
                 {
                     cocktail.Recipe = CocktailIngredients(db, cocktail.Id);
                 }
-                return cocktails;
+                return cocktails.OrderBy(c => idsList.IndexOf(c.Id));
             }
         }
 

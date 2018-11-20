@@ -39,6 +39,31 @@ class Menu extends React.Component {
 
         document.title = this.props.name + ' - Miksd';
 
+        const cocktailList = !this.state.cocktails ? null : !this.state.cocktails.length ? (
+            <p>
+                No cocktails have been added to this menu yet.<br />
+                Go <Link to='/' className='link'>check out some cocktails</Link> and add them!
+            </p>
+        ): (
+            <dl>
+                {this.state.cocktails.map(c =>
+                    <div key={c.id}>
+                        <dt>
+                            <Link to={"/Cocktail/" + c.id}>{c.name}</Link>
+                            {!this.props.handleRemoveCocktailFromMenu ? null :
+                                <span className="remove-menu-button"
+                                    onClick={() => this.props.handleRemoveCocktailFromMenu(this.props.id, c.id)}
+                                >
+                                    −
+                                </span>
+                            }
+                        </dt>
+                        <dd>{c.recipe.join(', ')}</dd>
+                    </div>
+                )}
+            </dl>
+        );
+
         return (
             <div>
                 <div className="menu">
@@ -48,14 +73,7 @@ class Menu extends React.Component {
                         onChange={(e, value) => this.props.handleRenameMenu(this.props.id, value)}
                         tagName="h2"
                     />
-                    <dl>
-                        {this.state.cocktails && this.state.cocktails.map(c =>
-                            <div key={c.id}>
-                                <dt><Link to={"/Cocktail/" + c.id}>{c.name}</Link></dt>
-                                <dd>{c.recipe.join(', ')}</dd>
-                            </div>
-                        )}
-                    </dl>
+                    {cocktailList}
                 </div>
                 <Route path='/Menu/View' component={Footer} />
             </div>

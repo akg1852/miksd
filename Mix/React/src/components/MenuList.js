@@ -15,11 +15,15 @@ class MenuList extends React.Component {
                     +
                 </div>
                 <h2>Menus</h2>
+                <p style={{ fontSize: '0.8em' }}>
+                    Menus are currently in beta. Functionality may be lacking.
+                </p>
                 <ul>
                     {this.props.menus.map(m => <li key={m.id}>
                         <Link to={"/Menu/Edit/" + m.id}>{m.name}</Link>
                         <span className="remove-menu-button"
-                            onClick={() => this.props.handleRemoveMenu(m.id)}>
+                            onClick={() => this.props.handleRemoveMenu(m.id)}
+                        >
                             −
                         </span>
                     </li>)}
