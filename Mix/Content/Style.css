@@ -37,7 +37,7 @@ body {
 }
 
 #content {
-    padding: 0 10px 10px 10px;
+    padding: 0 10px 30px 10px;
 }
 
 input {
@@ -46,6 +46,10 @@ input {
 
 ul {
     margin: 10px 30px;
+}
+
+p, hr {
+    margin: 10px 0;
 }
 
 h1 {
@@ -57,17 +61,37 @@ h2 {
     font-size: 1.5em;
     font-weight: bold;
     margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 h3 {
     font-size: 1.2em;
     font-weight: bold;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 a {
     text-decoration: inherit;
     color: inherit;
+}
+a.link {
+    text-decoration: underline;
+    font-style: italic;
+}
+
+dl {
+    margin: 10px 0;
+}
+
+dt {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+dd {
+    margin-left: 30px;
 }
 
 /* header */
@@ -320,6 +344,42 @@ h2.result-header {
 
 .cocktail-image {
     float: right;
+}
+
+/* menu */
+.menus {
+    position: relative;
+}
+.menu {
+    margin-top: 30px;
+    background-color: #FFFFFA;
+    padding: 1px 30px 80px 30px;
+    min-height: 110vh;
+}
+.menu h2 {
+    text-align: center;
+}
+.footer {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #FFFFFA;
+    text-align: center;
+}
+.add-menu-button {
+    position: absolute;
+    top: -0.3em;
+    left: 120px;
+    font-weight: bold;
+    font-size: 2.5em;
+    color: #009900;
+    cursor: pointer;
+}
+.remove-menu-button {
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #990000;
+    cursor: pointer;
 }
 
 /* not found */

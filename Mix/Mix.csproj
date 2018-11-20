@@ -113,6 +113,8 @@
     <Content Include="React\dist\mix.js" />
     <Content Include="React\src\components\App.js" />
     <Content Include="React\src\components\CocktailResultList.js" />
+    <Content Include="React\src\components\MenuList.js" />
+    <Content Include="React\src\components\Menu.js" />
     <Content Include="React\src\components\NotFound.js" />
     <Content Include="React\src\components\Header.js" />
     <Content Include="React\src\components\HeaderMenu.js" />
@@ -132,6 +134,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CocktailController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -163,6 +166,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cocktail\Index.cshtml" />
     <Content Include="React\package.json" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\Edit.cshtml" />
+    <Content Include="Views\Menu\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

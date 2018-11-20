@@ -17,18 +17,25 @@ class IngredientSearch extends React.Component {
     }
 
     componentDidMount() {
+        this.mounted = true;
         fetch('/Cocktail/Ingredients')
             .then(response => {
                 if (response.status == 200) {
                     response.json().then(ingredients => {
-                        setSelectedIngredients(ingredients, this.props.selectedIngredients);
-                        this.setState({
-                            ingredients,
-                            selectedCategory: ingredients[0].category
-                        });
+                        if (this.mounted) {
+                            setSelectedIngredients(ingredients, this.props.selectedIngredients);
+                            this.setState({
+                                ingredients,
+                                selectedCategory: ingredients[0].category
+                            });
+                        }
                     });
                 }
             });
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     handleCategoryChange(category) {

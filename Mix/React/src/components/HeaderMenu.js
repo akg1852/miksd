@@ -8,15 +8,23 @@ class HeaderMenu extends React.Component {
     }
 
     componentDidMount() {
-        const featured = { name: 'Featured', url: '/' };
+        this.mounted = true;
+        const featured = { name: 'Featured Cocktails', url: '/' };
+        const menus = { name: 'Menus', url: '/Menu' };
         fetch('/Cocktail/Categories')
             .then(response => {
                 if (response.status == 200) {
                     response.json().then(categories => {
-                        this.setState({ categories: [featured].concat(categories) });
+                        if (this.mounted) {
+                            this.setState({ categories: [featured, menus].concat(categories) });
+                        }
                     });
                 }
             });
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     render() {

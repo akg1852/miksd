@@ -93,7 +93,7 @@ namespace Mix.Services
             }
         }
 
-        public IEnumerable<CocktailMatch> Cocktails(IEnumerable<Ingredients> ingredients = null,
+        public IEnumerable<CocktailMatch> FindCocktails(IEnumerable<Ingredients> ingredients = null,
                                                     IEnumerable<Ingredients> exgredients = null,
                                                     Vessels vessel = Vessels.None)
         {
@@ -169,7 +169,25 @@ namespace Mix.Services
             }
         }
 
-        public Cocktail Cocktail(long id)
+        public IEnumerable<Cocktail> Cocktails(IEnumerable<Cocktails> ids)
+        {
+            using (var db = new SqlConnection(connectionString))
+            {
+                var cocktails = db.Query<Cocktail>(
+                    @"SELECT C.Id, C.Name
+                    FROM Cocktail C
+                    WHERE C.Id IN @ids"
+                    , new { ids });
+
+                foreach (var cocktail in cocktails)
+                {
+                    cocktail.Recipe = CocktailIngredients(db, cocktail.Id);
+                }
+                return cocktails;
+            }
+        }
+
+        public Cocktail Cocktail(Cocktails id)
         {
             using (var db = new SqlConnection(connectionString))
             {
@@ -242,7 +260,7 @@ namespace Mix.Services
             var similarIngredients = ingredients.Where(i => !equivalence.Any(e => (Ingredients)e.Child == i))
                 .Concat(equivalence.Select(e => (Ingredients)e.Parent));
 
-            return Cocktails(similarIngredients)
+            return FindCocktails(similarIngredients)
                 .Where(c => c.Id != cocktail.Id)
                 .Take(10);
         }

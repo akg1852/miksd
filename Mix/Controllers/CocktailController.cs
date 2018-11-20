@@ -20,7 +20,7 @@ namespace Mix.Controllers
             return View();
         }
 
-        public ActionResult Data(long id)
+        public ActionResult Data(Cocktails id)
         {
             var cocktail = cocktailService.Cocktail(id);
             return JsonContent(new
@@ -64,7 +64,7 @@ namespace Mix.Controllers
                 var includedIngredients = i?.Where(ii => ii > 0);
                 var excludedIngredients = i?.Where(ii => ii < 0)?.Select(ii => ii.Negate());
 
-                cocktails = cocktailService.Cocktails(includedIngredients, excludedIngredients, v);
+                cocktails = cocktailService.FindCocktails(includedIngredients, excludedIngredients, v);
 
                 if (c != 0)
                 {
@@ -121,20 +121,5 @@ namespace Mix.Controllers
                 };
             }));
         }
-
-        private object CocktailSummary(Cocktail cocktail)
-        {
-            var prepInVessel = cocktail.PrepMethod == PrepMethods.Build || cocktail.PrepMethod == PrepMethods.Layer;
-            return new {
-                cocktail.Id,
-                cocktail.Name,
-                recipe = cocktail.Recipe
-                    .Where(ingredient => !ingredient.IsOptional)
-                    .Select(ingredient => ingredient.Name),
-                description = cocktail.PrepMethodName + (prepInVessel ? " in " : " & strain into ") + @cocktail.VesselName,
-                thumbnail = ImageService.CocktailImage(cocktail, 50, "cocktail-thumbnail"),
-            };
-        }
-
     }
 }
