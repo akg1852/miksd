@@ -19,10 +19,12 @@ class CocktailSearch extends React.Component {
         document.body.addEventListener('click', this.handleClickAway);
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        return {
-            query: '',
-        }
+    componentDidMount() {
+        this.mounted = true;
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     handleInput(e) {
@@ -73,7 +75,8 @@ class CocktailSearch extends React.Component {
     }
 
     handleClickAway(e) {
-        if (this.state.query &&
+        if (this.mounted &&
+            this.state.query &&
             !this.cocktailSearchEl.contains(e.target)) {
 
             e.preventDefault();

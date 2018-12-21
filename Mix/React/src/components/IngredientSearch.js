@@ -47,7 +47,8 @@ class IngredientSearch extends React.Component {
     }
 
     handleClickAway(e) {
-        if (this.state.showIngredientSearch &&
+        if (this.mounted &&
+            this.state.showIngredientSearch &&
             !this.ingredientSearchEl.contains(e.target) &&
             !this.ingredientSearchButtonEl.contains(e.target)) {
 
