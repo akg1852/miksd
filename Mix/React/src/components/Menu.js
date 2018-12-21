@@ -41,8 +41,7 @@ class Menu extends React.Component {
 
         const cocktailList = !this.state.cocktails ? null : !this.state.cocktails.length ? (
             <p>
-                No cocktails have been added to this menu yet.<br />
-                Go <Link to='/' className='link'>check out some cocktails</Link> and add them!
+                Go <Link to='/' className='link'>find some cocktails</Link> to add to this menu!
             </p>
         ): (
             <dl>
@@ -52,6 +51,7 @@ class Menu extends React.Component {
                             <Link to={"/Cocktail/" + c.id}>{c.name}</Link>
                             {!this.props.handleRemoveCocktailFromMenu ? null :
                                 <span className="remove-menu-button"
+                                    title="Remove cocktail from menu"
                                     onClick={() => this.props.handleRemoveCocktailFromMenu(this.props.id, c.id)}
                                 >
                                     −

@@ -11,6 +11,7 @@ class MenuList extends React.Component {
         return (
             <div className="menus">
                 <div className="add-menu-button"
+                    title="Create new menu"
                     onClick={this.props.handleAddMenu}>
                     +
                 </div>
@@ -22,6 +23,7 @@ class MenuList extends React.Component {
                     {this.props.menus.map(m => <li key={m.id}>
                         <Link to={"/Menu/Edit/" + m.id}>{m.name}</Link>
                         <span className="remove-menu-button"
+                            title="Delete menu"
                             onClick={() => this.props.handleRemoveMenu(m.id)}
                         >
                             −

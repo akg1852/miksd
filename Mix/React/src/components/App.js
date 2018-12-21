@@ -41,7 +41,7 @@ class App extends React.Component {
                         const menus = this.state.menus.concat(
                         {
                             id: menu.id,
-                            name: 'New Menu',
+                            name: 'Untitled Menu',
                             cocktailIds: []
                         });
 
@@ -64,7 +64,7 @@ class App extends React.Component {
         const menus = this.state.menus
         const menu = menus.find(m => m.id === id);
 
-        menu.name = name;
+        menu.name = name || 'Untitled Menu';
         this.saveMenus(menus);
     }
 
