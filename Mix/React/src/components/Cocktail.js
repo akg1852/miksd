@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import CocktailList from './CocktailList';
+import { Link } from 'react-router-dom';
 
 class Cocktail extends React.Component {
     constructor(props) {
@@ -7,12 +8,10 @@ class Cocktail extends React.Component {
         this.state = {};
 
         this.getCocktail();
-
-        this.handleAddCocktailToMenu = this.handleAddCocktailToMenu.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps !== this.props) {
+        if (prevProps.cocktailId !== this.props.cocktailId) {
             window.scrollTo(0, 0);
             this.getCocktail();
         }
@@ -27,14 +26,6 @@ class Cocktail extends React.Component {
                     });
                 }
             });
-    }
-
-    handleAddCocktailToMenu(e) {
-        const select = e.target;
-        const menu = select.value;
-        const cocktail = this.state.cocktail.id;
-        select.options[select.selectedIndex].disabled = true;
-        this.props.handleAddCocktailToMenu(menu, cocktail);
     }
 
     render() {
@@ -55,23 +46,10 @@ class Cocktail extends React.Component {
 
                 <p>{description}</p>
 
-                <select className="add-to-menu"
-                    value=""
-                    onChange={this.handleAddCocktailToMenu}
-                >
-                    <option hidden>Add to Menu</option>
-                    <React.Fragment>
-                        {this.props.menus.map(menu =>
-                            <option
-                                key={menu.id}
-                                value={menu.id}
-                                disabled={menu.cocktailIds.includes(id)}
-                            >
-                                {menu.name}
-                            </option>
-                        )}
-                    </React.Fragment>
-                </select>
+                <Menus
+                    cocktailId={id}
+                    {...this.props}
+                />
 
                 <div className="spacer"></div>
                 <CocktailList cocktails={similar} title="Similar Cocktails" />
@@ -87,5 +65,70 @@ const Ingredient = ({ name, isOptional, quantity, quantityWords }) => (
         {isOptional && ' (optional)'}
     </li>
 );
+
+class Menus extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleAddCocktailToMenu = this.handleAddCocktailToMenu.bind(this);
+    }
+
+    handleAddCocktailToMenu(e) {
+        const menu = e.target.value;
+        const cocktail = this.props.cocktailId;
+        this.props.handleAddCocktailToMenu(menu, cocktail);
+    }
+
+    render() {
+        const menusIncluded = [];
+        const menusNotIncluded = [];
+        this.props.menus.forEach(menu => {
+            if (menu.cocktailIds.includes(this.props.cocktailId)) {
+                menusIncluded.push(menu);
+            }
+            else {
+                menusNotIncluded.push(menu);
+            }
+        });
+
+        return (
+            <div>
+                <select className="add-to-menu"
+                    value=""
+                    onChange={this.handleAddCocktailToMenu}
+                >
+                    <option hidden>Add to Menu</option>
+                    {!menusNotIncluded.length ?
+                        <option disabled>No more menus</option> :
+                        menusNotIncluded.map(menu =>
+                        <option
+                            key={menu.id}
+                            value={menu.id}
+                        >
+                            {menu.name}
+                        </option>
+                    )}
+                </select>
+                {menusIncluded.map(menu =>
+                    <div className='menu-tag' key={menu.id}>
+                        <Link
+                            to={"/Menu/Edit/" + menu.id}
+                            title={menu.name}
+                        >
+                            {menu.name.length > 20 ? menu.name.substr(0, 19) + '…' : menu.name}
+                        </Link>
+                        <div
+                            className="tag-x"
+                            title="Remove cocktail from menu"
+                            onClick={() => this.props.handleRemoveCocktailFromMenu(menu.id, this.props.cocktailId)}
+                        >
+                            ×
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    }
+}
 
 export default Cocktail;

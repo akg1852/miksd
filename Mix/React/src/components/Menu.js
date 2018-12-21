@@ -11,6 +11,14 @@ class Menu extends React.Component {
         this.getCocktails()
     }
 
+    componentDidMount() {
+        this.mounted = true;
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (prevProps !== this.props) {
             this.getCocktails();
@@ -26,10 +34,19 @@ class Menu extends React.Component {
             .then(response => {
                 if (response.status == 200) {
                     response.json().then(cocktails => {
-                        this.setState({ cocktails });
+                        if (this.mounted) {
+                            this.setState({ cocktails });
+                        }
                     });
                 }
             });
+    }
+
+    handleMoveCocktail(cocktailId, moveAmount) {
+        const menuId = this.props.id;
+        this.props.handleRemoveCocktailFromMenu(menuId, cocktailId, oldIndex => {
+            this.props.handleAddCocktailToMenu(menuId, cocktailId, oldIndex + moveAmount);
+        })
     }
 
     render() {
@@ -50,12 +67,30 @@ class Menu extends React.Component {
                         <dt>
                             <Link to={"/Cocktail/" + c.id}>{c.name}</Link>
                             {!this.props.handleRemoveCocktailFromMenu ? null :
-                                <span className="remove-menu-button"
-                                    title="Remove cocktail from menu"
-                                    onClick={() => this.props.handleRemoveCocktailFromMenu(this.props.id, c.id)}
-                                >
-                                    −
-                                </span>
+                                <React.Fragment>
+                                    <span className="remove-menu-button"
+                                        title="Remove cocktail from menu"
+                                        onClick={() => this.props.handleRemoveCocktailFromMenu(this.props.id, c.id)}
+                                    >
+                                        −
+                                    </span>
+                                    <span>
+                                        <span
+                                            className="menu-move-arrow"
+                                            title="Move cocktail up"
+                                            onClick={() => this.handleMoveCocktail(c.id, -1)}
+                                        >
+                                            ▲
+                                        </span>
+                                        <span
+                                            className="menu-move-arrow"
+                                            title="Move cocktail down"
+                                            onClick={() => this.handleMoveCocktail(c.id, 1)}
+                                        >
+                                            ▼
+                                        </span>
+                                    </span>
+                                </React.Fragment>
                             }
                         </dt>
                         <dd>{c.recipe.join(', ')}</dd>

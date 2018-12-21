@@ -382,8 +382,26 @@ h2.result-header {
     cursor: pointer;
 }
 .add-to-menu {
+    width: 150px;
     margin-top: 10px;
     background-color: var(--primary-color);
+}
+.menu-tag {
+    display: inline-block;
+    margin: 5px;
+    padding: 0 5px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.tag-x {
+    margin-left: 5px;
+    float: right;
+}
+.menu-move-arrow {
+    color: var(--shadow-color);
+    font-size: 0.8em;
+    cursor: pointer;
 }
 
 /* not found */

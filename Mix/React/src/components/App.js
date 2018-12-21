@@ -68,25 +68,30 @@ class App extends React.Component {
         this.saveMenus(menus);
     }
 
-    handleAddCocktailToMenu(menuId, cocktailId) {
+    handleAddCocktailToMenu(menuId, cocktailId, index) {
         const menus = this.state.menus;
         const cocktailIds = menus.find(m => m.id === menuId).cocktailIds;
 
         if (!cocktailIds.includes(cocktailId)) {
-            cocktailIds.push(cocktailId);
+            if (index == null) {
+                index = Infinity;
+            }
+            cocktailIds.splice(index, 0, cocktailId);
             this.saveMenus(menus);
+            this.setState({ menus });
         }
     }
 
-    handleRemoveCocktailFromMenu(menuId, cocktailId) {
+    handleRemoveCocktailFromMenu(menuId, cocktailId, callback) {
         const menus = this.state.menus;
         const cocktailIds = menus.find(m => m.id === menuId).cocktailIds;
         const cocktailIndex = cocktailIds.indexOf(cocktailId);
 
         if (cocktailIndex !== -1) {
             cocktailIds.splice(cocktailIndex, 1);
-            this.setState({ menus });
             this.saveMenus(menus);
+            this.setState({ menus },
+                () => { callback && callback(cocktailIndex) });
         }
     }
 
@@ -118,12 +123,14 @@ class App extends React.Component {
                             <Cocktail {...props}
                                 menus={this.state.menus}
                                 handleAddCocktailToMenu={this.handleAddCocktailToMenu}
+                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
                             />
                         } />
                         <Route path='/Menu/Edit/:id' render={(props) =>
                             <Menu {...props}
                                 {...this.state.menus.find(m => m.id === props.match.params.id) }
                                 handleRenameMenu={this.handleRenameMenu}
+                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
                                 handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
                             />
                         } />
