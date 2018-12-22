@@ -20,7 +20,7 @@ class Menu extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps !== this.props) {
+        if (this.props !== prevProps) {
             this.getCocktails();
         }
     }

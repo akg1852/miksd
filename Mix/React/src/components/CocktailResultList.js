@@ -10,13 +10,15 @@ class CocktailResultList extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps !== this.props) {
-            this.getCocktails();
+        if (this.props.query !== prevProps.query) {
+            this.setState({ cocktails: null }, () => {
+                this.getCocktails();
+            });
         }
     }
 
     getCocktails() {
-        fetch('/Cocktail/List' + window.location.search)
+        fetch('/Cocktail/List' + this.props.query)
             .then(response => {
                 if (response.status == 200) {
                     response.json().then(cocktails => {
