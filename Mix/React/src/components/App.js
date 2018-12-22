@@ -108,6 +108,7 @@ class App extends React.Component {
 
         menu.name = name || 'Untitled Menu';
         this.saveMenus(menus);
+        this.setState({ menus });
     }
 
     handleAddCocktailToMenu(menuId, cocktailId, index) {
