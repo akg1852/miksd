@@ -11,9 +11,11 @@ class Cocktail extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.cocktailId !== this.props.cocktailId) {
+        if (this.props.match.params.id !== prevProps.match.params.id) {
             window.scrollTo(0, 0);
-            this.getCocktail();
+            this.setState({ cocktail: null }, () => {
+                this.getCocktail();
+            });
         }
     }
 

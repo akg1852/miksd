@@ -33,6 +33,48 @@ class App extends React.Component {
         this.handleRemoveCocktailFromMenu = this.handleRemoveCocktailFromMenu.bind(this);
     }
 
+    renderPage(title, ingredients) {
+        return (
+            <div>
+                <Route render={(props) => <Header {...props} selectedIngredients={ingredients} />} />
+                <HeaderMenu />
+
+                <div id="content">
+                    <Switch>
+                        <Route exact path='/' render={(props) =>
+                            <CocktailResultList {...props}
+                                title={title}
+                                ingredients={ingredients} />
+                        } />
+                        <Route path='/Cocktail/:id' render={(props) =>
+                            <Cocktail {...props}
+                                menus={this.state.menus}
+                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
+                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
+                            />
+                        } />
+                        <Route path='/Menu/Edit/:id' render={(props) =>
+                            <Menu {...props}
+                                {...this.state.menus.find(m => m.id === props.match.params.id) }
+                                handleRenameMenu={this.handleRenameMenu}
+                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
+                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
+                            />
+                        } />
+                        <Route path='/Menu/' render={(props) =>
+                            <MenuList {...props}
+                                menus={this.state.menus}
+                                handleAddMenu={this.handleAddMenu}
+                                handleRemoveMenu={this.handleRemoveMenu}
+                            />
+                        } />
+                        <Route component={NotFound} />
+                    </Switch>
+                </div>
+            </div>
+        );
+    }
+
     handleAddMenu() {
         fetch('/Menu/Create')
             .then(response => {
@@ -107,46 +149,6 @@ class App extends React.Component {
         title = (title ? decodeURIComponent(title.replace(/\+/g, ' ')) : 'Cocktails');
         document.title = title + ' - Miksd';
 
-        const page = () => (
-            <div>
-                <Route render={(props) => <Header {...props} selectedIngredients={ingredients} />} />
-                <HeaderMenu />
-
-                <div id="content">
-                    <Switch>
-                        <Route exact path='/' render={(props) =>
-                            <CocktailResultList {...props}
-                                title={title}
-                                ingredients={ingredients} />
-                        } />
-                        <Route path='/Cocktail/:id' render={(props) =>
-                            <Cocktail {...props}
-                                menus={this.state.menus}
-                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
-                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
-                            />
-                        } />
-                        <Route path='/Menu/Edit/:id' render={(props) =>
-                            <Menu {...props}
-                                {...this.state.menus.find(m => m.id === props.match.params.id) }
-                                handleRenameMenu={this.handleRenameMenu}
-                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
-                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
-                            />
-                        } />
-                        <Route path='/Menu/' render={(props) =>
-                            <MenuList {...props}
-                                menus={this.state.menus}
-                                handleAddMenu={this.handleAddMenu}
-                                handleRemoveMenu={this.handleRemoveMenu}
-                            />
-                        } />
-                        <Route component={NotFound} />
-                    </Switch>
-                </div>
-            </div>
-        );
-
         return (
             <Switch>
                 <Route path='/Menu/View/:id' render={(props) =>
@@ -155,7 +157,7 @@ class App extends React.Component {
                         {...this.state.menus.find(m => m.id === props.match.params.id) }
                     />
                 } />
-                <Route component={page} />
+                <Route render={() => this.renderPage(title, ingredients)} />
             </Switch>
         );
     }
