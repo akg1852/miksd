@@ -45,7 +45,8 @@ input {
 }
 
 ul {
-    margin: 10px 30px;
+    margin: 0;
+    list-style-type: none;
 }
 
 p, hr {
@@ -354,6 +355,19 @@ h2.result-header {
 .menus {
     position: relative;
 }
+.menus-list-item {
+    padding: 0 10px;
+    display: flex;
+}
+.menus-list-item a {
+    flex-grow: 1;
+}
+.menus-list-item:nth-child(odd) {
+    background-color: var(--primary-color);
+}
+.menus-list-item:nth-child(even) {
+    background-color: var(--primary-color-light);
+}
 .menu {
     margin-top: 30px;
     background-color: #FFFFFA;
@@ -388,7 +402,7 @@ h2.result-header {
     cursor: pointer;
 }
 .remove-menu-button {
-    padding-left: 10px;
+    margin-left: 10px;
     font-weight: bold;
     color: #990000;
     cursor: pointer;
