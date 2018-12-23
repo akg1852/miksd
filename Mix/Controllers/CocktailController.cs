@@ -1,5 +1,6 @@
 ﻿using Mix.Models;
 using Mix.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -53,30 +54,29 @@ namespace Mix.Controllers
          */
         public ActionResult List(List<Ingredients> i, byte c = 0, byte f = 0, Vessels v = Vessels.None)
         {
-            IEnumerable<CocktailMatch> cocktails;
-
-            if (i == null && v == Vessels.None)
-            {
-                cocktails = cocktailService.FeaturedCocktails();
-            }
-            else
-            {
-                var includedIngredients = i?.Where(ii => ii > 0);
-                var excludedIngredients = i?.Where(ii => ii < 0)?.Select(ii => ii.Negate());
-
-                cocktails = cocktailService.FindCocktails(includedIngredients, excludedIngredients, v);
-
-                if (c != 0)
-                {
-                    cocktails = cocktails.Where(co => co.Completeness == 1);
-                }
-                if (f != 0)
-                {
-                    cocktails = cocktails.Where(co => co.Fullness == 1);
-                }
-            }
+            var cocktails = ((i == null && v == Vessels.None) ?
+                cocktailService.FeaturedCocktails() :
+                getCocktails(i, c, f, v));
 
             return JsonContent(cocktails.Select(CocktailSummary));
+        }
+
+        private IEnumerable<CocktailMatch> getCocktails(List<Ingredients> i, byte c = 0, byte f = 0, Vessels v = Vessels.None)
+        {
+            var includedIngredients = i?.Where(ii => ii > 0);
+            var excludedIngredients = i?.Where(ii => ii < 0)?.Select(ii => ii.Negate());
+            var cocktails = cocktailService.FindCocktails(includedIngredients, excludedIngredients, v);
+
+            if (c != 0)
+            {
+                cocktails = cocktails.Where(co => co.Completeness == 1);
+            }
+            if (f != 0)
+            {
+                cocktails = cocktails.Where(co => co.Fullness == 1);
+            }
+
+            return cocktails;
         }
 
         public ActionResult Search(string q)
@@ -120,6 +120,29 @@ namespace Mix.Controllers
                     url
                 };
             }));
+        }
+
+        public ActionResult NoCategory()
+        {
+            var categorised = CocktailCategory.Categories.Select(category =>
+            {
+                return getCocktails(
+                    category.Ingredients,
+                    (byte)(category.Ingredients == null ? 0 : 1),
+                    (byte)(category.Full ? 1 : 0),
+                    category.Vessel
+                ).Select(c => c.Id);
+            })
+            .SelectMany(x => x)
+            .Distinct();
+
+            var uncategorised = Enum.GetValues(typeof(Cocktails))
+                .Cast<Cocktails>()
+                .Where(c => !categorised.Contains(c) && c != Cocktails.None)
+                .OrderBy(c => c.ToString())
+                .Select(c => $"<a href='/Cocktail/{(long)c}'>{c}</a>");
+
+            return Content(String.Join("<br>", uncategorised));
         }
     }
 }
