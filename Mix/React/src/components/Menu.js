@@ -25,6 +25,11 @@ class Menu extends React.Component {
         }
     }
 
+    getViewLink() {
+        const cocktails = this.props.cocktailIds.join(',');
+        return this.props.name.replace(';', '') + ';' + cocktails;
+    }
+
     getCocktails() {
         if (!this.props.cocktailIds) {
             return;
@@ -110,6 +115,14 @@ class Menu extends React.Component {
         return (
             <div>
                 <div className="menu">
+                    {this.props.readOnly || !this.props.cocktailIds.length ? null :
+                        <Link
+                            to={'/Menu/View/' + this.getViewLink()}
+                            className="share-link"
+                        >
+                            Share
+                        </Link>
+                    }
                     <ContentEditable
                         content={this.props.name}
                         editable={!this.props.readOnly}

@@ -153,10 +153,11 @@ class App extends React.Component {
 
         return (
             <Switch>
-                <Route path='/Menu/View/:id' render={(props) =>
+                <Route path='/Menu/View/:name;:cocktailIds' render={(props) =>
                     <Menu {...props}
                         readOnly={true}
-                        {...this.state.menus.find(m => m.id === props.match.params.id) }
+                        name={decodeURIComponent(props.match.params.name)}
+                        cocktailIds={props.match.params.cocktailIds.split(',')}
                     />
                 } />
                 <Route render={() => this.renderPage(title, ingredients)} />

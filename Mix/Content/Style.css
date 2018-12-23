@@ -359,6 +359,10 @@ h2.result-header {
 .menu h2 {
     text-align: center;
 }
+.share-link {
+    float: right;
+    margin-top: 30px;
+}
 .footer {
     margin-bottom: 30px;
     padding: 20px;

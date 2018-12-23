@@ -26,7 +26,7 @@ namespace Mix.Controllers
             return View();
         }
 
-        public ActionResult View(Guid id)
+        public new ActionResult View(string id)
         {
             return View();
         }
