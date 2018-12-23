@@ -235,7 +235,8 @@ ul.header-menu a, ul.header-menu a:visited {
     background-color: var(--primary-color);
     padding: 2px;
     border-right: solid var(--border-color) 1px;
-    flex-grow: 1;
+    flex: 1 1 0;
+    white-space: nowrap;
 }
 .ingredient-category-header.current {
     background-color: var(--primary-color-dark);

@@ -18,11 +18,22 @@ const Ingredients = ({ ingredients, selectedCategory, handleCategoryChange, hand
 
 const IngredientCategoryHeader = ({ name, isCurrent, count, handleCategoryChange }) => (
     <div className={"ingredient-category-header " + (isCurrent ? 'current' : '')}
+        style={{ flexBasis: textWidth(name) }}
         onClick={() => handleCategoryChange(name)}>
         {name}
         {(count > 0) && <span className="ingredient-count"> ({count})</span>}
     </div>
 );
+
+const textWidth = (text) => {
+    const el = document.createElement("span");
+    el.textContent = text;
+    el.style.visibility = 'hidden';
+    document.body.appendChild(el);
+    const textWidth = (el.offsetWidth) + "px";
+    document.body.removeChild(el);
+    return textWidth;
+};
 
 const IngredientCategory = ({ ingredients, isCurrent, handleIngredientSelect }) => (
     <div className={"ingredient-category " + (isCurrent ? 'current' : '')}>
