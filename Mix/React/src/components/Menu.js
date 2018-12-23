@@ -99,6 +99,7 @@ class Menu extends React.Component {
             </dl>
         );
 
+        this.isNew = !!this.isNew || this.props.name === 'Untitled Menu';
         return (
             <div>
                 <div className="menu">
@@ -107,6 +108,8 @@ class Menu extends React.Component {
                         editable={!!this.props.handleRenameMenu}
                         onChange={(e, value) => this.props.handleRenameMenu(this.props.id, value)}
                         tagName="h2"
+                        onBlur={() => this.blur = true}
+                        caretPosition={!this.blur && this.isNew ? 'end' : null}
                     />
                     {cocktailList}
                 </div>
