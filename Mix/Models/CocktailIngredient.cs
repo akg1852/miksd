@@ -25,10 +25,15 @@ namespace Mix.Models
 
         public string QuantityWords()
         {
-            if (IsDiscrete) return null;
-
             string quantityString;
-            if (SpecialPrep == SpecialPreps.Squeeze)
+
+            if (IsDiscrete)
+            {
+                if (Quantity == 0.25M) quantityString = "¼";
+                else if (Quantity == 0.5M) quantityString = "½";
+                else return null;
+            }
+            else if (SpecialPrep == SpecialPreps.Squeeze)
             {
                 quantityString = "A squeeze";
             }
