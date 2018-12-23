@@ -103,23 +103,23 @@ class IngredientSearch extends React.Component {
                     onClick={this.handleToggleShow}>
                     <IngredientSearchButton />
                 </svg>
-                {this.state.showIngredientSearch &&
-                    <form id="ingredient-search"
-                        ref={(el) => this.ingredientSearchEl = el}
-                        onSubmit={this.handleSubmit}>
-                        <Ingredients
-                            ingredients={this.state.ingredients}
-                            selectedCategory={this.state.selectedCategory}
-                            handleCategoryChange={this.handleCategoryChange}
-                            handleIngredientSelect={this.handleIngredientSelect} />
-                        <input id="ingredient-clear-button" type="button"
-                            disabled={this.state.ingredients.every(c =>
-                                c.ingredients.every(i => i.selection === undefined))}
-                            value="Clear All"
-                            onClick={this.handleClearAll} />
-                        <input type="submit" value="Search" />
-                    </form>
-                }
+                <form id="ingredient-search"
+                    ref={(el) => this.ingredientSearchEl = el}
+                    onSubmit={this.handleSubmit}
+                    style={{ display: this.state.showIngredientSearch ? 'block' : 'none' }}
+                >
+                    <Ingredients
+                        ingredients={this.state.ingredients}
+                        selectedCategory={this.state.selectedCategory}
+                        handleCategoryChange={this.handleCategoryChange}
+                        handleIngredientSelect={this.handleIngredientSelect} />
+                    <input id="ingredient-clear-button" type="button"
+                        disabled={this.state.ingredients.every(c =>
+                            c.ingredients.every(i => i.selection === undefined))}
+                        value="Clear All"
+                        onClick={this.handleClearAll} />
+                    <input type="submit" value="Search" />
+                </form>
             </div>
         )
     }
