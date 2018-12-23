@@ -70,42 +70,46 @@ class Menu extends React.Component {
         ): (
             <dl>
                 {this.state.cocktails.map(c =>
-                    <div key={c.id}>
-                        <dt>
-                            <Link
-                                to={'/Cocktail/' + c.id}
-                                target={this.props.readOnly ? '_blank' : null}
-                            >
-                                {c.name}
-                            </Link>
-                            {this.props.readOnly ? null :
-                                <React.Fragment>
-                                    <span className="remove-menu-button"
-                                        title="Remove cocktail from menu"
-                                        onClick={() => this.props.handleRemoveCocktailFromMenu(this.props.id, c.id)}
-                                    >
-                                        −
-                                    </span>
-                                    <span>
-                                        <span
-                                            className="menu-move-arrow"
-                                            title="Move cocktail up"
-                                            onClick={() => this.handleMoveCocktail(c.id, -1)}
+                    <div key={c.id} className="menu-cocktail">
+                        {this.props.readOnly ? null :
+                            <div className="list-item-move">
+                                <span
+                                    className="list-item-move-arrow"
+                                    title="Move cocktail up"
+                                    onClick={() => this.handleMoveCocktail(c.id, -1)}
+                                >
+                                    ▲
+                                </span>
+                                <span
+                                    className="list-item-move-arrow"
+                                    title="Move cocktail down"
+                                    onClick={() => this.handleMoveCocktail(c.id, 1)}
+                                >
+                                    ▼
+                                </span>
+                            </div>
+                        }
+                        <div>
+                            <dt>
+                                <Link
+                                    to={'/Cocktail/' + c.id}
+                                    target={this.props.readOnly ? '_blank' : null}
+                                >
+                                    {c.name}
+                                </Link>
+                                {this.props.readOnly ? null :
+                                    <React.Fragment>
+                                        <span className="remove-menu-button"
+                                            title="Remove cocktail from menu"
+                                            onClick={() => this.props.handleRemoveCocktailFromMenu(this.props.id, c.id)}
                                         >
-                                            ▲
+                                            ×
                                         </span>
-                                        <span
-                                            className="menu-move-arrow"
-                                            title="Move cocktail down"
-                                            onClick={() => this.handleMoveCocktail(c.id, 1)}
-                                        >
-                                            ▼
-                                        </span>
-                                    </span>
-                                </React.Fragment>
-                            }
-                        </dt>
-                        <dd>{c.recipe.join(', ')}</dd>
+                                    </React.Fragment>
+                                }
+                            </dt>
+                            <dd>{c.recipe.join(', ')}</dd>
+                        </div>
                     </div>
                 )}
             </dl>

@@ -87,11 +87,14 @@ dl {
 dt {
     font-size: 1.1em;
     font-weight: bold;
-    margin-top: 5px;
 }
 
 dd {
     margin-left: 30px;
+}
+
+.small-print {
+    font-size: 0.8em;
 }
 
 /* header */
@@ -364,6 +367,11 @@ h2.result-header {
     float: right;
     margin-top: 30px;
 }
+.menu-cocktail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
 .footer {
     margin-bottom: 30px;
     padding: 20px;
@@ -382,7 +390,6 @@ h2.result-header {
 .remove-menu-button {
     padding-left: 10px;
     font-weight: bold;
-    font-size: 1.5em;
     color: #990000;
     cursor: pointer;
 }
@@ -403,7 +410,12 @@ h2.result-header {
     margin-left: 5px;
     float: right;
 }
-.menu-move-arrow {
+.list-item-move {
+    display: inline-flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+.list-item-move-arrow {
     color: var(--shadow-color);
     font-size: 0.8em;
     cursor: pointer;

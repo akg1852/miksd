@@ -33,10 +33,13 @@ class HeaderMenu extends React.Component {
         }
 
         const url = window.location.pathname + window.location.search;
+        const isMenu = window.location.pathname.indexOf('/Menu/Edit') === 0;
+        const isCurrent = c => c.url === url || c.url === '/Menu' & isMenu;
+
         return (
             <ul className="header-menu">
                 {this.state.categories.map(c =>
-                    <li key={c.name} className={c.url === url ? 'current' : ''}>
+                    <li key={c.name} className={isCurrent(c) ? 'current' : ''}>
                         <Link to={c.url}>{c.name}</Link>
                     </li>
                 )}

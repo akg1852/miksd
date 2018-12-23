@@ -16,8 +16,9 @@ class MenuList extends React.Component {
                     +
                 </div>
                 <h2>Menus</h2>
-                <p style={{ fontSize: '0.8em' }}>
-                    Menus are currently in beta. Functionality may be lacking.
+                <p className="small-print">
+                    Create your own cocktail menus. They're saved to your browser automatically.<br />
+                    When a menu is ready, use the "share" link to share a clean read-only version of it.
                 </p>
                 <ul>
                     {this.props.menus.map(m => <li key={m.id}>
@@ -26,7 +27,7 @@ class MenuList extends React.Component {
                             title="Delete menu"
                             onClick={() => this.props.handleRemoveMenu(m.id)}
                         >
-                            −
+                            ×
                         </span>
                     </li>)}
                 </ul>
