@@ -52,7 +52,9 @@ class CocktailSearch extends React.Component {
     goToCocktail() {
         const cocktails = this.state.cocktails;
         if (cocktails && cocktails.length) {
-            this.props.history.push('/Cocktail/' + this.state.cocktails[this.state.selection].id);
+            this.setState({ query: '' }, () => {
+                this.props.history.push('/Cocktail/' + this.state.cocktails[this.state.selection].id);
+            });
         }
     }
 
@@ -75,11 +77,11 @@ class CocktailSearch extends React.Component {
     }
 
     handleClickAway(e) {
-        if (this.mounted &&
-            this.state.query &&
-            !this.cocktailSearchEl.contains(e.target)) {
+        if (this.mounted && this.state.query) {
+            if (!this.cocktailSearchEl.contains(e.target)) {
+                e.preventDefault();
+            }
 
-            e.preventDefault();
             this.setState({ query: '' });
         }
     }
@@ -106,7 +108,8 @@ const CocktailSearchResults = ({ cocktails, selection, handleSelection }) => (
             cocktails.map((c, i) => (
                 <Link key={c.id} to={"/Cocktail/" + c.id}
                     className={"search-result " + (i === selection ? ' search-result-selected' : '')}
-                    onMouseMove={() => handleSelection(i)}>
+                    onMouseMove={() => handleSelection(i)}
+                >
                     {c.name}
                 </Link>
             ))}
