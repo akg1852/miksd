@@ -352,9 +352,6 @@ h2.result-header {
 }
 
 /* menu */
-.menus {
-    position: relative;
-}
 .menus-list-item {
     padding: 0 10px;
     display: flex;
@@ -393,9 +390,8 @@ h2.result-header {
     text-align: center;
 }
 .add-menu-button {
-    position: absolute;
-    top: -0.3em;
-    left: 120px;
+    float: right;
+    margin: 0 10px;
     font-weight: bold;
     font-size: 2.5em;
     color: #009900;
