@@ -291,16 +291,11 @@ ul.header-menu a, ul.header-menu a:visited {
 
 #ingredient-clear-button {
     height: 27px;
-    width: 128px;
+    width: 100%;
     background-color: #999999;
 }
 #ingredient-clear-button:disabled {
     color: #666666;
-}
-#ingredient-search input[type='submit'] {
-    height: 27px;
-    width: 188px;
-    background-color: #669966;
 }
 .ingredient-count{
     font-size: 0.7em;

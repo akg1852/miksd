@@ -31,12 +31,18 @@ class App extends React.Component {
         this.handleRenameMenu = this.handleRenameMenu.bind(this);
         this.handleAddCocktailToMenu = this.handleAddCocktailToMenu.bind(this);
         this.handleRemoveCocktailFromMenu = this.handleRemoveCocktailFromMenu.bind(this);
+        this.handleIngredientSearch = this.handleIngredientSearch.bind(this);
     }
 
     renderPage(title, ingredients) {
         return (
             <div>
-                <Route render={(props) => <Header {...props} selectedIngredients={ingredients} />} />
+                <Route render={(props) =>
+                    <Header {...props}
+                        selectedIngredients={ingredients}
+                        handleIngredientSearch={this.handleIngredientSearch}
+                    />
+                } />
                 <HeaderMenu />
 
                 <div id="content">
@@ -45,7 +51,7 @@ class App extends React.Component {
                             <CocktailResultList {...props}
                                 title={title}
                                 query={window.location.search}
-                                ingredients={ingredients} />
+                            />
                         } />
                         <Route path='/Cocktail/:id' render={(props) =>
                             <Cocktail {...props}
@@ -143,9 +149,14 @@ class App extends React.Component {
         localStorage.setItem('menus', JSON.stringify(menus));
     }
 
+    handleIngredientSearch(selectedIngredients) {
+        this.selectedIngredients = null;
+        this.props.history.push('/?' + selectedIngredients.map(i => 'i=' + i).join('&'));
+    }
+
     render() {
         const query = getQueryString();
-        const ingredients = query['i'] || [];
+        this.selectedIngredients = query['i'] || this.selectedIngredients || [];
 
         let title = (query['title'] || [])[0];
         title = (title ? decodeURIComponent(title.replace(/\+/g, ' ')) : 'Cocktails');
@@ -160,7 +171,7 @@ class App extends React.Component {
                         cocktailIds={props.match.params.cocktailIds.split(',')}
                     />
                 } />
-                <Route render={() => this.renderPage(title, ingredients)} />
+                <Route render={() => this.renderPage(title, this.selectedIngredients)} />
             </Switch>
         );
     }
