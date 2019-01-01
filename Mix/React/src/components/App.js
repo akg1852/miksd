@@ -6,6 +6,7 @@ import Cocktail from './Cocktail';
 import Header from './Header';
 import HeaderMenu from './HeaderMenu';
 import Menu from './Menu';
+import MenuHandlers from '../MenuHandlers';
 import MenuList from './MenuList';
 import NotFound from './NotFound';
 
@@ -26,12 +27,13 @@ class App extends React.Component {
             menus: menusJson ? JSON.parse(menusJson) : defaultMenus
         };
 
-        this.handleAddMenu = this.handleAddMenu.bind(this);
-        this.handleRemoveMenu = this.handleRemoveMenu.bind(this);
-        this.handleRenameMenu = this.handleRenameMenu.bind(this);
-        this.handleAddCocktailToMenu = this.handleAddCocktailToMenu.bind(this);
-        this.handleRemoveCocktailFromMenu = this.handleRemoveCocktailFromMenu.bind(this);
+        this.menuHandlers = new MenuHandlers(this);
         this.handleIngredientSearch = this.handleIngredientSearch.bind(this);
+    }
+
+    handleIngredientSearch(selectedIngredients) {
+        this.selectedIngredients = null;
+        this.props.history.push('/?' + selectedIngredients.map(i => 'i=' + i).join('&'));
     }
 
     renderPage(title, ingredients) {
@@ -56,23 +58,23 @@ class App extends React.Component {
                         <Route path='/Cocktail/:id' render={(props) =>
                             <Cocktail {...props}
                                 menus={this.state.menus}
-                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
-                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
+                                handleAddCocktailToMenu={this.menuHandlers.handleAddCocktailToMenu}
+                                handleRemoveCocktailFromMenu={this.menuHandlers.handleRemoveCocktailFromMenu}
                             />
                         } />
                         <Route path='/Menu/Edit/:id' render={(props) =>
                             <Menu {...props}
                                 {...this.state.menus.find(m => m.id === props.match.params.id) }
-                                handleRenameMenu={this.handleRenameMenu}
-                                handleAddCocktailToMenu={this.handleAddCocktailToMenu}
-                                handleRemoveCocktailFromMenu={this.handleRemoveCocktailFromMenu}
+                                handleRenameMenu={this.menuHandlers.handleRenameMenu}
+                                handleAddCocktailToMenu={this.menuHandlers.handleAddCocktailToMenu}
+                                handleRemoveCocktailFromMenu={this.menuHandlers.handleRemoveCocktailFromMenu}
                             />
                         } />
                         <Route path='/Menu/' render={(props) =>
                             <MenuList {...props}
                                 menus={this.state.menus}
-                                handleAddMenu={this.handleAddMenu}
-                                handleRemoveMenu={this.handleRemoveMenu}
+                                handleAddMenu={this.menuHandlers.handleAddMenu}
+                                handleRemoveMenu={this.menuHandlers.handleRemoveMenu}
                             />
                         } />
                         <Route component={NotFound} />
@@ -80,78 +82,6 @@ class App extends React.Component {
                 </div>
             </div>
         );
-    }
-
-    handleAddMenu() {
-        fetch('/Menu/Create')
-            .then(response => {
-                if (response.status == 200) {
-                    response.json().then(menu => {
-                        const menus = this.state.menus.concat(
-                        {
-                            id: menu.id,
-                            name: 'Untitled Menu',
-                            cocktailIds: []
-                        });
-
-                        this.saveMenus(menus)
-                        this.setState({ menus }, () => {
-                            this.props.history.push('/Menu/Edit/' + menu.id);
-                        });
-                    });
-                }
-            });
-    }
-
-    handleRemoveMenu(id) {
-        const menus = this.state.menus.filter(menu => menu.id !== id);
-        this.saveMenus(menus)
-        this.setState({ menus });
-    }
-
-    handleRenameMenu(id, name) {
-        const menus = this.state.menus
-        const menu = menus.find(m => m.id === id);
-
-        menu.name = name || 'Untitled Menu';
-        this.saveMenus(menus);
-        this.setState({ menus });
-    }
-
-    handleAddCocktailToMenu(menuId, cocktailId, index) {
-        const menus = this.state.menus;
-        const cocktailIds = menus.find(m => m.id === menuId).cocktailIds;
-
-        if (!cocktailIds.includes(cocktailId)) {
-            if (index == null) {
-                index = Infinity;
-            }
-            cocktailIds.splice(index, 0, cocktailId);
-            this.saveMenus(menus);
-            this.setState({ menus });
-        }
-    }
-
-    handleRemoveCocktailFromMenu(menuId, cocktailId, callback) {
-        const menus = this.state.menus;
-        const cocktailIds = menus.find(m => m.id === menuId).cocktailIds;
-        const cocktailIndex = cocktailIds.indexOf(cocktailId);
-
-        if (cocktailIndex !== -1) {
-            cocktailIds.splice(cocktailIndex, 1);
-            this.saveMenus(menus);
-            this.setState({ menus },
-                () => { callback && callback(cocktailIndex) });
-        }
-    }
-
-    saveMenus(menus) {
-        localStorage.setItem('menus', JSON.stringify(menus));
-    }
-
-    handleIngredientSearch(selectedIngredients) {
-        this.selectedIngredients = null;
-        this.props.history.push('/?' + selectedIngredients.map(i => 'i=' + i).join('&'));
     }
 
     render() {

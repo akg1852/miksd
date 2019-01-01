@@ -123,6 +123,7 @@
     <Content Include="React\src\components\CocktailSearch.js" />
     <Content Include="React\src\components\Ingredients.js" />
     <Content Include="React\src\components\IngredientSearch.js" />
+    <Content Include="React\src\MenuHandlers.js" />
     <Content Include="React\src\index.js" />
     <Content Include="React\webpack.config.babel.js" />
     <Content Include="Web.config">
