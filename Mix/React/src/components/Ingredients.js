@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import IngredientSelect from './IngredientSelect';
 
 const Ingredients = ({ ingredients, selectedCategory, handleCategoryChange, handleIngredientSelect }) => (
     <div id="ingredients" className="ingredients">
@@ -50,18 +51,18 @@ const Ingredient = ({ id, name, selection, handleSelect }) => {
     const noSelection = selection === undefined;
 
     return (
-        <span className={"ingredient-option " + (include ? 'include' : exclude ? 'exclude' : '')}>
-            <input type="checkbox" name="i" id={"ingredient+" + id}
-                checked={include} readOnly value={id} />
-            <label className="include" htmlFor={"ingredient+" + id}
-                onClick={() => handleSelect(id, !include ? true : undefined)}>✓</label>
-            <input type="checkbox" name="i" id={"ingredient-" + id}
-                checked={exclude} readOnly value={-id} />
-            <label className="exclude" htmlFor={"ingredient-" + id}
-                onClick={() => handleSelect(id, !exclude ? false : undefined)}>✗</label>
-            <span className="ingredient-name"
-                onClick={() => handleSelect(id, noSelection ? true : undefined)}>{name}</span>
-        </span>
+        <div>
+            <IngredientSelect
+                id={id}
+                selection={selection}
+                handleSelect={handleSelect}
+            />
+            <span className={'ingredient-select-name' + (include ? ' include' : exclude ? ' exclude' : '')}
+                onClick={() => handleSelect(id, noSelection ? true : undefined)}
+            >
+                {name}
+            </span>
+        </div>
     );
 }
 

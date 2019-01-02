@@ -255,36 +255,36 @@ ul.header-menu a, ul.header-menu a:visited {
     display: block;
 }
 
-.ingredient-option {
-    display: block;
+.ingredient-select {
     white-space: nowrap;
     user-select: none;
 }
-.ingredient-option input[type='checkbox'] {
+.ingredient-select input[type='checkbox'] {
     display: none;
 }
-.ingredient-name {
-    margin-left: 15px;
-    cursor: default;
-}
-.ingredient-option label {
+.ingredient-select label {
     margin-left: 10px;
     color: #999999;
     font-weight: bold;
     cursor: pointer;
 }
-.ingredient-option.include label.include {
+.ingredient-select label.include {
     color: #009900;
     text-shadow: var(--text-shadow);
 }
-.ingredient-option.exclude label.exclude {
+.ingredient-select label.exclude {
     color: #CC0000;
     text-shadow: var(--text-shadow);
 }
-.ingredient-option.include .ingredient-name {
+
+.ingredient-select-name {
+    margin-left: 15px;
+    cursor: default;
+}
+.ingredient-select-name.include {
     font-weight: bold;
 }
-.ingredient-option.exclude .ingredient-name {
+.ingredient-select-name.exclude {
     color: #999999;
     text-decoration: line-through;
 }
