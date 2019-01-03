@@ -37,7 +37,11 @@ namespace Mix.Controllers
         {
             return ingredients
                 .Where(ingredient => !ingredient.IsOptional)
-                .Select(ingredient => ingredient.Name);
+                .Select(ingredient => new {
+                    id = ingredient.Ingredient,
+                    ingredient.Name,
+                    super = ingredient.Super,
+                });
         }
     }
 }

@@ -255,24 +255,36 @@ ul.header-menu a, ul.header-menu a:visited {
     display: block;
 }
 
+.ingredient-select-wrapper {
+    display: inline-block;
+    position: absolute;
+    padding-right: 10px;
+    background: var(--background-color);
+    border: solid var(--border-color) 1px;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+}
+.ingredient-select-icon {
+    color: var(--primary-color-dark);
+    font-size: 0.8em;
+    vertical-align: super;
+}
+
 .ingredient-select {
     white-space: nowrap;
     user-select: none;
 }
-.ingredient-select input[type='checkbox'] {
-    display: none;
-}
-.ingredient-select label {
+.ingredient-select-option {
     margin-left: 10px;
     color: #999999;
     font-weight: bold;
     cursor: pointer;
 }
-.ingredient-select label.include {
+.ingredient-select-option.include {
     color: #009900;
     text-shadow: var(--text-shadow);
 }
-.ingredient-select label.exclude {
+.ingredient-select-option.exclude {
     color: #CC0000;
     text-shadow: var(--text-shadow);
 }
@@ -323,6 +335,9 @@ h2.result-header {
 }
 .cocktail-summary > p {
     flex: 1;
+}
+.cocktail-summary-ingredient {
+    white-space: nowrap;
 }
 
 .cocktail-result {

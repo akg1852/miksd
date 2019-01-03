@@ -22,12 +22,31 @@ namespace Mix.Services
             }
         }
 
+        private string SuperAndSubIngredient = $@"
+           SuperIngredient AS (
+                SELECT Id, Name
+                FROM Ingredient
+                WHERE IsSuper = 1
+            ),
+            SubIngredient AS (
+                SELECT IR.Child AS Id, P.Id AS Super
+                FROM SuperIngredient P
+                JOIN IngredientRelationship IR ON IR.Parent = P.Id
+                UNION ALL
+                SELECT IR.Child AS Id, P.Super
+                FROM SubIngredient P
+                JOIN IngredientRelationship IR ON IR.Parent = P.Id
+            )
+        ";
+
         public List<IngredientCategory> IngredientCategories()
         {
             using (var db = new SqlConnection(connectionString))
             {
-                var ingredientSql = @"
-                    WITH Categorised AS (
+                var ingredientSql = $@"
+                    WITH
+                    {SuperAndSubIngredient},
+                    Categorised AS (
                         SELECT Id, Id AS Category
                         FROM Ingredient
                         WHERE Id IN @categoryIds
@@ -35,19 +54,8 @@ namespace Mix.Services
                         SELECT IR.Child AS Id, P.Category
                         FROM Categorised P
                         JOIN IngredientRelationship IR ON IR.Parent = P.Id
-                    ), SuperIngredient AS (
-                        SELECT Id, Name
-                        FROM Ingredient
-                        WHERE IsSuper = 1
-                    ), SubIngredient AS (
-                        SELECT IR.Child AS Id
-                        FROM SuperIngredient P
-                        JOIN IngredientRelationship IR ON IR.Parent = P.Id
-                        UNION ALL
-                        SELECT IR.Child AS Id
-                        FROM SubIngredient P
-                        JOIN IngredientRelationship IR ON IR.Parent = P.Id
-                    ), LeafIngredient AS (
+                    ),
+                    LeafIngredient AS (
                         SELECT I.Id, I.Name
                         FROM Ingredient I
                         LEFT JOIN IngredientRelationship IR ON IR.Parent = I.Id
@@ -125,7 +133,7 @@ namespace Mix.Services
 
             using (var db = new SqlConnection(connectionString))
             {
-                var cocktailSql = @"
+                var cocktailSql = $@"
                     WITH
                     IncludedIngredientRoot AS (
                         SELECT *
@@ -282,11 +290,13 @@ namespace Mix.Services
         private IEnumerable<CocktailIngredient> CocktailIngredients(SqlConnection db, Cocktails cocktail)
         {
             var ingredientSql =
+                $"WITH {SuperAndSubIngredient}" +
                 "SELECT CI.Ingredient, I.Name, CI.IsOptional, CI.Quantity, I.IsDiscrete, " +
-                "CI.SpecialPrep, S.Name AS SpecialPrepName " +
+                "CI.SpecialPrep, S.Name AS SpecialPrepName, SI.Super " +
                 "FROM CocktailIngredient CI " +
                 "LEFT JOIN Ingredient I ON I.Id = CI.Ingredient " +
                 "LEFT JOIN SpecialPrep S ON S.Id = CI.SpecialPrep " +
+                "LEFT JOIN SubIngredient SI ON SI.Id = I.Id " +
                 "WHERE CI.Cocktail = @Cocktail";
             return db.Query<CocktailIngredient>(ingredientSql, new { Cocktail = cocktail });
         }

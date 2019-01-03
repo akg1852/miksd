@@ -9,6 +9,7 @@ namespace Mix.Models
         public bool IsOptional;
         public decimal Quantity;
         public bool IsDiscrete;
+        public Ingredients Super;
 
         public SpecialPreps SpecialPrep;
         public string SpecialPrepName;

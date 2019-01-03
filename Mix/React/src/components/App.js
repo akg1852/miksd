@@ -53,6 +53,8 @@ class App extends React.Component {
                             <CocktailResultList {...props}
                                 title={title}
                                 query={window.location.search}
+                                selectedIngredients={ingredients}
+                                handleIngredientSearch={this.handleIngredientSearch}
                             />
                         } />
                         <Route path='/Cocktail/:id' render={(props) =>

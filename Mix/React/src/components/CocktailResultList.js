@@ -11,9 +11,7 @@ class CocktailResultList extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.query !== prevProps.query) {
-            this.setState({ cocktails: null }, () => {
-                this.getCocktails();
-            });
+            this.getCocktails();
         }
     }
 
@@ -30,7 +28,12 @@ class CocktailResultList extends React.Component {
 
     render() {
         return (
-            <CocktailList title={this.props.title} cocktails={this.state.cocktails} />
+            <CocktailList
+                title={this.props.title}
+                cocktails={this.state.cocktails}
+                selectedIngredients={this.props.selectedIngredients}
+                handleIngredientSearch={this.props.handleIngredientSearch}
+            />
         );
     }
 }

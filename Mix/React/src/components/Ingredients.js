@@ -53,9 +53,8 @@ const Ingredient = ({ id, name, selection, handleSelect }) => {
     return (
         <div>
             <IngredientSelect
-                id={id}
                 selection={selection}
-                handleSelect={handleSelect}
+                handleSelect={(selection) => handleSelect(id, selection)}
             />
             <span className={'ingredient-select-name' + (include ? ' include' : exclude ? ' exclude' : '')}
                 onClick={() => handleSelect(id, noSelection ? true : undefined)}
