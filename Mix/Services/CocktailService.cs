@@ -35,11 +35,35 @@ namespace Mix.Services
                         SELECT IR.Child AS Id, P.Category
                         FROM Categorised P
                         JOIN IngredientRelationship IR ON IR.Parent = P.Id
+                    ), SuperIngredient AS (
+                        SELECT Id, Name
+                        FROM Ingredient
+                        WHERE IsSuper = 1
+                    ), SubIngredient AS (
+                        SELECT IR.Child AS Id
+                        FROM SuperIngredient P
+                        JOIN IngredientRelationship IR ON IR.Parent = P.Id
+                        UNION ALL
+                        SELECT IR.Child AS Id
+                        FROM SubIngredient P
+                        JOIN IngredientRelationship IR ON IR.Parent = P.Id
+                    ), LeafIngredient AS (
+                        SELECT I.Id, I.Name
+                        FROM Ingredient I
+                        LEFT JOIN IngredientRelationship IR ON IR.Parent = I.Id
+                        WHERE IR.Parent IS NULL
                     )
                     SELECT DISTINCT I.*, C.Category
-                    FROM Ingredient I
+                    FROM (
+                        SELECT Id, Name
+                        FROM SuperIngredient
+                        UNION
+                        SELECT L.Id, L.Name
+                        FROM LeafIngredient L
+                        LEFT JOIN SubIngredient S ON S.Id = L.Id
+                        WHERE S.Id IS NULL
+                    ) AS I
                     LEFT JOIN Categorised C ON C.Id = I.Id
-                    WHERE I.IsHidden = 0
                     ORDER BY I.Name
                 ";
                 var categoryIds = new List<Ingredients> { Ingredients.Spirit, Ingredients.WineAll, Ingredients.Liqueur };
@@ -257,7 +281,7 @@ namespace Mix.Services
                 "FROM IngredientRelationship IR " +
                 "LEFT JOIN Ingredient I ON I.Id = IR.Parent " +
                 "WHERE Child IN @ingredients " +
-                "AND I.Equivalence = 1",
+                "AND (I.Equivalence = 1 OR I.IsSuper = 1)",
                 new { ingredients }).ToList();
             var similarIngredients = ingredients.Where(i => !equivalence.Any(e => (Ingredients)e.Child == i))
                 .Concat(equivalence.Select(e => (Ingredients)e.Parent));

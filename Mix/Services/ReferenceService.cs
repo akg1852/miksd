@@ -20,12 +20,12 @@ namespace Mix.Services
         {
             foreach (var ingredient in Reference.AllIngredients)
             {
-                db.Execute("INSERT INTO Ingredient (Id, Name, Equivalence, IsHidden, IsDiscrete) " +
-                    "VALUES (@Id, @Name, @Equivalence, @IsHidden, @IsDiscrete)",
+                db.Execute("INSERT INTO Ingredient (Id, Name, Equivalence, IsDiscrete, IsSuper) " +
+                    "VALUES (@Id, @Name, @Equivalence, @IsDiscrete, @IsSuper)",
                     new
                     {
                         ingredient.Id, ingredient.Name,
-                        ingredient.Equivalence, ingredient.IsHidden, ingredient.IsDiscrete
+                        ingredient.Equivalence, ingredient.IsDiscrete, ingredient.IsSuper
                     });
             }
             foreach (var parent in Reference.AllIngredients)

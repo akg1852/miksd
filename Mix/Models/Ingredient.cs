@@ -10,7 +10,7 @@ namespace Mix.Models
         public Ingredients Category;
         public IEnumerable<Ingredients> Children;
         public bool Equivalence;
-        public bool IsHidden;
+        public bool IsSuper;
         public bool IsDiscrete;
 
         public Ingredient() { }
@@ -24,7 +24,7 @@ namespace Mix.Models
             Name = name;
             Children = children;
             Equivalence = options.HasFlag(IngredientOptions.Equivalence);
-            IsHidden = options.HasFlag(IngredientOptions.Hidden);
+            IsSuper = options.HasFlag(IngredientOptions.Super);
             IsDiscrete = options.HasFlag(IngredientOptions.Discrete);
         }
     }
@@ -34,7 +34,7 @@ namespace Mix.Models
     {
         None = 0,
         Equivalence = 1,
-        Hidden = 2,
+        Super = 2,
         Discrete = 4,
     }
 

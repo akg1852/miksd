@@ -10,13 +10,3 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
--- clear out reference data
--- (it gets regenerated in code where necessary)
-DELETE FROM CocktailIngredient
-DELETE FROM Cocktail
-DELETE FROM SpecialPrep
-DELETE FROM Garnish
-DELETE FROM PrepMethod
-DELETE FROM Vessel
-DELETE FROM IngredientRelationship
-DELETE FROM Ingredient
