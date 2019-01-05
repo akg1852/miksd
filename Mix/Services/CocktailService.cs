@@ -127,14 +127,32 @@ namespace Mix.Services
             {
                 var cocktailSql = @"
                     WITH
-                    IncludedIngredient AS (
-                        SELECT *, Id AS QueryIngredient
+                    IncludedIngredientRoot AS (
+                        SELECT *
                         FROM Ingredient WHERE Id IN @ingredients
+                    ),
+                    IncludedIngredientUp AS (
+                        SELECT *, Id AS QueryIngredient
+                        FROM IncludedIngredientRoot
+                        UNION ALL
+                        SELECT P.*, C.QueryIngredient
+                        FROM IncludedIngredientUp C
+                        JOIN IngredientRelationship IR ON IR.Child = C.Id
+                        JOIN Ingredient P ON P.Id = IR.Parent
+                    ),
+                    IncludedIngredientDown AS (
+                        SELECT *, Id AS QueryIngredient
+                        FROM IncludedIngredientRoot
                         UNION ALL
                         SELECT C.*, P.QueryIngredient
-                        FROM IncludedIngredient P
+                        FROM IncludedIngredientDown P
                         JOIN IngredientRelationship IR ON IR.Parent = P.Id
                         JOIN Ingredient C ON C.Id = IR.Child
+                    ),
+                    IncludedIngredient AS (
+                        SELECT * FROM IncludedIngredientUp
+                        UNION
+                        SELECT * FROM IncludedIngredientDown
                     ),
                     ExcludedIngredient AS (
                         SELECT *
