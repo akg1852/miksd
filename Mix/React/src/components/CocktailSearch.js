@@ -43,7 +43,7 @@ class CocktailSearch extends React.Component {
             .then(response => {
                 if (response.status == 200) {
                     response.json().then(data => {
-                        this.setState({ cocktails: data });
+                        this.setState({ cocktails: data || [] });
                     });
                 }
             });
@@ -51,7 +51,7 @@ class CocktailSearch extends React.Component {
 
     goToCocktail() {
         const cocktails = this.state.cocktails;
-        if (cocktails && cocktails.length) {
+        if (cocktails.length) {
             this.setState({ query: '' }, () => {
                 this.props.history.push('/Cocktail/' + this.state.cocktails[this.state.selection].id);
             });
