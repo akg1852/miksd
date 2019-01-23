@@ -141,6 +141,8 @@ namespace Mix.Models
         SloeGin = 98,
         ApricotLiqueur = 99,
         Sherry = 100,
+        FruitJuice = 101,
+        Mixer = 102,
     }
 
     public static class IngredientHelpers

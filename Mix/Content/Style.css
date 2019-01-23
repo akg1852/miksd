@@ -225,8 +225,8 @@ ul.header-menu a, ul.header-menu a:visited {
     background-color: var(--background-color);
     border: solid var(--border-color) 1px;
     box-shadow: var(--box-shadow);
-    height: 300px;
-    width: 320px;
+    height: 343px;
+    width: 340px;
 }
 .ingredient-category-headers {
     display: flex;
@@ -248,8 +248,8 @@ ul.header-menu a, ul.header-menu a:visited {
 .ingredient-category {
     display: none;
     overflow-y: scroll;
-    width: 318px;
-    height: 243px;
+    width: 338px;
+    height: 286px;
 }
 .ingredient-category.current {
     display: block;

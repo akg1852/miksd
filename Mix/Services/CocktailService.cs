@@ -74,16 +74,22 @@ namespace Mix.Services
                     LEFT JOIN Categorised C ON C.Id = I.Id
                     ORDER BY I.Name
                 ";
-                var categoryIds = new List<Ingredients> { Ingredients.Spirit, Ingredients.WineAll, Ingredients.Liqueur };
+                var categoryIds = new List<Ingredients> {
+                    Ingredients.Spirit,
+                    Ingredients.WineAll,
+                    Ingredients.Liqueur,
+                    Ingredients.Mixer,
+                };
                 var results = db.Query<Ingredient>(ingredientSql, new { categoryIds })
                     .GroupBy(i => i.Category)
                     .ToDictionary(i => i.Key, i => i.ToList());
 
                 var categories = new List<IngredientCategory>
                 {
-                    new IngredientCategory { Id = Ingredients.Spirit, Name = "Spirits" },
-                    new IngredientCategory { Id = Ingredients.Liqueur, Name = "Liqueurs" },
+                    new IngredientCategory { Id = Ingredients.Spirit, Name = "Spirit" },
                     new IngredientCategory { Id = Ingredients.WineAll, Name = "Wine" },
+                    new IngredientCategory { Id = Ingredients.Liqueur, Name = "Liqueur" },
+                    new IngredientCategory { Id = Ingredients.Mixer, Name = "Mixer" },
                     new IngredientCategory { Id = Ingredients.None, Name = "Other" },
                 };
 

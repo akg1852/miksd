@@ -122,6 +122,11 @@ namespace Mix.Models
             new I(i.Orgeat, "Orgeat Syrup"),
             new I(i.HoneySyrup, "Honey Syrup"),
 
+            new I(i.Mixer, "Mixer",
+                i.FruitJuice, i.Carbonated),
+
+            new I(i.FruitJuice, "Fruit Juice",
+                i.Citrus, i.OrangeJuice, i.PineappleJuice, i.CranberryJuice, i.GrapefruitJuice),
             new I(i.Citrus, "Citrus", o.Equivalence,
                 i.LemonJuice, i.LimeJuice),
             new I(i.LemonJuice, "Lemon Juice"),
@@ -133,17 +138,17 @@ namespace Mix.Models
             new I(i.PineappleJuice, "Pineapple Juice"),
             new I(i.CranberryJuice, "Cranberry Juice"),
             new I(i.GrapefruitJuice, "Grapefruit Juice"),
-            new I(i.PeachPuree, "Peach Purée"),
 
             new I(i.Carbonated, "Carbonated Drink",
                 i.Soda, i.Cola, i.GingerBeer, i.GingerAle, i.Tonic, i.Lemonade),
-            new I(i.Water, "Water"),
             new I(i.Soda, "Soda Water"),
             new I(i.Tonic, "Tonic Water"),
             new I(i.Cola, "Cola"),
             new I(i.GingerBeer, "Ginger Beer"),
             new I(i.GingerAle, "Ginger Ale"),
             new I(i.Lemonade, "Lemonade"),
+
+            new I(i.Water, "Water"),
 
             new I(i.EggWhite, "Egg White"),
             new I(i.EggYolk, "Egg Yolk"),
@@ -155,6 +160,7 @@ namespace Mix.Models
 
             new I(i.MintLeaf, "Mint leaves", o.Discrete),
             new I(i.GingerSlice, "Ginger slices", o.Discrete),
+            new I(i.PeachPuree, "Peach Purée"),
         };
     }
 }
