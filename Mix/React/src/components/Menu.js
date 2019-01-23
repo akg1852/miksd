@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import ContentEditable from 'react-sane-contenteditable';
+import Loading from './Loading';
 import NotFound from './NotFound';
 
 class Menu extends React.Component {
@@ -61,13 +62,15 @@ class Menu extends React.Component {
 
         document.title = this.props.name + ' - Miksd';
 
-        const cocktailList = !this.state.cocktails ? null : !this.state.cocktails.length ? (
+        const cocktailList = !this.state.cocktails ? (
+            <Loading />
+        ) : !this.state.cocktails.length ? (
             this.props.readOnly ? (
                 <p>Sorry, no cocktails have been added to this menu.</p>
             ) : (
                 <p>Go <Link to="/" className="link">find some cocktails</Link> to add to this menu!</p>
             )
-        ): (
+        ) : (
             <dl>
                 {this.state.cocktails.map(c =>
                     <div key={c.id} className="menu-cocktail">

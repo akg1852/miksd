@@ -441,8 +441,8 @@ h2.result-header {
     cursor: pointer;
 }
 
-/* not found */
-.not-found {
+/* not found / loading */
+.not-found, .loading {
     text-align: center;
     margin-top: 30px;
     font-size: 1.3em;

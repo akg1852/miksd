@@ -1,6 +1,7 @@
 ﻿import React from 'react';
-import CocktailList from './CocktailList';
 import { Link } from 'react-router-dom';
+import CocktailList from './CocktailList';
+import Loading from './Loading';
 
 class Cocktail extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class Cocktail extends React.Component {
 
     render() {
         if (!this.state.cocktail) {
-            return null;
+            return <Loading />;
         }
 
         const { id, name, recipe, description, image, similar } = this.state.cocktail;

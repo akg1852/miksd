@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import IngredientSelect from './IngredientSelect';
+import Loading from './Loading';
 
 const showSize = 10;
 
@@ -73,34 +74,36 @@ class CocktailList extends React.Component {
     }
 
     render() {
-        if (!this.props.cocktails) {
-            return null;
-        }
-        if (this.props.cocktails.length === 0) {
-            return <div className="not-found">Sorry! No cocktails match your search criteria.</div>
-        }
-
         return (
             <div>
                 <h2>{this.props.title}</h2>
-                {this.props.cocktails.slice(0, this.state.show).map(c =>
-                    <Cocktail key={c.id}
-                        {...c}
-                        selectedIngredients={this.props.selectedIngredients}
-                        handleIngredientSelect={this.handleIngredientSelect}
-                        ingredientSelecting={
-                            this.state.cocktailSelecting === c.id ?
-                            this.state.ingredientSelecting :
-                            null
+                {!this.props.cocktails ? (
+                    <Loading />
+                ) : this.props.cocktails.length === 0 ? (
+                    <div className="not-found">Sorry! No cocktails match your search criteria.</div>
+                ) : (
+                    <React.Fragment>
+                        {this.props.cocktails.slice(0, this.state.show).map(c =>
+                            <Cocktail key={c.id}
+                                {...c}
+                                selectedIngredients={this.props.selectedIngredients}
+                                handleIngredientSelect={this.handleIngredientSelect}
+                                ingredientSelecting={
+                                    this.state.cocktailSelecting === c.id ?
+                                    this.state.ingredientSelecting :
+                                    null
+                                }
+                                handleSelecting={this.handleSelecting}
+                            />
+                        )}
+                        {(this.props.cocktails.length > this.state.show) &&
+                            <div id="show-more"
+                                onClick={this.handleShowMore}>
+                                Show More…
+                            </div>
                         }
-                        handleSelecting={this.handleSelecting}
-                    />
+                    </React.Fragment>
                 )}
-                {(this.props.cocktails.length > this.state.show) &&
-                    <div id="show-more"
-                        onClick={this.handleShowMore}>
-                        Show More…
-                    </div>}
             </div>
         );
     }
