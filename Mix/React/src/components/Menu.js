@@ -108,7 +108,7 @@ class Menu extends React.Component {
                                     </React.Fragment>
                                 }
                             </dt>
-                            <dd>{c.recipe.join(', ')}</dd>
+                            <dd>{c.recipe.map(i => i.name).join(', ')}</dd>
                         </div>
                     </div>
                 )}
