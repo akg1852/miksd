@@ -32,6 +32,7 @@ namespace Mix.Controllers
                     var quantity = ingredient.Quantity.ToString("0.#") + (ingredient.IsDiscrete ? "" : " ml");
                     return new
                     {
+                        id = ingredient.Ingredient,
                         ingredient.Name,
                         ingredient.IsOptional,
                         quantity,
