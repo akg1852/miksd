@@ -217,7 +217,7 @@ namespace Mix.Services
                     )
                     SELECT * FROM MatchingCocktail
                     ORDER BY
-                        IIF(Fullness > Completeness, Fullness, Completeness) DESC,
+                        IIF(Fullness >= Completeness, Fullness, Completeness) DESC,
                         IIF(Fullness < Completeness, Fullness, Completeness) DESC,
                         IngredientCount ASC,
                         Id ASC
