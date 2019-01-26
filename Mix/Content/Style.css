@@ -447,3 +447,13 @@ h2.result-header {
     margin-top: 30px;
     font-size: 1.3em;
 }
+.loading .dot {
+    display: inline-block;
+    width: 15px;
+    font-size: 2em;
+    color: var(--primary-color-dark);
+}
+.loading .dot.current {
+    font-weight: bold;
+    font-size: 4em;
+}
