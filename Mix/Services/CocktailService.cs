@@ -136,6 +136,7 @@ namespace Mix.Services
                                                     Vessels vessel = Vessels.None)
         {
             ingredients = ingredients?.Distinct()?.ToList();
+            var nonOptionalIngredients = "CI.IsOptional = 0 AND CI.Ingredient <> 58";
 
             using (var db = new SqlConnection(connectionString))
             {
@@ -186,13 +187,14 @@ namespace Mix.Services
                     ),
                     MatchingCocktail AS (
                         SELECT C.Id, C.Name, C.Color, C.Vessel, C.VesselName, C.PrepMethod, C.PrepMethodName,
+                        COUNT(*) AS IngredientCount,
                         (CAST(C.FullnessCount AS float) / COUNT(*)) AS Fullness,
                         (CAST(C.CompletenessCount AS float) / NULLIF(@ingredientsCount, 0)) AS Completeness
                         FROM (
                             SELECT C.Id, C.Name, C.Color,
                             C.Vessel, V.Name AS VesselName,
                             C.PrepMethod, P.Name AS PrepMethodName,
-                            COUNT(DISTINCT (CASE WHEN CI.IsOptional = 0 THEN II.Id END)) AS FullnessCount,
+                            COUNT(DISTINCT (CASE WHEN {nonOptionalIngredients} THEN II.Id END)) AS FullnessCount,
                             (
                                 COUNT(DISTINCT (CASE WHEN II.IsUp = 0 THEN II.QueryIngredient END)) +
                                 (0.9 * COUNT(DISTINCT (CASE WHEN II.IsUp = 1 THEN II.QueryIngredient END)))
@@ -208,13 +210,17 @@ namespace Mix.Services
                             GROUP BY C.Id, C.Name, C.Color, C.Vessel, V.Name, C.PrepMethod, P.Name
                         ) AS C
                         LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
-                        WHERE CI.IsOptional = 0
+                        WHERE {nonOptionalIngredients}
                         GROUP BY C.Id, C.Name, C.Color,
                         C.Vessel, C.VesselName, C.PrepMethod, C.PrepMethodName,
                         C.FullnessCount, C.CompletenessCount
                     )
                     SELECT * FROM MatchingCocktail
-                    ORDER BY Fullness + Completeness DESC, Name ASC
+                    ORDER BY
+                        IIF(Fullness > Completeness, Fullness, Completeness) DESC,
+                        IIF(Fullness < Completeness, Fullness, Completeness) DESC,
+                        IngredientCount ASC,
+                        Id ASC
                 ";
 
                 var cocktails = db.Query<CocktailMatch>(cocktailSql,
