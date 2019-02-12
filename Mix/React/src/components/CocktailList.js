@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import IngredientSelect from './IngredientSelect';
-import Loading from './Loading';
 
 const showSize = 10;
 
@@ -78,7 +77,7 @@ class CocktailList extends React.Component {
             <div>
                 <h2>{this.props.title}</h2>
                 {!this.props.cocktails ? (
-                    <Loading />
+                    null
                 ) : this.props.cocktails.length === 0 ? (
                     <div className="not-found">Sorry! No cocktails match your search criteria.</div>
                 ) : (

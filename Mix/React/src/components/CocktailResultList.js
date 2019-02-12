@@ -1,11 +1,14 @@
 ﻿import React from 'react';
 import CocktailList from './CocktailList';
+import Loading from './Loading';
 
 class CocktailResultList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+    }
 
+    componentDidMount() {
         this.getCocktails();
     }
 
@@ -16,24 +19,29 @@ class CocktailResultList extends React.Component {
     }
 
     getCocktails() {
-        fetch('/Cocktail/List' + this.props.query)
-            .then(response => {
-                if (response.status == 200) {
-                    response.json().then(cocktails => {
-                        this.setState({ cocktails });
-                    });
-                }
-            });
+        this.setState({ isLoading: true }, () => {
+            fetch('/Cocktail/List' + this.props.query)
+                .then(response => {
+                    if (response.status == 200) {
+                        response.json().then(cocktails => {
+                            this.setState({ cocktails, isLoading: false });
+                        });
+                    }
+                });
+        });
     }
 
     render() {
         return (
-            <CocktailList
-                title={this.props.title}
-                cocktails={this.state.cocktails}
-                selectedIngredients={this.props.selectedIngredients}
-                handleIngredientSearch={this.props.handleIngredientSearch}
-            />
+            <React.Fragment>
+                {this.state.isLoading && <Loading isFixed />}
+                <CocktailList
+                    title={this.props.title}
+                    cocktails={this.state.cocktails}
+                    selectedIngredients={this.props.selectedIngredients}
+                    handleIngredientSearch={this.props.handleIngredientSearch}
+                />
+            </React.Fragment>
         );
     }
 }

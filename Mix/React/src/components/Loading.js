@@ -14,7 +14,7 @@ class Loading extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.update, 400);
+        this.interval = setInterval(this.update, 200);
     }
 
     componentWillUnmount() {
@@ -32,9 +32,9 @@ class Loading extends React.Component {
 
     render() {
         return (
-            <div className="loading">
+            <div className={'loading' + (this.props.isFixed ? ' fixed' : '')}>
                 {[...Array(this.totalDots)].map((o, i) => (
-                    <span className={'dot' + (i === this.state.dot ? ' current' : '')}>.</span>
+                    <span key={i} className={'dot' + (i === this.state.dot ? ' current' : '')}>.</span>
                 ))}
             </div>
         );
