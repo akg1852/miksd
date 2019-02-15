@@ -378,8 +378,8 @@ h2.result-header {
 .menu {
     margin-top: 30px;
     background-color: #FFFFFA;
-    padding: 1px 30px 80px 30px;
-    min-height: 110vh;
+    padding: 1px 30px 30px 30px;
+    min-height: 100vh;
 }
 .menu h2 {
     text-align: center;
