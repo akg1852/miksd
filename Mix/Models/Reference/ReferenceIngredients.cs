@@ -11,7 +11,8 @@ namespace Mix.Models
         public static List<Ingredient> AllIngredients = new List<Ingredient>
         {
             new I(i.Spirit, "Spirit",
-                i.Rum, i.Whisky, i.Vodka, i.Gin, i.Brandy, i.CognacOrRye, i.Tequila, i.Cachaça, i.Absinthe),
+                i.Vodka, i.Gin, i.Tequila, i.Rum, i.Absinthe,
+                i.Whisky, i.Brandy, i.Calvados, i.CognacOrRye, i.Cachaça),
             new I(i.WineAll, "Wine",
                 i.Wine, i.FortifiedWine),
             new I(i.Liqueur, "Liqueur",
@@ -19,7 +20,9 @@ namespace Mix.Models
 
             new I(i.Rum, "Rum", o.Equivalence,
                 i.WhiteRum, i.DarkRum, i.RhumAgricole),
-            new I(i.WhiteRum, "White Rum"),
+            new I(i.WhiteRum, "White Rum", o.Super,
+                i.OverproofRum),
+            new I(i.OverproofRum, "Overproof Rum"),
             new I(i.DarkRum, "Dark Rum"),
             new I(i.RhumAgricole, "Rhum Agricole"),
             new I(i.Cachaça, "Cachaça"),
@@ -41,6 +44,7 @@ namespace Mix.Models
                 i.Cognac, i.Pisco),
             new I(i.Cognac, "Cognac"),
             new I(i.Pisco, "Pisco"),
+            new I(i.Calvados, "Calvados"),
 
             new I(i.Vodka, "Vodka"),
 
@@ -66,8 +70,8 @@ namespace Mix.Models
 
             new I(i.SweetLiqueur, "Liqueur (Sweet)",
                 i.OrangeLiqueur, i.Maraschino, i.Drambuie, i.Cassis, i.Mûre, i.Violette, i.Cacao,
-                i.Galliano, i.Amaretto, i.Benedictine, i.ChartreuseVerte, i.CherryHeering,
-                i.SouthernComfort, i.PeachSchnapps, i.Midori, i.SloeGin, i.ApricotLiqueur),
+                i.Galliano, i.Amaretto, i.Benedictine, i.ChartreuseVerte, i.ChartreuseJaune, i.CherryHeering,
+                i.SouthernComfort, i.PeachSchnapps, i.Midori, i.SloeGin, i.ApricotLiqueur, i.CoconutRum),
             new I(i.OrangeLiqueur, "Triple Sec / Curaçao", o.Super,
                 i.TripleSec, i.Curaçao),
             new I(i.TripleSec, "Triple Sec", o.Equivalence,
@@ -87,12 +91,14 @@ namespace Mix.Models
             new I(i.Amaretto, "Amaretto"),
             new I(i.Benedictine, "Benedictine"),
             new I(i.ChartreuseVerte, "Chartreuse (Green)"),
+            new I(i.ChartreuseJaune, "Chartreuse (Yellow)"),
             new I(i.CherryHeering, "Cherry Heering"),
             new I(i.SouthernComfort, "Southern Comfort"),
             new I(i.PeachSchnapps, "Peach Schnapps"),
             new I(i.Midori, "Midori"),
             new I(i.SloeGin, "Sloe Gin"),
             new I(i.ApricotLiqueur, "Apricot Brandy (Liqueur)"),
+            new I(i.CoconutRum, "Coconut Rum"),
 
             new I(i.Wine, "Wine", o.Equivalence,
                 i.SparklingWine, i.WhiteWine),
@@ -113,7 +119,8 @@ namespace Mix.Models
             new I(i.LilletBlanc, "Lillet Blanc"),
 
             new I(i.Sweetener, "Sweetener",
-                 i.Sugar, i.Orgeat, i.SweetLiqueur, i.Grenadine, i.LimeCordial, i.HoneySyrup),
+                 i.Sugar, i.Orgeat, i.SweetLiqueur, i.Grenadine, i.LimeCordial,
+                 i.HoneySyrup, i.Falernum, i.PassionFruitSyrup),
             new I(i.Sugar, "Sugar", o.Super,
                 i.SimpleSyrup, i.GommeSyrup),
             new I(i.SimpleSyrup, "Simple Syrup"),
@@ -121,6 +128,8 @@ namespace Mix.Models
             new I(i.Grenadine, "Grenadine"),
             new I(i.Orgeat, "Orgeat Syrup"),
             new I(i.HoneySyrup, "Honey Syrup"),
+            new I(i.Falernum, "Falernum"),
+            new I(i.PassionFruitSyrup, "Passion fruit Syrup"),
 
             new I(i.Mixer, "Mixer",
                 i.FruitJuice, i.Carbonated),
@@ -157,6 +166,7 @@ namespace Mix.Models
             new I(i.Baileys, "Baileys Irish Cream"),
             new I(i.Cream, "Cream"),
             new I(i.CoconutCream, "Coconut Cream"),
+            new I(i.CondensedMilk, "Condensed Milk"),
 
             new I(i.MintLeaf, "Mint leaves", o.Discrete),
             new I(i.GingerSlice, "Ginger slices", o.Discrete),

@@ -143,6 +143,13 @@ namespace Mix.Models
         Sherry = 100,
         FruitJuice = 101,
         Mixer = 102,
+        ChartreuseJaune = 103,
+        Calvados = 104,
+        CoconutRum = 105,
+        OverproofRum = 106,
+        Falernum = 107,
+        PassionFruitSyrup = 108,
+        CondensedMilk = 109,
     }
 
     public static class IngredientHelpers

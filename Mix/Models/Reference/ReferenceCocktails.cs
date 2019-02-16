@@ -3,7 +3,6 @@
 using C = Mix.Models.Cocktail;
 using CI = Mix.Models.CocktailIngredient;
 using q = Mix.Models.CommonQuantity;
-using S = Mix.Models.SpecialPrep;
 using i = Mix.Models.Ingredients;
 using c = Mix.Models.Cocktails;
 using v = Mix.Models.Vessels;
@@ -276,8 +275,8 @@ namespace Mix.Models
 
             new C(c.SeaBreeze, "Sea Breeze", "#E0412B", onTheRocks,
                 v.Highball, p.Build, g.LimeSlice,
-                new CI(i.Vodka, 40M),
-                new CI(i.CranberryJuice, 120M),
+                new CI(i.Vodka, 45M),
+                new CI(i.CranberryJuice, 90M),
                 new CI(i.GrapefruitJuice, 30M)),
 
             new C(c.MaryPickford, "Mary Pickford", "#DF5637",
@@ -490,10 +489,10 @@ namespace Mix.Models
 
             new C(c.AlabamaSlammer, "Alabama Slammer", "#F36424",
                 v.Cocktail, p.Shake, g.OrangeTwist,
-                new CI(i.Vodka, 45M),
-                new CI(i.SouthernComfort, 20M),
-                new CI(i.OrangeJuice, 30M),
-                new CI(i.Grenadine, 5M)),
+                new CI(i.SouthernComfort, 30M),
+                new CI(i.Amaretto, 30M),
+                new CI(i.SloeGin, 30M),
+                new CI(i.OrangeJuice, 60M)),
 
             new C(c.Vesper, "Vesper", "#EEEEE4",
                 v.Cocktail, p.Shake, g.LemonTwist,
@@ -617,6 +616,128 @@ namespace Mix.Models
                 new CI(i.Kahlúa, 20M),
                 new CI(i.Baileys, 20M),
                 new CI(i.Midori, 20M)),
+
+            new C(c.Hurricane, "Hurricane", "#C74B00", onTheRocks,
+                v.Highball, p.Shake, g.Cherry | g.OrangeSlice,
+                new CI(i.DarkRum, 60M),
+                new CI(i.WhiteRum, 60M),
+                new CI(i.PassionFruitSyrup, 30M),
+                new CI(i.PineappleJuice, 30M),
+                new CI(i.OrangeJuice, 30M),
+                new CI(i.LimeJuice, 15M)),
+
+            new C(c.Scorpion, "Scorpion", "#DEB238", onTheRocks,
+                v.Highball, p.Build, g.OrangeSlice,
+                new CI(i.WhiteRum, 60M),
+                new CI(i.Brandy, 15M),
+                new CI(i.OrangeJuice, 60M),
+                new CI(i.LemonJuice, 30M),
+                new CI(i.Orgeat, 15M)),
+
+            new C(c.Zombie, "Zombie", "#E31F28", onTheRocks,
+                v.Highball, p.Shake, g.Cherry,
+                new CI(i.WhiteRum, 45M),
+                new CI(i.DarkRum, 45M),
+                new CI(i.LimeJuice, 15M),
+                new CI(i.PineappleJuice, 30M),
+                new CI(i.Falernum, 15M),
+                new CI(i.Grenadine, q.Splash),
+                new CI(i.Angostura, q.Dash)),
+
+            new C(c.BayBreeze, "Bay Breeze", "#B6393D", onTheRocks,
+                v.Highball, p.Build, g.LimeSlice,
+                new CI(i.WhiteRum, 45M),
+                new CI(i.CranberryJuice, 90M),
+                new CI(i.PineappleJuice, 30M)),
+
+            new C(c.CapeCodder, "Cape Codder", "#A90808", onTheRocks,
+                v.Highball, p.Build, g.LimeSlice,
+                new CI(i.Vodka, 60M),
+                new CI(i.CranberryJuice, 120M)),
+
+            new C(c.BahamaMama, "Bahama Mama", "#F4530D", onTheRocks,
+                v.Highball, p.Shake, g.None,
+                new CI(i.DarkRum, 15M),
+                new CI(i.CoconutRum, 15M),
+                new CI(i.OverproofRum, 15M),
+                new CI(i.LemonJuice, 30M),
+                new CI(i.PineappleJuice, 120M)),
+
+            new C(c.CornNOil, "Corn N Oil", "#773219", onTheRocks,
+                v.Rocks, p.Stir, g.LimeWedge,
+                new CI(i.DarkRum, 60M),
+                new CI(i.Falernum, 15M),
+                new CI(i.Angostura, 2 * q.Dash)),
+
+            new C(c.BlueHawaiian, "Blue Hawaiian", "#01ACD7", onTheRocks,
+                v.Highball, p.Shake, g.Cherry,
+                new CI(i.WhiteRum, 30M),
+                new CI(i.BlueCuraçao, 30M),
+                new CI(i.PineappleJuice, 60M),
+                new CI(i.CoconutCream, 30M)),
+
+            new C(c.JungleBird, "Jungle Bird", "#D34C24", onTheRocks,
+                v.Rocks, p.Shake, g.None,
+                new CI(i.DarkRum, 45M),
+                new CI(i.Campari, 20M),
+                new CI(i.LimeJuice, 15M),
+                new CI(i.PineappleJuice, 45M),
+                new CI(i.SimpleSyrup, 15M)),
+
+            new C(c.Alaska, "Alaska", "#E4DD89",
+                v.Cocktail, p.Stir, g.OrangeTwist,
+                new CI(i.Gin, 45M),
+                new CI(i.ChartreuseJaune, 15M),
+                new CI(i.OrangeBitters, q.Dash)),
+
+            new C(c.Bronx, "Bronx", "#F7BB01",
+                v.Cocktail, p.Shake, g.None,
+                new CI(i.Gin, 60M),
+                new CI(i.SweetVermouth, 10M),
+                new CI(i.DryVermouth, 10M),
+                new CI(i.OrangeJuice, 30M)),
+
+            new C(c.Bijou, "Bijou", "#D08A0B",
+                v.Cocktail, p.Stir, g.OrangeTwist,
+                new CI(i.Gin, 30M),
+                new CI(i.SweetVermouth, 30M),
+                new CI(i.ChartreuseVerte, 30M),
+                new CI(i.OrangeBitters, q.Dash)),
+
+            new C(c.AngelFace, "Angel Face", "#ECC74D",
+                v.Cocktail, p.Shake, g.None,
+                new CI(i.Gin, 30M),
+                new CI(i.ApricotLiqueur, 30M),
+                new CI(i.Calvados, 30M)),
+
+            new C(c.PeguClub, "Pegu Club", "#D5AD04",
+                v.Cocktail, p.Shake, g.LimeSlice,
+                new CI(i.Gin, 60M),
+                new CI(i.TripleSec, 30M),
+                new CI(i.LimeJuice, 10M),
+                new CI(i.Angostura, q.Dash),
+                new CI(i.OrangeBitters, q.Dash)),
+
+            new C(c.Algonquin, "Algonquin", "#EDBD00",
+                v.Cocktail, p.Stir, g.OrangeTwist,
+                new CI(i.Rye, 60M),
+                new CI(i.DryVermouth, 30M),
+                new CI(i.PineappleJuice, 30M)),
+
+            new C(c.BrandyCrusta, "Brandy Crusta", "#A15D15",
+                v.Cocktail, p.Shake, g.LemonTwist,
+                new CI(i.Cognac, 50M),
+                new CI(i.LemonJuice, 15M),
+                new CI(i.TripleSec, q.Teaspoon),
+                new CI(i.Maraschino, q.Teaspoon),
+                new CI(i.SimpleSyrup, q.Teaspoon),
+                new CI(i.Angostura, q.Dash)),
+
+            new C(c.Batida, "Batida", "#ECD9B4", onTheRocks,
+                v.Highball, p.Shake, g.None,
+                new CI(i.Cachaça, 60M),
+                new CI(i.FruitJuice, 60M),
+                new CI(i.CondensedMilk, 30M, isOptional: true)),
         };
     }
 }
