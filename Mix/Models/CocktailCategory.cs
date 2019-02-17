@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using i = Mix.Models.Ingredients;
+using v = Mix.Models.Vessels;
 
 namespace Mix.Models
 {
@@ -7,7 +8,7 @@ namespace Mix.Models
     {
         public string Name;
         public List<i> Ingredients;
-        public Vessels Vessel;
+        public List<v> Vessels;
         public bool Full;
 
         public static List<CocktailCategory> Categories = new List<CocktailCategory>
@@ -15,12 +16,14 @@ namespace Mix.Models
             new CocktailCategory
             {
                 Name = "Sours",
+                Vessels = new List<v> { v.Cocktail, v.Rocks },
                 Ingredients = new List<i> { i.Spirit, i.Citrus, i.Sweetener,
                     i.Carbonated.Negate()}
             },
             new CocktailCategory
             {
                 Name = "Ancestrals",
+                Vessels = new List<v> { v.Rocks },
                 Ingredients = new List<i> { i.Spirit, i.Sweetener, i.Bitters,
                     i.Citrus.Negate(), i.WineAll.Negate() }
             },
@@ -38,11 +41,19 @@ namespace Mix.Models
             new CocktailCategory
             {
                 Name = "Highballs",
-                Vessel = Vessels.Highball
+                Vessels = new List<v> { v.Highball, v.Rocks },
+                Ingredients = new List<i> { i.Spirit, i.Carbonated }
+            },
+            new CocktailCategory
+            {
+                Name = "Tiki Cocktails",
+                Vessels = new List<v> { v.Highball, v.Rocks },
+                Ingredients = new List<i> { i.Rum, i.FruitJuice }
             },
             new CocktailCategory
             {
                 Name = "Duos",
+                Vessels = new List<v> { v.Rocks },
                 Ingredients = new List<i> { i.Spirit, i.SweetLiqueur },
                 Full = true
             },

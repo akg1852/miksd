@@ -109,11 +109,11 @@ namespace Mix.Models
             new I(i.WhiteWine, "White Wine"),
 
             new I(i.FortifiedWine, "Fortified Wine",
-                i.Port, i.Sherry, i.Vermouth, i.LilletBlanc),
+                i.Port, i.Sherry, i.Vermouth),
             new I(i.Port, "Port"),
             new I(i.Sherry, "Sherry"),
             new I(i.Vermouth, "Vermouth", o.Equivalence,
-                i.SweetVermouth, i.DryVermouth),
+                i.SweetVermouth, i.DryVermouth, i.LilletBlanc),
             new I(i.SweetVermouth, "Sweet Red Vermouth"),
             new I(i.DryVermouth, "Dry White Vermouth"),
             new I(i.LilletBlanc, "Lillet Blanc"),

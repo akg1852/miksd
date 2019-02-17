@@ -53,16 +53,16 @@ namespace Mix.Controllers
          * v: vessel
          * n: name of category
          */
-        public ActionResult List(List<Ingredients> i, byte c = 0, byte f = 0, Vessels v = Vessels.None)
+        public ActionResult List(List<Ingredients> i, byte c = 0, byte f = 0, List <Vessels> v = null)
         {
-            var cocktails = ((i == null && v == Vessels.None) ?
+            var cocktails = ((i == null && v == null) ?
                 cocktailService.FeaturedCocktails() :
                 getCocktails(i, c, f, v));
 
             return JsonContent(cocktails.Select(CocktailSummary));
         }
 
-        private IEnumerable<CocktailMatch> getCocktails(List<Ingredients> i, byte c = 0, byte f = 0, Vessels v = Vessels.None)
+        private IEnumerable<CocktailMatch> getCocktails(List<Ingredients> i, byte c = 0, byte f = 0, IEnumerable<Vessels> v = null)
         {
             var includedIngredients = i?.Where(ii => ii > 0);
             var excludedIngredients = i?.Where(ii => ii < 0)?.Select(ii => ii.Negate());
@@ -110,9 +110,9 @@ namespace Mix.Controllers
                     }
                     url += "&c=1&i=" + string.Join("&i=", ingredients.Select(i => (long)i));
                 }
-                if (category.Vessel != Vessels.None)
+                if (category.Vessels != null)
                 {
-                    url += "&v=" + (long)category.Vessel;
+                    url += "&v=" + string.Join("&v=", category.Vessels.Select(v => (long)v));
                 }
 
                 return new
@@ -131,7 +131,7 @@ namespace Mix.Controllers
                     category.Ingredients,
                     (byte)(category.Ingredients == null ? 0 : 1),
                     (byte)(category.Full ? 1 : 0),
-                    category.Vessel
+                    category.Vessels
                 ).Select(c => c.Id);
             })
             .SelectMany(x => x)

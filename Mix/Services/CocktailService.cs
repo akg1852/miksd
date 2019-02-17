@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
+using i = Mix.Models.Ingredients;
+
 namespace Mix.Services
 {
     public class CocktailService
@@ -133,10 +135,10 @@ namespace Mix.Services
 
         public IEnumerable<CocktailMatch> FindCocktails(IEnumerable<Ingredients> ingredients = null,
                                                     IEnumerable<Ingredients> exgredients = null,
-                                                    Vessels vessel = Vessels.None)
+                                                    IEnumerable<Vessels> vessels = null)
         {
             ingredients = ingredients?.Distinct()?.ToList();
-            var nonOptionalIngredients = "CI.IsOptional = 0 AND CI.Ingredient <> 58";
+            var nonOptionalIngredients = "CI.IsOptional = 0 AND CI.Ingredient not in @nonFullnessIngredients";
 
             using (var db = new SqlConnection(connectionString))
             {
@@ -204,7 +206,7 @@ namespace Mix.Services
                             LEFT JOIN IncludedIngredient II ON II.Id = CI.Ingredient
                             LEFT JOIN Vessel V ON V.Id = C.Vessel
                             LEFT JOIN PrepMethod P ON P.Id = C.PrepMethod
-                            WHERE (@vessel = 0 OR C.Vessel = @vessel)
+                            WHERE (@noVessels = 1 OR C.Vessel in @vessels)
                             AND (NOT EXISTS (SELECT TOP 1 * FROM IncludedIngredient)
                             OR II.Id IS NOT NULL)
                             GROUP BY C.Id, C.Name, C.Color, C.Vessel, V.Name, C.PrepMethod, P.Name
@@ -224,7 +226,17 @@ namespace Mix.Services
                 ";
 
                 var cocktails = db.Query<CocktailMatch>(cocktailSql,
-                    new { ingredientsCount = ingredients?.Count() ?? 0, ingredients, exgredients, vessel });
+                    new {
+                        ingredientsCount = ingredients?.Count() ?? 0,
+                        ingredients,
+                        exgredients,
+                        noVessels = vessels == null,
+                        vessels,
+                        nonFullnessIngredients = new List<i> {
+                            i.Water,
+                            i.Bitters, i.Angostura, i.OrangeBitters, i.Peychauds
+                        }
+                    });
 
                 foreach (var cocktail in cocktails)
                 {
