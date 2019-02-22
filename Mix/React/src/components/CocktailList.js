@@ -110,37 +110,48 @@ class CocktailList extends React.Component {
 
 class Cocktail extends React.Component {
     render() {
-        return (
+        let CocktailLink = (linkProps) => (
             <Link to={"/Cocktail/" + this.props.id}>
-                <div className="cocktail-result">
-                    <div className="cocktail-name">{this.props.name}</div>
-                    <div className="cocktail-summary">
-                        <div dangerouslySetInnerHTML={{ __html: this.props.thumbnail }} />
-                        <div>
-                            {this.props.recipe.map(i => {
-                                const isSelecting = this.props.ingredientSelecting === i.id;
-                                return (
-                                    <Ingredient key={i.id}
-                                        id={i.id}
-                                        name={i.name}
-                                        super={i.super}
-                                        selectedIngredients={this.props.selectedIngredients}
-                                        handleSelect={this.props.handleIngredientSelect}
-                                        isSelecting={isSelecting}
-                                        toggleSelecting={() =>
-                                            isSelecting ?
-                                            this.props.handleSelecting() :
-                                            this.props.handleSelecting(this.props.id, i.id)
-                                        }
-                                    />
-                                );
-                            }).reduce((acc, el) => [acc, ', ', el])}
-                            <br />
-                            {this.props.description}
-                        </div>
-                    </div>
-                </div>
+                {linkProps.children}
             </Link>
+        );
+
+        return (
+            <div className="cocktail-result">
+                <CocktailLink>
+                    <div className="cocktail-result-name">{this.props.name}</div>
+                </CocktailLink>
+                <div className="cocktail-result-bottom">
+                    <div dangerouslySetInnerHTML={{ __html: this.props.thumbnail }} />
+                    <div className="cocktail-summary">
+                        {this.props.recipe.map(i => {
+                            const isSelecting = this.props.ingredientSelecting === i.id;
+                            return (
+                                <Ingredient key={i.id}
+                                    id={i.id}
+                                    name={i.name}
+                                    super={i.super}
+                                    selectedIngredients={this.props.selectedIngredients}
+                                    handleSelect={this.props.handleIngredientSelect}
+                                    isSelecting={isSelecting}
+                                    toggleSelecting={() =>
+                                        isSelecting ?
+                                        this.props.handleSelecting() :
+                                        this.props.handleSelecting(this.props.id, i.id)
+                                    }
+                                />
+                            );
+                        }).reduce((acc, el) => [acc, ', ', el])}
+                        <br />
+                        {this.props.description}
+                    </div>
+                    <CocktailLink>
+                        <div className="cocktail-link-button">
+                            &gt;
+                        </div>
+                    </CocktailLink>
+                </div>
+            </div>
         );
     }
 }
@@ -154,10 +165,7 @@ class Ingredient extends React.Component {
                     <React.Fragment>
                         <span
                             className="ingredient-select-icon"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                this.props.toggleSelecting();
-                            }}
+                            onClick={this.props.toggleSelecting}
                         >
                             🔍
                         </span>

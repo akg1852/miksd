@@ -268,6 +268,7 @@ ul.header-menu a, ul.header-menu a:visited {
     color: var(--primary-color-dark);
     font-size: 0.8em;
     vertical-align: super;
+    cursor: pointer;
 }
 
 .ingredient-select {
@@ -321,30 +322,40 @@ h2.result-header {
     font-weight: bold;
 }
 
-.cocktail-name {
-    background-color: var(--primary-color);
-    margin-bottom: 5px;
-    padding-left: 15px;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.cocktail-summary {
-    display: flex;
-    padding-right: 20px;
-}
-.cocktail-summary > p {
-    flex: 1;
-}
-.cocktail-summary-ingredient {
-    white-space: nowrap;
-}
-
 .cocktail-result {
     box-shadow: var(--box-shadow);
 }
 .cocktail-result:hover {
     background-color: var(--primary-color-light);
+}
+.cocktail-result-name {
+    background-color: var(--primary-color);
+    padding-left: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.cocktail-result-bottom {
+    display: flex;
+    padding-right: 10px;
+    align-items: center;
+    cursor: default;
+}
+.cocktail-summary {
+    flex: 1;
+}
+.cocktail-summary-ingredient {
+    white-space: nowrap;
+}
+.cocktail-link-button {
+    border: solid var(--primary-color) 2px;
+    border-radius: 5px;
+    background-color: var(--primary-color-light);
+    padding: 5px;
+    color: var(--primary-color-dark);
+    font-weight: bold;
+}
+.cocktail-result:hover .cocktail-link-button {
+    border-color: var(--primary-color-dark);
 }
 
 #show-more {
