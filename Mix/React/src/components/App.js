@@ -24,11 +24,17 @@ class App extends React.Component {
 
         const menusJson = localStorage.getItem('menus');
         this.state = {
+            showIngredientSearch: false,
             menus: menusJson ? JSON.parse(menusJson) : defaultMenus
         };
 
         this.menuHandlers = new MenuHandlers(this);
+        this.toggleIngredientSearch = this.toggleIngredientSearch.bind(this);
         this.handleIngredientSearch = this.handleIngredientSearch.bind(this);
+    }
+
+    toggleIngredientSearch() {
+        this.setState({ showIngredientSearch: !this.state.showIngredientSearch });
     }
 
     handleIngredientSearch(selectedIngredients) {
@@ -37,51 +43,58 @@ class App extends React.Component {
     }
 
     renderPage(title, ingredients) {
-        return (
-            <div>
-                <Route render={(props) =>
-                    <Header {...props}
-                        selectedIngredients={ingredients}
-                        handleIngredientSearch={this.handleIngredientSearch}
-                    />
-                } />
-                <HeaderMenu />
+        const modalOpen = this.state.showIngredientSearch;
 
-                <div id="content">
-                    <Switch>
-                        <Route exact path='/' render={(props) =>
-                            <CocktailResultList {...props}
-                                title={title}
-                                query={window.location.search}
-                                selectedIngredients={ingredients}
-                                handleIngredientSearch={this.handleIngredientSearch}
-                            />
-                        } />
-                        <Route path='/Cocktail/:id' render={(props) =>
-                            <Cocktail {...props}
-                                menus={this.state.menus}
-                                handleAddCocktailToMenu={this.menuHandlers.handleAddCocktailToMenu}
-                                handleRemoveCocktailFromMenu={this.menuHandlers.handleRemoveCocktailFromMenu}
-                            />
-                        } />
-                        <Route path='/Menu/Edit/:id' render={(props) =>
-                            <Menu {...props}
-                                {...this.state.menus.find(m => m.id === props.match.params.id) }
-                                handleRenameMenu={this.menuHandlers.handleRenameMenu}
-                                handleAddCocktailToMenu={this.menuHandlers.handleAddCocktailToMenu}
-                                handleRemoveCocktailFromMenu={this.menuHandlers.handleRemoveCocktailFromMenu}
-                            />
-                        } />
-                        <Route path='/Menu/' render={(props) =>
-                            <MenuList {...props}
-                                menus={this.state.menus}
-                                handleAddMenu={this.menuHandlers.handleAddMenu}
-                                handleRemoveMenu={this.menuHandlers.handleRemoveMenu}
-                            />
-                        } />
-                        <Route component={NotFound} />
-                    </Switch>
+        return (
+            <div className="app-container">
+                <div className="app">
+                    <Route render={(props) =>
+                        <Header {...props}
+                            showIngredientSearch={this.state.showIngredientSearch}
+                            toggleIngredientSearch={this.toggleIngredientSearch}
+                            selectedIngredients={ingredients}
+                            handleIngredientSearch={this.handleIngredientSearch}
+                        />
+                    } />
+                    <HeaderMenu />
+
+                    <div id="content">
+                        <Switch>
+                            <Route exact path='/' render={(props) =>
+                                <CocktailResultList {...props}
+                                    title={title}
+                                    query={window.location.search}
+                                    selectedIngredients={ingredients}
+                                    handleIngredientSearch={this.handleIngredientSearch}
+                                />
+                            } />
+                            <Route path='/Cocktail/:id' render={(props) =>
+                                <Cocktail {...props}
+                                    menus={this.state.menus}
+                                    handleAddCocktailToMenu={this.menuHandlers.handleAddCocktailToMenu}
+                                    handleRemoveCocktailFromMenu={this.menuHandlers.handleRemoveCocktailFromMenu}
+                                />
+                            } />
+                            <Route path='/Menu/Edit/:id' render={(props) =>
+                                <Menu {...props}
+                                    {...this.state.menus.find(m => m.id === props.match.params.id) }
+                                    handleRenameMenu={this.menuHandlers.handleRenameMenu}
+                                    handleAddCocktailToMenu={this.menuHandlers.handleAddCocktailToMenu}
+                                    handleRemoveCocktailFromMenu={this.menuHandlers.handleRemoveCocktailFromMenu}
+                                />
+                            } />
+                            <Route path='/Menu/' render={(props) =>
+                                <MenuList {...props}
+                                    menus={this.state.menus}
+                                    handleAddMenu={this.menuHandlers.handleAddMenu}
+                                    handleRemoveMenu={this.menuHandlers.handleRemoveMenu}
+                                />
+                            } />
+                            <Route component={NotFound} />
+                        </Switch>
+                    </div>
                 </div>
+                {modalOpen && <div className="modal-overlay"></div>}
             </div>
         );
     }

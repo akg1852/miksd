@@ -24,16 +24,30 @@ body {
     --text-shadow: -1px 0 var(--border-color), 0 1px var(--border-color), 1px 0 var(--border-color), 0 -1px var(--border-color);
 
     font-family: 'Noto Sans', sans-serif;
-    overflow-y: scroll;
+    overflow: hidden;
     background-color: var(--background-color);
 }
 
-#app {
-    min-height: 100vh;
+.app-container {
+    position: relative;
+    height: 100vh;
+    overflow-y: scroll;
+}
+.app {
     color: var(--text-color);
     background-color: var(--background-color);
     max-width: 800px;
     margin: 0 auto;
+}
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    opacity: 0.2;
+    z-index: 100;
 }
 
 #content {
@@ -138,6 +152,7 @@ dd {
 #cocktail-search-form {
     position: relative;
     flex: 1 1 0;
+    z-index: 102;
 }
 
 #search-field {
@@ -171,6 +186,7 @@ dd {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    z-index: 101;
 }
 
 #ingredient-search-button {

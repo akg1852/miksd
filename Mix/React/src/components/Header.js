@@ -20,10 +20,7 @@ class Header extends React.Component {
                     <div id="header-bottom">
                         <p id="subtitle">Your guide to cocktails / mixed drinks</p>
                         <div id="header-bottom-right">
-                            <IngredientSearch history={this.props.history}
-                                selectedIngredients={this.props.selectedIngredients}
-                                handleIngredientSearch={this.props.handleIngredientSearch}
-                            />
+                            <IngredientSearch {...this.props} />
                         </div>
                     </div>
                 </div>

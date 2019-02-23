@@ -4,12 +4,11 @@ import Ingredients from './Ingredients'
 class IngredientSearch extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { showIngredientSearch: false };
+        this.state = {};
 
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleClickAway = this.handleClickAway.bind(this);
         this.handleIngredientSelect = this.handleIngredientSelect.bind(this);
-        this.handleToggleShow = this.handleToggleShow.bind(this);
 
         document.body.addEventListener('click', this.handleClickAway);
     }
@@ -39,18 +38,14 @@ class IngredientSearch extends React.Component {
         this.setState({ selectedCategory: category });
     }
 
-    handleToggleShow() {
-        this.setState({ showIngredientSearch: !this.state.showIngredientSearch });
-    }
-
     handleClickAway(e) {
         if (this.mounted &&
-            this.state.showIngredientSearch &&
+            this.props.showIngredientSearch &&
             !this.ingredientSearchEl.contains(e.target) &&
             !this.ingredientSearchButtonEl.contains(e.target)) {
 
             e.preventDefault();
-            this.setState({ showIngredientSearch: false });
+            this.props.toggleIngredientSearch();
         }
     }
 
@@ -77,12 +72,12 @@ class IngredientSearch extends React.Component {
             <div id="ingredient-search-wrapper">
                 <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'
                     ref={(el) => this.ingredientSearchButtonEl = el}
-                    onClick={this.handleToggleShow}>
+                    onClick={this.props.toggleIngredientSearch}>
                     <IngredientSearchButton />
                 </svg>
                 <div id="ingredient-search"
                     ref={(el) => this.ingredientSearchEl = el}
-                    style={{ display: this.state.showIngredientSearch ? 'block' : 'none' }}
+                    style={{ display: this.props.showIngredientSearch ? 'block' : 'none' }}
                 >
                     <Ingredients
                         ingredients={ingredients}
