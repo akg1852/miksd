@@ -14,17 +14,6 @@ class CocktailList extends React.Component {
         this.handleShowMore = this.handleShowMore.bind(this);
         this.handleIngredientSelect = this.handleIngredientSelect.bind(this);
         this.handleSelecting = this.handleSelecting.bind(this);
-        this.handleClickAway = this.handleClickAway.bind(this);
-
-        document.body.addEventListener('click', this.handleClickAway);
-    }
-
-    componentDidMount() {
-        this.mounted = true;
-    }
-
-    componentWillUnmount() {
-        this.mounted = false;
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -58,20 +47,6 @@ class CocktailList extends React.Component {
         });
     }
 
-    handleClickAway(e) {
-        if (this.mounted &&
-            this.state.ingredientSelecting &&
-            !e.target.className.includes('ingredient-select-icon') &&
-            !e.target.className.includes('ingredient-select-option')
-        ) {
-            e.preventDefault();
-            this.setState({
-                cocktailSelecting: null,
-                ingredientSelecting: null
-            });
-        }
-    }
-
     render() {
         return (
             <div>
@@ -100,6 +75,12 @@ class CocktailList extends React.Component {
                                 onClick={this.handleShowMore}>
                                 Show More…
                             </div>
+                        }
+                        {this.state.ingredientSelecting &&
+                            <div
+                                className="invisible-overlay"
+                                onClick={() => this.handleSelecting(null, null)}
+                            ></div>
                         }
                     </React.Fragment>
                 )}

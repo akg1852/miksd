@@ -34,17 +34,22 @@ body {
     overflow-y: scroll;
 }
 .app {
+    position: relative;
     color: var(--text-color);
     background-color: var(--background-color);
     max-width: 800px;
     margin: 0 auto;
 }
-.modal-overlay {
-    position: fixed;
+.modal-overlay, .invisible-overlay {
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 10;
+}
+.modal-overlay {
+    position: fixed;
     background-color: var(--primary-color-light);
     opacity: 0.3;
     z-index: 100;
@@ -279,12 +284,15 @@ ul.header-menu a, ul.header-menu a:visited {
     border: solid var(--border-color) 1px;
     border-radius: 5px;
     box-shadow: var(--box-shadow);
+    z-index: 12;
 }
 .ingredient-select-icon {
+    position: relative;
     color: var(--primary-color-dark);
     font-size: 0.8em;
     vertical-align: super;
     cursor: pointer;
+    z-index: 11;
 }
 
 .ingredient-select {
