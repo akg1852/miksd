@@ -71,7 +71,8 @@ namespace Mix.Models
             new I(i.SweetLiqueur, "Liqueur (Sweet)",
                 i.OrangeLiqueur, i.Maraschino, i.Drambuie, i.Cassis, i.Mûre, i.Violette, i.Cacao,
                 i.Galliano, i.Amaretto, i.Benedictine, i.ChartreuseVerte, i.ChartreuseJaune, i.CherryHeering,
-                i.SouthernComfort, i.PeachSchnapps, i.Midori, i.SloeGin, i.ApricotLiqueur, i.CoconutRum),
+                i.SouthernComfort, i.PeachSchnapps, i.Midori, i.SloeGin, i.ApricotLiqueur, i.CoconutRum,
+                i.Kahlúa, i.Baileys),
             new I(i.OrangeLiqueur, "Triple Sec / Curaçao", o.Super,
                 i.TripleSec, i.Curaçao),
             new I(i.TripleSec, "Triple Sec", o.Equivalence,
@@ -99,6 +100,8 @@ namespace Mix.Models
             new I(i.SloeGin, "Sloe Gin"),
             new I(i.ApricotLiqueur, "Apricot Brandy (Liqueur)"),
             new I(i.CoconutRum, "Coconut Rum"),
+            new I(i.Kahlúa, "Kahlúa"),
+            new I(i.Baileys, "Baileys Irish Cream"),
 
             new I(i.Wine, "Wine", o.Equivalence,
                 i.SparklingWine, i.WhiteWine),
@@ -161,9 +164,6 @@ namespace Mix.Models
 
             new I(i.EggWhite, "Egg White"),
             new I(i.EggYolk, "Egg Yolk"),
-
-            new I(i.Kahlúa, "Kahlúa"),
-            new I(i.Baileys, "Baileys Irish Cream"),
             new I(i.Cream, "Cream"),
             new I(i.CoconutCream, "Coconut Cream"),
             new I(i.CondensedMilk, "Condensed Milk"),

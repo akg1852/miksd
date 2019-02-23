@@ -15,6 +15,13 @@ namespace Mix.Models
         {
             new CocktailCategory
             {
+                Name = "Ancestrals",
+                Vessels = new List<v> { v.Rocks },
+                Ingredients = new List<i> { i.Spirit, i.Sweetener, i.Bitters,
+                    i.Citrus.Negate(), i.WineAll.Negate() }
+            },
+            new CocktailCategory
+            {
                 Name = "Sours",
                 Vessels = new List<v> { v.Cocktail, v.Rocks },
                 Ingredients = new List<i> { i.Spirit, i.Citrus, i.Sweetener,
@@ -22,10 +29,10 @@ namespace Mix.Models
             },
             new CocktailCategory
             {
-                Name = "Ancestrals",
-                Vessels = new List<v> { v.Rocks },
-                Ingredients = new List<i> { i.Spirit, i.Sweetener, i.Bitters,
-                    i.Citrus.Negate(), i.WineAll.Negate() }
+                Name = "Sweets",
+                Vessels = new List<v> { v.Cocktail, v.Rocks, v.Shot },
+                Ingredients = new List<i> { i.SweetLiqueur,
+                    i.WineAll.Negate() }
             },
             new CocktailCategory
             {
@@ -49,13 +56,6 @@ namespace Mix.Models
                 Name = "Tiki Cocktails",
                 Vessels = new List<v> { v.Highball, v.Rocks },
                 Ingredients = new List<i> { i.Rum, i.FruitJuice }
-            },
-            new CocktailCategory
-            {
-                Name = "Duos",
-                Vessels = new List<v> { v.Rocks },
-                Ingredients = new List<i> { i.Spirit, i.SweetLiqueur },
-                Full = true
             },
         };
     }
