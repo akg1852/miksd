@@ -149,19 +149,19 @@ namespace Mix.Services
                         FROM Ingredient WHERE Id IN @ingredients
                     ),
                     IncludedIngredientUp AS (
-                        SELECT *, Id AS QueryIngredient, 0 AS IsUp
+                        SELECT *, Id AS QueryIngredient
                         FROM IncludedIngredientRoot
                         UNION ALL
-                        SELECT P.*, C.QueryIngredient, 1 AS IsUp
+                        SELECT P.*, C.QueryIngredient
                         FROM IncludedIngredientUp C
                         JOIN IngredientRelationship IR ON IR.Child = C.Id
                         JOIN Ingredient P ON P.Id = IR.Parent
                     ),
                     IncludedIngredientDown AS (
-                        SELECT *, Id AS QueryIngredient, 0 AS IsUp
+                        SELECT *, Id AS QueryIngredient
                         FROM IncludedIngredientRoot
                         UNION ALL
-                        SELECT C.*, P.QueryIngredient, 0 AS IsUp
+                        SELECT C.*, P.QueryIngredient
                         FROM IncludedIngredientDown P
                         JOIN IngredientRelationship IR ON IR.Parent = P.Id
                         JOIN Ingredient C ON C.Id = IR.Child
@@ -197,10 +197,7 @@ namespace Mix.Services
                             C.Vessel, V.Name AS VesselName,
                             C.PrepMethod, P.Name AS PrepMethodName,
                             COUNT(DISTINCT (CASE WHEN {nonOptionalIngredients} THEN II.Id END)) AS FullnessCount,
-                            (
-                                COUNT(DISTINCT (CASE WHEN II.IsUp = 0 THEN II.QueryIngredient END)) +
-                                (0.9 * COUNT(DISTINCT (CASE WHEN II.IsUp = 1 THEN II.QueryIngredient END)))
-                            ) AS CompletenessCount
+                            COUNT(DISTINCT II.QueryIngredient) AS CompletenessCount
                             FROM NonExcludedCocktail C
                             LEFT JOIN CocktailIngredient CI ON CI.Cocktail = C.Id
                             LEFT JOIN IncludedIngredient II ON II.Id = CI.Ingredient
