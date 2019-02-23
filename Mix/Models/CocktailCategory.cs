@@ -15,10 +15,9 @@ namespace Mix.Models
         {
             new CocktailCategory
             {
-                Name = "Ancestrals",
-                Vessels = new List<v> { v.Rocks },
-                Ingredients = new List<i> { i.Spirit, i.Sweetener, i.Bitters,
-                    i.Citrus.Negate(), i.WineAll.Negate() }
+                Name = "Spirit Forward",
+                Ingredients = new List<i> { i.Spirit, i.Modifier,
+                    i.Citrus.Negate(), i.Wine.Negate(), i.Carbonated.Negate() }
             },
             new CocktailCategory
             {
@@ -33,12 +32,6 @@ namespace Mix.Models
                 Vessels = new List<v> { v.Cocktail, v.Rocks, v.Shot },
                 Ingredients = new List<i> { i.SweetLiqueur,
                     i.WineAll.Negate() }
-            },
-            new CocktailCategory
-            {
-                Name = "Spirit Forward",
-                Ingredients = new List<i> { i.Spirit, i.Vermouth,
-                    i.Citrus.Negate() }
             },
             new CocktailCategory
             {

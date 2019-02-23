@@ -57,6 +57,9 @@ namespace Mix.Models
             new I(i.Tequila, "Tequila"),
             new I(i.Absinthe, "Absinthe"),
 
+            new I(i.Modifier, "Modifier",
+                i.Bitters, i.BitterLiqueur, i.FortifiedWine, i.IslayScotch),
+
             new I(i.Bitters, "Bitters", o.Super,
                 i.Angostura, i.OrangeBitters, i.Peychauds),
             new I(i.Angostura, "Angostura Bitters"),

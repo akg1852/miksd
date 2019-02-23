@@ -151,6 +151,7 @@ namespace Mix.Models
         PassionFruitSyrup = 108,
         CondensedMilk = 109,
         NonCitrusFruitJuice = 110,
+        Modifier = 111,
     }
 
     public static class IngredientHelpers

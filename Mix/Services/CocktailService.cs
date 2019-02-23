@@ -230,7 +230,7 @@ namespace Mix.Services
                         noVessels = vessels == null,
                         vessels,
                         nonFullnessIngredients = new List<i> {
-                            i.Water,
+                            i.Water, i.Sugar,
                             i.Bitters, i.Angostura, i.OrangeBitters, i.Peychauds
                         }
                     });
