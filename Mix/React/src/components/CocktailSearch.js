@@ -11,20 +11,14 @@ class CocktailSearch extends React.Component {
             selection: 0
         };
 
-        this.handleClickAway = this.handleClickAway.bind(this);
+        this.reset = this.reset.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleKey = this.handleKey.bind(this);
         this.handleSelection = this.handleSelection.bind(this);
-
-        document.body.addEventListener('click', this.handleClickAway);
     }
 
-    componentDidMount() {
-        this.mounted = true;
-    }
-
-    componentWillUnmount() {
-        this.mounted = false;
+    reset() {
+        this.setState({ query: '' });
     }
 
     handleInput(e) {
@@ -76,34 +70,38 @@ class CocktailSearch extends React.Component {
         }
     }
 
-    handleClickAway(e) {
-        if (this.mounted && this.state.query) {
-            if (!this.cocktailSearchEl.contains(e.target)) {
-                e.preventDefault();
-            }
-
-            this.setState({ query: '' });
-        }
-    }
-
     render() {
         return (
             <form id="cocktail-search-form"
-                ref={(el) => this.cocktailSearchEl = el}
                 onSubmit={(e) => { e.preventDefault(); this.goToCocktail() }}>
                 <input id="search-field" type="search" autoComplete="off" spellCheck="false"
                     placeholder="Cocktail Search"
                     value={this.state.query}
                     onChange={this.handleInput}
-                    onKeyDown={this.handleKey} />
-                {this.state.query && <CocktailSearchResults handleSelection={this.handleSelection} {...this.state} />}
+                    onKeyDown={this.handleKey}
+                    style={{ zIndex: this.state.query ? '101' : null }}
+                />
+                {this.state.query &&
+                    <React.Fragment>
+                        <CocktailSearchResults {...this.state}
+                            handleSelection={this.handleSelection}
+                            reset={this.reset}
+                        />
+                        <div
+                            className="modal-overlay"
+                            onClick={this.reset}
+                        ></div>
+                    </React.Fragment>
+                }
             </form>
         );
     }
 }
 
-const CocktailSearchResults = ({ cocktails, selection, handleSelection }) => (
-    <div id="search-results">
+const CocktailSearchResults = ({ cocktails, selection, handleSelection, reset }) => (
+    <div id="search-results"
+        onClick={reset}
+    >
         {(cocktails.length === 0) ? 'No results' :
             cocktails.map((c, i) => (
                 <Link key={c.id} to={"/Cocktail/" + c.id}
