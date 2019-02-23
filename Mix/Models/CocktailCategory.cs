@@ -25,7 +25,7 @@ namespace Mix.Models
                 Name = "Sours",
                 Vessels = new List<v> { v.Cocktail, v.Rocks },
                 Ingredients = new List<i> { i.Spirit, i.Citrus, i.Sweetener,
-                    i.Carbonated.Negate()}
+                    i.Carbonated.Negate() }
             },
             new CocktailCategory
             {
@@ -38,7 +38,7 @@ namespace Mix.Models
             {
                 Name = "Spirit Forward",
                 Ingredients = new List<i> { i.Spirit, i.Vermouth,
-                    i.Citrus.Negate()}
+                    i.Citrus.Negate() }
             },
             new CocktailCategory
             {
@@ -53,9 +53,9 @@ namespace Mix.Models
             },
             new CocktailCategory
             {
-                Name = "Tiki Cocktails",
-                Vessels = new List<v> { v.Highball, v.Rocks },
-                Ingredients = new List<i> { i.Rum, i.FruitJuice }
+                Name = "Fruity Cocktails",
+                Ingredients = new List<i> { i.NonCitrusFruitJuice,
+                    i.Wine.Negate(), i.Vermouth.Negate() }
             },
         };
     }

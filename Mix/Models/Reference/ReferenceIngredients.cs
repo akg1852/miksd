@@ -138,9 +138,11 @@ namespace Mix.Models
                 i.FruitJuice, i.Carbonated),
 
             new I(i.FruitJuice, "Fruit Juice",
-                i.Citrus, i.OrangeJuice, i.PineappleJuice, i.CranberryJuice, i.GrapefruitJuice),
+                i.Citrus, i.NonCitrusFruitJuice),
             new I(i.Citrus, "Citrus", o.Equivalence,
                 i.LemonJuice, i.LimeJuice),
+            new I(i.NonCitrusFruitJuice, "Fruit Juice (Non-Citrus)",
+                i.OrangeJuice, i.PineappleJuice, i.CranberryJuice, i.GrapefruitJuice),
             new I(i.LemonJuice, "Lemon Juice"),
             new I(i.LimeJuice, "Lime Juice", o.Super,
                 i.Lime, i.LimeCordial),

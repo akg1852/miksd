@@ -150,6 +150,7 @@ namespace Mix.Models
         Falernum = 107,
         PassionFruitSyrup = 108,
         CondensedMilk = 109,
+        NonCitrusFruitJuice = 110,
     }
 
     public static class IngredientHelpers
