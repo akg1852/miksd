@@ -127,7 +127,6 @@ dd {
 #header {
     display: flex;
     padding: 10px;
-    position: relative;
 }
 
 #header-main {
@@ -191,6 +190,7 @@ dd {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    z-index: 100;
 }
 
 #ingredient-search-button {
