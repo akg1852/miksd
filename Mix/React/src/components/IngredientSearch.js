@@ -4,13 +4,13 @@ import Ingredients from './Ingredients'
 class IngredientSearch extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            showIngredientSearch: false
+        };
 
+        this.toggleIngredientSearch = this.toggleIngredientSearch.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
-        this.handleClickAway = this.handleClickAway.bind(this);
         this.handleIngredientSelect = this.handleIngredientSelect.bind(this);
-
-        document.body.addEventListener('click', this.handleClickAway);
     }
 
     componentDidMount() {
@@ -34,19 +34,12 @@ class IngredientSearch extends React.Component {
         this.mounted = false;
     }
 
-    handleCategoryChange(category) {
-        this.setState({ selectedCategory: category });
+    toggleIngredientSearch() {
+        this.setState({ showIngredientSearch: !this.state.showIngredientSearch });
     }
 
-    handleClickAway(e) {
-        if (this.mounted &&
-            this.props.showIngredientSearch &&
-            !this.ingredientSearchEl.contains(e.target) &&
-            !this.ingredientSearchButtonEl.contains(e.target)) {
-
-            e.preventDefault();
-            this.props.toggleIngredientSearch();
-        }
+    handleCategoryChange(category) {
+        this.setState({ selectedCategory: category });
     }
 
     handleIngredientSelect(id, selection) {
@@ -71,13 +64,13 @@ class IngredientSearch extends React.Component {
         return (
             <div id="ingredient-search-wrapper">
                 <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'
-                    ref={(el) => this.ingredientSearchButtonEl = el}
-                    onClick={this.props.toggleIngredientSearch}>
+                    onClick={this.toggleIngredientSearch}
+                    style={{ zIndex: this.state.showIngredientSearch ? '101' : null }}
+                >
                     <IngredientSearchButton />
                 </svg>
                 <div id="ingredient-search"
-                    ref={(el) => this.ingredientSearchEl = el}
-                    style={{ display: this.props.showIngredientSearch ? 'block' : 'none' }}
+                    style={{ display: this.state.showIngredientSearch ? 'block' : 'none' }}
                 >
                     <Ingredients
                         ingredients={ingredients}
@@ -91,6 +84,12 @@ class IngredientSearch extends React.Component {
                         onClick={() => this.props.handleIngredientSearch([])}
                     />
                 </div>
+                {this.state.showIngredientSearch &&
+                    <div
+                        className="modal-overlay"
+                        onClick={this.toggleIngredientSearch}
+                    ></div>
+                }
             </div>
         )
     }

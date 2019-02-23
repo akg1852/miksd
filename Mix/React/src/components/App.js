@@ -24,17 +24,11 @@ class App extends React.Component {
 
         const menusJson = localStorage.getItem('menus');
         this.state = {
-            showIngredientSearch: false,
             menus: menusJson ? JSON.parse(menusJson) : defaultMenus
         };
 
         this.menuHandlers = new MenuHandlers(this);
-        this.toggleIngredientSearch = this.toggleIngredientSearch.bind(this);
         this.handleIngredientSearch = this.handleIngredientSearch.bind(this);
-    }
-
-    toggleIngredientSearch() {
-        this.setState({ showIngredientSearch: !this.state.showIngredientSearch });
     }
 
     handleIngredientSearch(selectedIngredients) {
@@ -43,15 +37,11 @@ class App extends React.Component {
     }
 
     renderPage(title, ingredients) {
-        const modalOpen = this.state.showIngredientSearch;
-
         return (
             <div className="app-container">
                 <div className="app">
                     <Route render={(props) =>
                         <Header {...props}
-                            showIngredientSearch={this.state.showIngredientSearch}
-                            toggleIngredientSearch={this.toggleIngredientSearch}
                             selectedIngredients={ingredients}
                             handleIngredientSearch={this.handleIngredientSearch}
                         />
@@ -94,7 +84,6 @@ class App extends React.Component {
                         </Switch>
                     </div>
                 </div>
-                {modalOpen && <div className="modal-overlay"></div>}
             </div>
         );
     }
