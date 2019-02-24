@@ -440,10 +440,10 @@ namespace Mix.Models
 
             new C(c.LastWord, "The Last Word", "#C2CF7D",
                 v.Cocktail, p.Shake, g.Cherry,
-                new CI(i.Gin, 60M),
-                new CI(i.ChartreuseVerte, 60M),
-                new CI(i.Maraschino, 60M),
-                new CI(i.LimeJuice, 60M)),
+                new CI(i.Gin, 45M),
+                new CI(i.ChartreuseVerte, 45M),
+                new CI(i.Maraschino, 45M),
+                new CI(i.LimeJuice, 45M)),
 
             new C(c.ScotchSoda, "Scotch and Soda", "#FDBD3B", onTheRocks,
                 v.Rocks, p.Build, g.None,
