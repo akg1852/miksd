@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
+import { InView } from 'react-intersection-observer';
 import IngredientSelect from './IngredientSelect';
 
 const showSize = 10;
@@ -71,10 +72,11 @@ class CocktailList extends React.Component {
                             />
                         )}
                         {(this.props.cocktails.length > this.state.show) &&
-                            <div id="show-more"
+                            <InView as="div" onChange={inView => inView && this.handleShowMore()}
+                                id="show-more"
                                 onClick={this.handleShowMore}>
                                 Show More…
-                            </div>
+                            </InView>
                         }
                         {this.state.ingredientSelecting &&
                             <div

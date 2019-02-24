@@ -9,6 +9,7 @@
     "dependencies": {
         "react": "^16.7.0",
         "react-dom": "^16.7.0",
+        "react-intersection-observer": "^8.0.5",
         "react-router-dom": "^4.2.2",
         "react-sane-contenteditable": "^1.5.0"
     },
