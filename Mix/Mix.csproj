@@ -109,6 +109,7 @@
     <Content Include="Content\Style.css" />
     <Content Include="Error.html" />
     <Content Include="Global.asax" />
+    <Content Include="Content\manifest.json" />
     <None Include="React\.babelrc" />
     <Content Include="React\dist\mix.js" />
     <Content Include="React\src\components\App.js" />
