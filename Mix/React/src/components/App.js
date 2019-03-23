@@ -41,12 +41,12 @@ class App extends React.Component {
             <div className="app-container">
                 <div className="app">
                     <Route render={(props) =>
-                        <Header {...props}
-                            selectedIngredients={ingredients}
-                            handleIngredientSearch={this.handleIngredientSearch}
-                        />
+                        <Header {...props} />
                     } />
-                    <HeaderMenu />
+                    <HeaderMenu
+                        selectedIngredients={ingredients}
+                        handleIngredientSearch={this.handleIngredientSearch}
+                    />
 
                     <div id="content">
                         <Switch>

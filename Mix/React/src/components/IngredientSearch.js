@@ -4,11 +4,8 @@ import Ingredients from './Ingredients'
 class IngredientSearch extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            showIngredientSearch: false
-        };
+        this.state = {};
 
-        this.toggleIngredientSearch = this.toggleIngredientSearch.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleIngredientSelect = this.handleIngredientSelect.bind(this);
     }
@@ -32,10 +29,6 @@ class IngredientSearch extends React.Component {
 
     componentWillUnmount() {
         this.mounted = false;
-    }
-
-    toggleIngredientSearch() {
-        this.setState({ showIngredientSearch: !this.state.showIngredientSearch });
     }
 
     handleCategoryChange(category) {
@@ -62,15 +55,9 @@ class IngredientSearch extends React.Component {
         const ingredients = ingredientsWithSelection(this.state.ingredients, this.props.selectedIngredients);
 
         return (
-            <div id="ingredient-search-wrapper">
-                <svg id='ingredient-search-button' width='40' height='40' viewBox=' 0 0 100 100'
-                    onClick={this.toggleIngredientSearch}
-                    style={{ zIndex: this.state.showIngredientSearch ? '101' : null }}
-                >
-                    <IngredientSearchButton />
-                </svg>
+            <React.Fragment>
                 <div id="ingredient-search"
-                    style={{ display: this.state.showIngredientSearch ? 'block' : 'none' }}
+                    style={{ display: this.props.showIngredientSearch ? 'block' : 'none' }}
                 >
                     <Ingredients
                         ingredients={ingredients}
@@ -83,26 +70,21 @@ class IngredientSearch extends React.Component {
                         value="Clear All"
                         onClick={() => this.props.handleIngredientSearch([])}
                     />
+                    <input id="ingredient-done-button" type="button"
+                        value="Done"
+                        onClick={this.props.hideIngredientSearch}
+                    />
                 </div>
-                {this.state.showIngredientSearch &&
+                {this.props.showIngredientSearch &&
                     <div
                         className="modal-overlay"
-                        onClick={this.toggleIngredientSearch}
+                        onClick={this.props.hideIngredientSearch}
                     ></div>
                 }
-            </div>
+            </React.Fragment>
         )
     }
 }
-
-const IngredientSearchButton = () => (
-    <g>
-        <circle cx='50' cy='50' r='50' />
-        <path fill='none' stroke='#FFFFFF' strokeWidth='36' strokeLinecap='round'
-            d='m280,278a153,153 0 1,0-2,2l170,170m-91-117 110,110-26,26-110-110'
-            transform='scale(0.1) translate(280 250)' />
-    </g>
-);
 
 const ingredientsWithSelection = (ingredients, selectedIngredients) => {
     ingredients.forEach(c => c.ingredients.forEach(i => {

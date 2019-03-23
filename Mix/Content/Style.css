@@ -143,10 +143,6 @@ dd {
     display: flex;
 }
 
-#header-bottom-right {
-    width: 40px;
-}
-
 #title, #subtitle {
     flex: 1 0 0;
 }
@@ -183,31 +179,21 @@ dd {
     background-color: var(--primary-color);
 }
 
-/* ingredient search button */
-
-#ingredient-search-wrapper {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    z-index: 100;
-}
-
-#ingredient-search-button {
-    cursor: pointer;
-    filter: drop-shadow( 3px 3px 3px var(--shadow-color) );
-}
-#ingredient-search-button circle {
-    fill: var(--secondary-color);
-}
-
 /* header menu */
+
+.header-menu-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    user-select: none;
+}
 
 ul.header-menu {
     display: flex;
     margin: 0;
     width: 100%;
     background-color: var(--primary-color);
+    border-bottom: solid var(--background-color) 1px;
     overflow-x: auto;
 }
 
@@ -215,6 +201,7 @@ ul.header-menu > li {
     flex: 1 0 0;
     text-align: center;
     display: inline-block;
+    cursor: pointer;
 }
 
 ul.header-menu > li:not(:last-child) {
@@ -226,28 +213,36 @@ ul.header-menu a {
     padding: 0 5px;
     width: 100%;
     height: 100%;
-    border-bottom: solid 5px transparent;
-}
-
-ul.header-menu > li.current > a {
-    border-bottom: solid 5px var(--primary-color-dark);
 }
 
 ul.header-menu a, ul.header-menu a:visited {
     color: var(--text-color);
 }
 
+.header-menu-categories {
+    background-color: var(--primary-color);
+    position: absolute;
+    border: solid var(--background-color) 1px;
+}
+.header-menu-categories a {
+    margin: 10px;
+    display: block;
+}
+
 /* ingredient search */
 
 #ingredient-search {
     position: absolute;
-    top: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
     background-color: var(--background-color);
     border: solid var(--border-color) 1px;
     box-shadow: var(--box-shadow);
     height: 343px;
     width: 340px;
     z-index: 101;
+    user-select: none;
 }
 .ingredient-category-headers {
     display: flex;
@@ -326,9 +321,9 @@ ul.header-menu a, ul.header-menu a:visited {
     text-decoration: line-through;
 }
 
-#ingredient-clear-button {
+#ingredient-clear-button, #ingredient-done-button {
     height: 27px;
-    width: 100%;
+    width: 168px;
     background-color: #999999;
 }
 #ingredient-clear-button:disabled {
@@ -337,7 +332,6 @@ ul.header-menu a, ul.header-menu a:visited {
 .ingredient-count{
     font-size: 0.7em;
 }
-
 
 /* result lists */
 

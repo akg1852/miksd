@@ -1,12 +1,7 @@
 ﻿import React from 'react';
 import CocktailSearch from './CocktailSearch';
-import IngredientSearch from './IngredientSearch';
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div id="header">
@@ -19,12 +14,6 @@ class Header extends React.Component {
 
                     <div id="header-bottom">
                         <p id="subtitle">Your guide to cocktails / mixed drinks</p>
-                        <div id="header-bottom-right">
-                            <IngredientSearch
-                                selectedIngredients={this.props.selectedIngredients}
-                                handleIngredientSearch={this.props.handleIngredientSearch}
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
