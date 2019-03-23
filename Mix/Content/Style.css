@@ -381,6 +381,9 @@ h2.result-header {
 .cocktail-result:hover .cocktail-link-button {
     border-color: var(--primary-color-dark);
 }
+.cocktail-result .cocktail-link-button:hover {
+    background-color: var(--primary-color);
+}
 
 #show-more {
     display: inline-block;
