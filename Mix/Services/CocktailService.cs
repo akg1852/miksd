@@ -340,7 +340,7 @@ namespace Mix.Services
 
             return FindCocktails(similarIngredients)
                 .Where(c => c.Id != cocktail.Id)
-                .Take(10);
+                .Take(6);
         }
 
         private string ContainsSearchCondition(string query)
